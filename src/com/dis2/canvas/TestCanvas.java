@@ -26,6 +26,7 @@ public class TestCanvas {
             CanvasWidget panel = new CanvasWidget(icon.getImage());
             JFrame frame = new JFrame("Test Canvas");
             frame.setSize(800,800);
+            frame.getContentPane().setLayout(null);
             frame.getContentPane().add(panel);
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
