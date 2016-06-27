@@ -1,4 +1,6 @@
 
+import com.dis2.shared.Actions;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
