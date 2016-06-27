@@ -1,5 +1,9 @@
+package com.dis2.cards;
+
 import java.awt.Image;
 import java.awt.Color;
+
+import com.dis2.shared.Palette;
 
 public class cardWidget {
 	

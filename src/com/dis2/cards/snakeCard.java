@@ -1,16 +1,21 @@
+package com.dis2.cards;
 
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
+
 
 public class snakeCard extends cardWidget{
 	
 	private int Ntimes;
-	Image img = Toolkit.getDefaultToolkit().getImage("/Users/tania13/Desktop/Images/snake.png");
+	URL imageUrl = fishCard.class.getResource(
+			"/resources/snake.png");
+	Image img = Toolkit.getDefaultToolkit().getImage(imageUrl);
 	BufferedImage bimg;
 	int iw;
 	int ih;
@@ -19,7 +24,7 @@ public class snakeCard extends cardWidget{
 		super(x,y,w,h,arcW,arcH);
 		
 		try{
-			BufferedImage bimg = ImageIO.read(new File("/Users/tania13/Desktop/Images/snake.png"));
+			BufferedImage bimg = ImageIO.read(imageUrl);
 			iw = bimg.getWidth();
 			ih = bimg.getHeight(); 
 		}catch (IOException e) {

@@ -1,3 +1,4 @@
+package com.dis2.cards;
 
 import com.dis2.shared.Actions;
 
@@ -6,13 +7,16 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
 public class fishCard extends cardWidget{
 	
 	Actions action;
-	Image img = Toolkit.getDefaultToolkit().getImage("/Users/tania13/Desktop/Images/fishPink.png");
+	URL imageUrl = fishCard.class.getResource(
+			"/resources/fishPink.png");
+	Image img = Toolkit.getDefaultToolkit().getImage(imageUrl);
 	BufferedImage bimg;
 	int iw;
 	int ih; 
@@ -22,7 +26,7 @@ public class fishCard extends cardWidget{
 		super(x,y,w,h,arcW,arcH);
 		
 		try{
-			BufferedImage bimg = ImageIO.read(new File("/Users/tania13/Desktop/Images/fishPink.png"));
+			BufferedImage bimg = ImageIO.read(imageUrl);
 			iw = bimg.getWidth();
 			ih = bimg.getHeight(); 
 		}catch (IOException e) {

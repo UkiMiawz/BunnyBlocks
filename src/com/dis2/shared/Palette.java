@@ -1,3 +1,5 @@
+package com.dis2.shared;
+
 import java.awt.Color;
 
 /*Palette class 

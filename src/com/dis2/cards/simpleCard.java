@@ -1,11 +1,12 @@
+package com.dis2.cards;
 
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.dis2.shared.Palette;
 
 
 public class simpleCard extends JPanel{
