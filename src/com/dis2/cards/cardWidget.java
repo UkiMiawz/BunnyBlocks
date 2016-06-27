@@ -10,8 +10,8 @@ public class cardWidget {
 	private int arcWidth;
 	private int arcHeight;
 	private double imageScale;
-	private double imageWidth;
-	private double imageHeight;
+	private int imageWidth;
+	private int imageHeight;
 	private Color fillColor;
 	private Color fontColor;
 	private int typeFace = 0;
@@ -150,19 +150,19 @@ public class cardWidget {
 		this.imageScale = imageScale;
 	}
 
-	public double getImageWidth() {
+	public int getImageWidth() {
 		return imageWidth;
 	}
 
-	public void setImageWidth(double imageWidth) {
+	public void setImageWidth(int imageWidth) {
 		this.imageWidth = imageWidth;
 	}
 
-	public double getImageHeight() {
+	public int getImageHeight() {
 		return imageHeight;
 	}
 
-	public void setImageHeight(double imageHeight) {
+	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
 	}
 	

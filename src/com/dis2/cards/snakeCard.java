@@ -1,14 +1,35 @@
 
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class snakeCard extends cardWidget{
 	
 	private int Ntimes;
+	Image img = Toolkit.getDefaultToolkit().getImage("/Users/tania13/Desktop/Images/snake.png");
+	BufferedImage bimg;
+	int iw;
+	int ih;
 
 	public snakeCard(int x, int y, int w, int h, int arcW, int arcH, double s, int fs){
 		super(x,y,w,h,arcW,arcH);
+		
+		try{
+			BufferedImage bimg = ImageIO.read(new File("/Users/tania13/Desktop/Images/snake.png"));
+			iw = bimg.getWidth();
+			ih = bimg.getHeight(); 
+		}catch (IOException e) {
+				    e.printStackTrace();
+		}
+		
 		this.setFillColor(palette.green());
-		this.setImg(Toolkit.getDefaultToolkit().getImage("/Resources/snake.png"));
+		this.setImg(img);
+		this.setImageHeight(ih);
+		this.setImageWidth(iw);
 		this.setImageScale(s);
 		this.setFontColor(palette.white());
 		this.setFontSize(fs);
@@ -22,13 +43,7 @@ public class snakeCard extends cardWidget{
 	}
 
 	public void setNtimes(int ntimes) {
-		Ntimes = ntimes;
-	}
-	
-	public void loop(){
-		for(int n= Ntimes; n>0; n--){
-			//perform character instruction
-		}
+		this.Ntimes = ntimes;
 	}
 
 }
