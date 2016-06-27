@@ -24,8 +24,14 @@ import javax.swing.JPanel;
 public class CanvasWidget extends JPanel {
 
     private Image backgroundImage;
+    private AnimationObject character;
     private ArrayList<AnimationObject> animationObjects = new ArrayList<AnimationObject>();
-    private AnimationObject bunny;
+
+    private static final int xBlock = 65;
+    private static final int yBlock = 35;
+
+    private static final int startingX = 80;
+    private static final int startingY = 30;
 
     public CanvasWidget(String imgPath) {
         this(new ImageIcon(imgPath).getImage());
@@ -47,10 +53,26 @@ public class CanvasWidget extends JPanel {
                     "/resources/bunny1_stand.png");
             System.out.println(url.getPath());
             ImageIcon icon = new ImageIcon(url);
-            AnimationObject bunny = new AnimationObject(150, 70, icon);
+            AnimationObject bunny = new AnimationObject(startingX, startingY, icon);
+
+            System.out.println("Testing add carrot");
+            URL carrotUrl = TestCanvas.class.getResource(
+                    "/resources/gold_2.png");
+            System.out.println(carrotUrl.getPath());
+            ImageIcon carrotIcon = new ImageIcon(carrotUrl);
+            AnimationObject carrot = new AnimationObject(startingX + 2*xBlock, startingY + 5*yBlock, carrotIcon);
+
+            System.out.println("Testing add carrot2");
+            AnimationObject carrot2 = new AnimationObject(startingX + 3*xBlock, startingY + 6*yBlock, carrotIcon);
+
+            System.out.println("Testing add carrot3");
+            AnimationObject carrot3 = new AnimationObject(startingX + 4*xBlock, startingY+7*yBlock, carrotIcon);
 
             System.out.println("Add objects");
-            animationObjects.add(bunny);
+            character = bunny;
+            animationObjects.add(carrot);
+            animationObjects.add(carrot2);
+            animationObjects.add(carrot3);
             redrawCanvas();
         }
         catch (Exception e){
@@ -62,6 +84,9 @@ public class CanvasWidget extends JPanel {
     private void redrawCanvas() {
         System.out.println("Redraw canvas");
         this.removeAll();
+        System.out.println("Add character");
+        this.add(character);
+        System.out.println("Add objects");
         for(AnimationObject animationObject: animationObjects) {
             this.add(animationObject);
         }
