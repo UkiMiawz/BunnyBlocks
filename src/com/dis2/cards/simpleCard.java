@@ -30,11 +30,12 @@ public class simpleCard extends JPanel{
 	    
 	    double w = cw.getImageScale() * cw.getImageWidth();
 	    double h = cw.getImageScale() * cw.getImageHeight();
-	    // explicitly specify width (w) and height (h)
-	    g.drawImage(cw.getImg(), cw.getX()+((int)w/18), cw.getY()+25, (int) w, (int) h, this);
+	    
+	    // explicitly specify width (w) and height (h) to scale Image
+	    g.drawImage(cw.getImg(), cw.getxMargin(), cw.getyMargin(), (int) w, (int) h, this);
 	    g.setColor(cw.getFontColor());
 	    g.setFont(new Font("Courier", Font.BOLD, cw.getFontSize()));
-	    g.drawString(cw.getLabel(),cw.getX()+((int)w/3), cw.getY()+210);   
+	    g.drawString(cw.getLabel(),cw.getxTextMargin(), cw.getyTextMargin());   
 	    
 	}
 

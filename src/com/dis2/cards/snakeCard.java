@@ -31,11 +31,16 @@ public class snakeCard extends cardWidget{
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setImageScale(s);
+		this.setxMargin(x+ w/10);
+		this.setyMargin(y + h/8);
 		this.setFontColor(palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
 		this.setLabel("For");
+		this.setxTextMargin(x + w/5);
+		this.setyTextMargin(h - h/10);
 		this.setText("The Snake card helps your character repeat an instruction N times");
+		this.setTextBox(1);
 	}
 
 	public int getNtimes() {

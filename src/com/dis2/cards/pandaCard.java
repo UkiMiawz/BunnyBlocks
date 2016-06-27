@@ -18,7 +18,7 @@ public class pandaCard extends cardWidget{
 		super(x,y,w,h,arcW,arcH);
 		
 		try{
-			BufferedImage bimg = ImageIO.read(new File("/Users/tania13/Desktop/Images/snake.png"));
+			BufferedImage bimg = ImageIO.read(new File("/Users/tania13/Desktop/Images/panda.png"));
 			iw = bimg.getWidth();
 			ih = bimg.getHeight(); 
 		}catch (IOException e) {
@@ -30,11 +30,16 @@ public class pandaCard extends cardWidget{
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setImageScale(s);
+		this.setxMargin(x+ w/18);
+		this.setyMargin(y + h/7);
 		this.setFontColor(palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
-		this.setLabel("If");
+		this.setLabel(" If");
+		this.setxTextMargin(x + w/3);
+		this.setyTextMargin(h - h/5);
 		this.setText("The Panda card helps your character decide between options");
+		this.setTextBox(2);
 	}
 
 	public Conditions getCondition() {
@@ -43,9 +48,6 @@ public class pandaCard extends cardWidget{
 
 	public void setCondition(Conditions condition) {
 		this.condition = condition;
-	}
-
-	
-	
+	}	
 
 }

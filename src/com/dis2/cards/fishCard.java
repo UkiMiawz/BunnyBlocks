@@ -31,11 +31,15 @@ public class fishCard extends cardWidget{
 		this.setImg(img);
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
+		this.setxMargin(x+ w/24);
+		this.setyMargin(y + h/10);
 		this.setImageScale(s);
 		this.setFontColor(palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
 		this.setLabel("Move");
+		this.setxTextMargin(x + w/3);
+		this.setyTextMargin(h - h/10);
 		this.setText("The Fish card helps your character to move one position in a straight line");
 		
 	}

@@ -16,9 +16,15 @@ public class cardWidget {
 	private Color fontColor;
 	private int typeFace = 0;
     private int fontSize = 12;
+    private int xMargin;
+    private int yMargin;
+    private int xTextMargin;
+    private int yTextMargin;
     private String text = "";
     private String label = "";
     private Image img;
+    private int textBox = 0;
+    private String[] options;
     public Palette palette = new Palette();
 	
 	//constructor
@@ -165,6 +171,55 @@ public class cardWidget {
 	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
 	}
+
+	public int getxMargin() {
+		return xMargin;
+	}
+
+	public void setxMargin(int xMargin) {
+		this.xMargin = xMargin;
+	}
+
+	public int getyMargin() {
+		return yMargin;
+	}
+
+	public void setyMargin(int yMargin) {
+		this.yMargin = yMargin;
+	}
+
+	public int getxTextMargin() {
+		return xTextMargin;
+	}
+
+	public void setxTextMargin(int xTextMargin) {
+		this.xTextMargin = xTextMargin;
+	}
+
+	public int getyTextMargin() {
+		return yTextMargin;
+	}
+
+	public void setyTextMargin(int yTextMargin) {
+		this.yTextMargin = yTextMargin;
+	}
+
+	public int getTextBox() {
+		return textBox;
+	}
+
+	public void setTextBox(int textBox) {
+		this.textBox = textBox;
+	}
+
+	public String[] getOptions() {
+		return options;
+	}
+
+	public void setOptions(String[] options) {
+		this.options = options;
+	}
+	
 	
 	
 	

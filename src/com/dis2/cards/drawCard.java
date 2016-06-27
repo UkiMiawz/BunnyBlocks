@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -15,14 +16,17 @@ public class drawCard extends cardWidget{
     private JLayeredPane lpane = new JLayeredPane();
     private JPanel content = new JPanel();
     private JPanel text = new JPanel();
+    private JPanel combo = new JPanel();
     private Palette p = new Palette();
-    fishCard fish;
-    snakeCard snake;
-    pandaCard panda;
+    private JTextField forN = new JTextField("0",2);  //Use only with snake card
+    private JComboBox<String> ifCombo = new JComboBox<String>();
     
-    public drawCard(){
+    static fishCard fish;
+    static snakeCard snake;
+    static pandaCard panda;
+    
+    public drawCard(cardWidget c){
         
-        //window.setContentPane(content);
         window.setBounds(30, 30, 180, 280);
         window.setPreferredSize(new Dimension(180, 280));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,44 +35,81 @@ public class drawCard extends cardWidget{
         lpane.setBounds(30, 30, 180, 280);
         content.setBounds(0, 0, 180, 280);
         
-        fish = new fishCard(5,5, 160, 240, 10, 10, 1.2, 20);
-        simpleCard card= new simpleCard(fish);
+        simpleCard card= new simpleCard(c);
         
-       //snake = new snakeCard(5,5,160, 240, 10, 10, 0.5, 20);
-       // simpleCard card2= new simpleCard(snake);
-        
-        //panda = new pandaCard(5,5, 160, 240, 10, 10, 0.47, 20);
-        //simpleCard card3= new simpleCard(panda);
         content.add(card);
-        //content.add(card2);
-        //content.add(card3);
         
-        /*content.setOpaque(true);
+        if(c.getTextBox()==1){
+        
+        content.setOpaque(true);
         text.setBackground(p.green());
         text.setBounds(80, 197, 30, 30);
-        JTextField forN = new JTextField("0",2);  //Use only with snake card
         text.add(forN);
         text.setOpaque(true);
         lpane.add(content, new Integer(0), 0);
-        lpane.add(text, new Integer(1), 0);*/
+        lpane.add(text, new Integer(1), 0);
         
+        } else if(c.getTextBox()==2){
+        	
+        	//ifCombo.addItem("Red Apple");
+        	ifCombo = new JComboBox<String>(c.getOptions());
+        	ifCombo.setEditable(false);
+        	
+        	content.setOpaque(true);
+            combo.setBackground(p.purple());
+            combo.setBounds(25, 200, 120, 30);
+            combo.add(ifCombo);
+            text.setOpaque(true);
+            lpane.add(content, new Integer(0), 0);
+            lpane.add(combo, new Integer(1), 0);
+        	
+        }else{
+        	
         lpane.add(content, new Integer(0), 0);
+        
+        }
         
         window.pack();
         window.setVisible(true);
         
-       /* forN.addActionListener(new ActionListener() {
+        /**
+         * Action event for Snake card
+         * Take number input by user and set it in snakeCard
+         */
+        forN.addActionListener(new ActionListener() { //Use only with snake card
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Text=" + forN.getText());  //Use only with snake card
+            	
+                System.out.println("Text=" + forN.getText());  
+                ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
               }
-            });*/
+            });
+        
+        /**
+         * Action event for Panda card
+         * Take selection by user and set it in pandaCard
+         */
+        ifCombo.addActionListener(new ActionListener() { //Use only with panda card
+            public void actionPerformed(ActionEvent e) {
+            	
+              System.out.println("Selected index=" + ifCombo.getSelectedIndex()
+                  + " Selected item=" + ifCombo.getSelectedItem());
+              //Set SelectedItem to match condition of class Conditions
+              //Perfom action according
+            }
+          });
 
         
     }
     
 	public static void main(String[] args) {
 		
-		new drawCard();
+		fish = new fishCard(5,5, 160, 240, 10, 10, 1.2, 20);
+		//snake = new snakeCard(5,5,160, 240, 10, 10, 0.5, 20);
+		//panda = new pandaCard(5,5, 160, 240, 10, 10, 0.47, 20);
+		//panda.setOptions(new String[] {"Red Apple", "Green Apple", "Blue Apple"});
+		new drawCard(fish);
+		//new drawCard(snake);
+		//new drawCard(panda);
 	}
        
 	
