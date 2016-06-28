@@ -79,7 +79,7 @@ public class CanvasWidget extends JPanel {
             animationObjects.add(carrot);
             animationObjects.add(carrot2);
             animationObjects.add(carrot3);
-            this.repaint();
+            redrawCanvas();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -120,7 +120,7 @@ public class CanvasWidget extends JPanel {
                     xMovement += -xDifference;
                     yMovement += -yDifference;
                     counter ++;
-                    this.repaint();
+                    redrawCanvas();
 
                     //wait before set the next movement
                     Thread.sleep(1000/framePerSecond);
@@ -131,14 +131,18 @@ public class CanvasWidget extends JPanel {
         }
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    private void redrawCanvas(){
         this.removeAll();
         this.add(character);
         for(AnimationObject animationObject: animationObjects) {
             this.add(animationObject);
         }
+        this.repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         System.out.println("Painting component");
         g.drawImage(backgroundImage, 0, 0, null);
     }
