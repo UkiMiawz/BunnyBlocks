@@ -63,7 +63,7 @@ public class CanvasWidget extends JPanel {
 
             System.out.println("Testing add coin");
             URL carrotUrl = TestCanvas.class.getResource(
-                    "/resources/gold_2.png");
+                    "/resources/coin.gif");
             System.out.println(carrotUrl.getPath());
             ImageIcon carrotIcon = new ImageIcon(carrotUrl);
             AnimationObject carrot = new AnimationObject(startingX + 2*xBlock, startingY + 5*yBlock, carrotIcon);
@@ -89,7 +89,7 @@ public class CanvasWidget extends JPanel {
 
     public void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
-            int limitMovement = 200;
+            int limitMovement = 1000;
             for(AnimationAction action: steps) {
                 System.out.println("Executing step " + action.toString());
                 //get movement value
