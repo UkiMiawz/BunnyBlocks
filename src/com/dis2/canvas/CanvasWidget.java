@@ -4,17 +4,21 @@
  * and open the template in the editor.
  */
 package com.dis2.canvas;
+import com.dis2.shared.Actions;
+import com.dis2.shared.AnimationAction;
+import com.dis2.canvas.MovementConstants.MovementValue;
+
 import java.net.URL;
 import java.util.ArrayList;
 
 import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Point;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
+import java.lang.Thread;
 
 /**
  *
@@ -32,6 +36,8 @@ public class CanvasWidget extends JPanel {
 
     private static final int startingX = 80;
     private static final int startingY = 30;
+
+    private static final int framePerSecond = 50;
 
     public CanvasWidget(String imgPath) {
         this(new ImageIcon(imgPath).getImage());
@@ -55,17 +61,17 @@ public class CanvasWidget extends JPanel {
             ImageIcon icon = new ImageIcon(url);
             AnimationObject bunny = new AnimationObject(startingX, startingY, icon);
 
-            System.out.println("Testing add carrot");
+            System.out.println("Testing add coin");
             URL carrotUrl = TestCanvas.class.getResource(
-                    "/resources/gold_2.png");
+                    "/resources/coin.gif");
             System.out.println(carrotUrl.getPath());
             ImageIcon carrotIcon = new ImageIcon(carrotUrl);
             AnimationObject carrot = new AnimationObject(startingX + 2*xBlock, startingY + 5*yBlock, carrotIcon);
 
-            System.out.println("Testing add carrot2");
+            System.out.println("Testing add coin");
             AnimationObject carrot2 = new AnimationObject(startingX + 3*xBlock, startingY + 6*yBlock, carrotIcon);
 
-            System.out.println("Testing add carrot3");
+            System.out.println("Testing add coin3");
             AnimationObject carrot3 = new AnimationObject(startingX + 4*xBlock, startingY+7*yBlock, carrotIcon);
 
             System.out.println("Add objects");
@@ -81,21 +87,61 @@ public class CanvasWidget extends JPanel {
 
     }
 
-    private void redrawCanvas() {
-        System.out.println("Redraw canvas");
+    public void animateCanvas(ArrayList<AnimationAction> steps) {
+        try {
+            character.setImage("/resources/bunny_walk.gif");
+            for(AnimationAction action: steps) {
+                System.out.println("Executing step " + action.toString());
+                //get movement value
+                MovementValue movementValue = MovementConstants.getMovement(action.getAction());
+                System.out.println("X value : " + movementValue.getX() + " Y value : " + movementValue.getY());
+                //animate per x & y
+                int xMovement = movementValue.getX();
+                int yMovement = movementValue.getY();
+
+                while(xMovement != 0 || yMovement != 0){
+
+                    int xDifference = 0;
+                    int yDifference = 0;
+
+                    if(xMovement > 0)
+                        xDifference = 1;
+                    else if(xMovement < 0)
+                        xDifference = -1;
+
+                    if(yMovement > 0)
+                        yDifference = 1;
+                    else if(yMovement < 0)
+                        yDifference = -1;
+
+                    character.moveObject(xDifference, yDifference);
+
+                    xMovement += -xDifference;
+                    yMovement += -yDifference;
+                    redrawCanvas();
+
+                    //wait before set the next movement
+                    Thread.sleep(1000/framePerSecond);
+                }
+            }
+            character.setImage("/resources/bunny1_stand.png");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void redrawCanvas(){
         this.removeAll();
-        System.out.println("Add character");
         this.add(character);
-        System.out.println("Add objects");
         for(AnimationObject animationObject: animationObjects) {
             this.add(animationObject);
         }
-        this.revalidate();
+        this.repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        System.out.println("Painting component");
+        super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, null);
     }
 }
