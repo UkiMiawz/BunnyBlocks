@@ -4,3 +4,6 @@ nbproject/
 test/
 *.iml
 out/
+*.classpath
+*.project
+bin/
