@@ -1,4 +1,4 @@
-package com.dis2.app;
+package com.dis2.menu;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -6,9 +6,8 @@ import java.util.*;
 import java.util.List;
 
 
-public class MenuWidget {
-	//private JFrame mainFrame;
-	private JPanel mainFrame;
+public class MenuWidget extends JPanel {
+	private JPanel mainPanel;
 	private JInternalFrame menuFrame;
 	private JInternalFrame descFrame;	
 	private JLabel descGlobalLabel;
@@ -56,21 +55,10 @@ public class MenuWidget {
 
 	private void drawMainFrameGUI()
 	{
-		//mainFrame = new JFrame("Hello GUI");
-		mainFrame = new JPanel();
-		mainFrame.setSize(SizeX, SizeY);
-		mainFrame.setLayout(new GridLayout(2,1));
-		//mainFrame.setLocationRelativeTo(null);
-		mainFrame.add(menuFrame);
-		mainFrame.add(descFrame);
-		
-		mainFrame.setVisible(true);
-		//mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		JFrame myFrame = new JFrame("Hello from the other side");
-		myFrame.setSize(500, 600);
-		myFrame.add(mainFrame);
-		myFrame.setVisible(true);
+		this.setSize(SizeX, SizeY);
+		this.setLayout(new GridLayout(2,1));
+		this.add(menuFrame);
+		this.add(descFrame);
 	}
 	
 	private void setUpMenuFrame()
