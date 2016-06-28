@@ -96,33 +96,6 @@ public class MenuWidget extends JPanel {
 		descMainPanel.add(contentPanel, BorderLayout.CENTER);
 		descFrame.add(descMainPanel);
 		descFrame.setSize(descFrame.getPreferredSize());
-		
-		/*GridBagConstraints gbc = new GridBagConstraints();
-		GridBagLayout gbl = new GridBagLayout();
-		
-		// For the content
-		gbc.fill= GridBagConstraints.FIRST_LINE_END;
-		descFrame.setLayout(gbl);
-				
-		descGlobalLabel = new JLabel("Click the animal logo for description!", JLabel.LEFT);
-		descGlobalLabel.setHorizontalAlignment(JLabel.LEFT);
-		gbc.gridx = 1;
-		gbc.gridy = 6;
-		gbl.setConstraints(descGlobalLabel, gbc);
-		
-		//The selected card.
-		JPanel menuMainPanel = new JPanel(new BorderLayout());
-		descGlobalPic = new JPanel(new GridLayout(0,1));
-		descGlobalPic.add(new simpleCard(cardContent.get(0)));
-		menuMainPanel.add(descGlobalPic, BorderLayout.PAGE_START);
-		
-		// The Panel that contain the selected card.
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbl.setConstraints(menuMainPanel, gbc);
-		
-		descFrame.add(menuMainPanel);
-		descFrame.add(descGlobalLabel);		*/
 	}
 	
 	private class MouseClickListener implements MouseListener
