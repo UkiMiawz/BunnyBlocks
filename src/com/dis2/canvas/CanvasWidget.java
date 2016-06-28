@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 package com.dis2.canvas;
+import com.dis2.shared.Actions;
+import com.dis2.shared.AnimationAction;
+
 import java.net.URL;
 import java.util.ArrayList;
 
 import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Point;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -33,12 +34,21 @@ public class CanvasWidget extends JPanel {
     private static final int startingX = 80;
     private static final int startingY = 30;
 
+    private ArrayList<AnimationAction> testActions = new ArrayList<AnimationAction>();
+
     public CanvasWidget(String imgPath) {
         this(new ImageIcon(imgPath).getImage());
     }
 
     public CanvasWidget(Image backgroundImage) {
         try{
+
+            System.out.println("Adding test movements");
+            testActions.add(new AnimationAction(Actions.MOVERIGHT));
+            testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVELEFT));
+
             System.out.println("Initiating canvas widget with image");
             this.backgroundImage = backgroundImage;
             Dimension size = new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null));
