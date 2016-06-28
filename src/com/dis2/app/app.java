@@ -9,6 +9,7 @@ public class app {
         menuWidget.expandList(new JButton("Hell"), "Hell1");
         menuWidget.expandList(new JButton("Hell level 2"), "Hell2");
         menuWidget.expandList(new JButton("Hell level 3"), "Hell3");
-        menuWidget.redraw();
+        menuWidget.redraw();   
+               
     }
 }
