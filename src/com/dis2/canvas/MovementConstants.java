@@ -1,6 +1,9 @@
 package com.dis2.canvas;
 
+import static com.dis2.shared.Actions.*;
+
 import com.dis2.shared.Actions;
+import com.dis2.shared.AnimationAction;
 
 public class MovementConstants {
 
@@ -25,13 +28,13 @@ public class MovementConstants {
     public static MovementValue getMovement(Actions movementAction) {
         switch (movementAction){
             case MOVEDOWN:
-                return new MovementValue(xBlockVertical, yBlockVertical); break;
+                return new MovementValue(xBlockVertical, yBlockVertical);
             case MOVEUP:
-                return new MovementValue(xBlockVertical, -yBlockVertical); break;
+                return new MovementValue(xBlockVertical, -yBlockVertical);
             case MOVELEFT:
-                return new MovementValue(-xBlockHorizontal, yBlockHorizontal); break;
+                return new MovementValue(-xBlockHorizontal, yBlockHorizontal);
             case MOVERIGHT:
-                return new MovementValue(xBlockHorizontal, yBlockHorizontal); break;
+                return new MovementValue(xBlockHorizontal, yBlockHorizontal);
             default:
                 return new MovementValue(0, 0);
         }

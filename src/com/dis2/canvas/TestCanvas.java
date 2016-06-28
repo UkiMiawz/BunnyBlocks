@@ -4,9 +4,14 @@
  * and open the template in the editor.
  */
 package com.dis2.canvas;
+import com.dis2.shared.Actions;
+import com.dis2.shared.AnimationAction;
+
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadFactory;
 
 /**
  *
@@ -30,6 +35,17 @@ public class TestCanvas {
             frame.getContentPane().add(panel);
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            ArrayList<AnimationAction> testActions = new ArrayList<AnimationAction>();
+            System.out.println("Adding test movements");
+            testActions.add(new AnimationAction(Actions.MOVERIGHT));
+            testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVELEFT));
+
+            Thread.sleep(1000);
+            System.out.println("Start animating");
+            panel.animateCanvas(testActions);
         }
         catch (Exception e) {
             e.printStackTrace();

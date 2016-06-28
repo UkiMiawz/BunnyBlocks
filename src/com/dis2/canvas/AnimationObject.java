@@ -40,6 +40,11 @@ public class AnimationObject extends JLabel {
         setComponent();
     }
 
+    public void moveObject(int xDifference, int yDifference){
+        setX(getX() + xDifference);
+        setY(getY() + yDifference);
+    }
+
     private void setComponent(){
         System.out.println("Set components");
         try {
