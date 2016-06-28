@@ -42,6 +42,7 @@ public class drawCard extends cardWidget{
         simpleCard card= new simpleCard(c);
         
         content.add(card);
+        content.addMouseListener(new CustomMouseListener());
         
         if(c.getTextBox()==1){
         
