@@ -89,17 +89,16 @@ public class CanvasWidget extends JPanel {
 
     public void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
-            int limitMovement = 1000;
             for(AnimationAction action: steps) {
                 System.out.println("Executing step " + action.toString());
                 //get movement value
                 MovementValue movementValue = MovementConstants.getMovement(action.getAction());
+                System.out.println("X value : " + movementValue.getX() + " Y value : " + movementValue.getY());
                 //animate per x & y
                 int xMovement = movementValue.getX();
                 int yMovement = movementValue.getY();
-                int counter = 0;
 
-                while(xMovement != 0 && yMovement != 0 && counter <= limitMovement){
+                while(xMovement != 0 || yMovement != 0){
 
                     int xDifference = 0;
                     int yDifference = 0;
@@ -119,7 +118,6 @@ public class CanvasWidget extends JPanel {
 
                     xMovement += -xDifference;
                     yMovement += -yDifference;
-                    counter ++;
                     redrawCanvas();
 
                     //wait before set the next movement
@@ -143,7 +141,7 @@ public class CanvasWidget extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("Painting component");
+        //System.out.println("Painting component");
         g.drawImage(backgroundImage, 0, 0, null);
     }
 }
