@@ -29,8 +29,9 @@ public class TestProgress extends JPanel {
             GridBagConstraints c = new GridBagConstraints();
             StepsBar progress = new StepsBar(600, 10);
             progress.setPreferredSize(new Dimension(100, 100));
-            progress.setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
-            progress.setBorderColor(Color.black);
+            progress.setBaseBackgroundColor(new Color(203,138,72));
+            progress.setBorderColor(new Color(173,119,65));
+            progress.setProgressColor(new Color(46,204,113));
             progress.setResizable(true);
             progress.setStepNumbers(10);
             progress.setCurrentStep(5);

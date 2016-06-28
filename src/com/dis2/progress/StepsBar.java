@@ -18,6 +18,7 @@ public class StepsBar extends JPanel {
     private int arcHeight = 10;
     private int stepNumbers = 0;
     private int currentStep = 0;
+    private Color baseBackgroundColor = Color.BLACK;
     private Color borderColor = Color.BLACK;
     private Color progressColor = Color.BLUE;
 
@@ -91,6 +92,14 @@ public class StepsBar extends JPanel {
         return progressColor;
     }
 
+    public Color getBaseBackgroundColor() {
+        return baseBackgroundColor;
+    }
+
+    public void setBaseBackgroundColor(Color baseBackgroundColor) {
+        this.baseBackgroundColor = baseBackgroundColor;
+    } 
+
     public void setProgressColor(Color progressColor) {
         this.progressColor = progressColor;
     }
@@ -152,7 +161,7 @@ public class StepsBar extends JPanel {
         }
         
         //Progress container
-        g.setColor(this.getBackground());
+        g.setColor(this.getBaseBackgroundColor());
         g.fillRoundRect(0, getPositionBarY(), this.getWidth(), this.fixedHeight, this.arcWidth, this.arcHeight);
        
         //Current progress
