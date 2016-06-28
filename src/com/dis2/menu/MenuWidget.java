@@ -1,4 +1,5 @@
 package com.dis2.menu;
+import com.dis2.cards.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -7,18 +8,18 @@ import java.util.List;
 
 
 public class MenuWidget extends JPanel {
-	private JPanel mainPanel;
 	private JInternalFrame menuFrame;
 	private JInternalFrame descFrame;	
 	private JLabel descGlobalLabel;
+	private JPanel descGlobalPic;
 	
-	public List<JButton> MenuContent;
+	public List<cardWidget> cardContent;
 	public int SizeX;
 	public int SizeY;
 		
 	public MenuWidget(int inputX, int inputY)
 	{
-		MenuContent = new ArrayList<JButton>();
+		cardContent = new ArrayList<cardWidget>();
 		this.SizeX = inputX;
 		this.SizeY = inputY;		
 	}
@@ -27,13 +28,7 @@ public class MenuWidget extends JPanel {
 	{
 		this(400,400);
 	}
-	
-	/*
-	public static void main(String[] args)
-	{
-		MenuWidget menuWidget = new MenuWidget();
-	}*/
-	
+		
 	public void redraw()
 	{
 		setUpDescFrame();
@@ -41,16 +36,14 @@ public class MenuWidget extends JPanel {
 		drawMainFrameGUI();		
 	}
 	
-	public void expandList(JButton newButton, String actionCommand)
+	public void expandCard(cardWidget newCard)
 	{
-		newButton.setActionCommand(actionCommand);
-		newButton.addActionListener(new ButtonClickListener());
-		MenuContent.add(newButton);
-	}
+		cardContent.add(newCard);		
+	}	
 	
-	public void reduceList(JButton removedButton)
+	public void removeCard(cardWidget removedCard)
 	{
-		MenuContent.remove(removedButton);
+		cardContent.remove(removedCard);
 	}
 
 	private void drawMainFrameGUI()
@@ -66,22 +59,22 @@ public class MenuWidget extends JPanel {
 		// For the menu frame
 		menuFrame = new JInternalFrame("Menu");
 		menuFrame.setVisible(true);		
-				
+
 		JPanel menuMainPanel = new JPanel(new BorderLayout());
-		
+
 		JPanel contentPanel = new JPanel(new GridLayout(0,1));
-		for(JButton button : MenuContent)
+		for(cardWidget cards : cardContent)
 		{
-			button.setPreferredSize(new Dimension(90, 25));
-			contentPanel.add(button);
+			simpleCard simpC = new simpleCard(cards);
+			simpC.addMouseListener(new MouseClickListener(cards));
+			contentPanel.add(simpC);
 		}			
-		
+
 		menuMainPanel.add(contentPanel, BorderLayout.PAGE_START);
-		
+
 		JScrollPane scrollPane = new JScrollPane(menuMainPanel);
 		menuFrame.getContentPane().add(scrollPane);
 		menuFrame.setSize(menuFrame.getPreferredSize());
-		
 	}
 	
 	private void setUpDescFrame()
@@ -89,55 +82,83 @@ public class MenuWidget extends JPanel {
 		descFrame = new JInternalFrame("Description");
 		descFrame.setVisible(true);
 		
-		GridBagConstraints gbc = new GridBagConstraints();
+		JPanel descMainPanel = new JPanel(new BorderLayout());
+		
+		JPanel contentPanel = new JPanel(new GridLayout(0,1));
+		descGlobalPic = new JPanel();
+		descGlobalPic.add(new simpleCard(cardContent.get(0)));
+		descGlobalLabel = new JLabel("Click the animal logo for description!", JLabel.LEFT);
+		descGlobalLabel.setHorizontalAlignment(JLabel.CENTER);
+		
+		contentPanel.add(descGlobalPic);
+		contentPanel.add(descGlobalLabel);
+		
+		descMainPanel.add(contentPanel, BorderLayout.CENTER);
+		descFrame.add(descMainPanel);
+		descFrame.setSize(descFrame.getPreferredSize());
+		
+		/*GridBagConstraints gbc = new GridBagConstraints();
 		GridBagLayout gbl = new GridBagLayout();
 		
 		// For the content
 		gbc.fill= GridBagConstraints.FIRST_LINE_END;
 		descFrame.setLayout(gbl);
-		
-		JButton myButton = new JButton("Heaven");
-		myButton.setPreferredSize(new Dimension(90, 25));
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.gridwidth= 1;
-		gbl.setConstraints(myButton, gbc);
-		myButton.setActionCommand("heavenClick");
-		myButton.addActionListener(new ButtonClickListener());
-		
-		descGlobalLabel = new JLabel("I'm in Heaven", JLabel.LEFT);
+				
+		descGlobalLabel = new JLabel("Click the animal logo for description!", JLabel.LEFT);
 		descGlobalLabel.setHorizontalAlignment(JLabel.LEFT);
 		gbc.gridx = 1;
 		gbc.gridy = 6;
 		gbl.setConstraints(descGlobalLabel, gbc);
 		
-		descFrame.add(myButton);
-		descFrame.add(descGlobalLabel);
+		//The selected card.
+		JPanel menuMainPanel = new JPanel(new BorderLayout());
+		descGlobalPic = new JPanel(new GridLayout(0,1));
+		descGlobalPic.add(new simpleCard(cardContent.get(0)));
+		menuMainPanel.add(descGlobalPic, BorderLayout.PAGE_START);
+		
+		// The Panel that contain the selected card.
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		gbl.setConstraints(menuMainPanel, gbc);
+		
+		descFrame.add(menuMainPanel);
+		descFrame.add(descGlobalLabel);		*/
 	}
 	
-	private class ButtonClickListener implements ActionListener
+	private class MouseClickListener implements MouseListener
 	{
-		public void actionPerformed(ActionEvent e)
+		private cardWidget myCardWidget;
+		public MouseClickListener(cardWidget cw)
 		{
-			String command = e.getActionCommand();
-			switch(command)
-			{
-				case "Hell1":
-					descGlobalLabel.setText("Now I'm in Hell level 1");
-					break;
-					
-				case "Hell2":
-					descGlobalLabel.setText("Aaargghh!!! Now I'm in Hell level 2");
-					break;
-				
-				case "Hell3":
-					descGlobalLabel.setText("Great, Now I'm in Hell level 3");
-					break;
-					
-				case "heavenClick":
-					descGlobalLabel.setText("Fuck, Now I'm in Heaven");
-					break;
-			}
+			myCardWidget = cw;
+		}
+		
+		public void mouseClicked(MouseEvent arg0) {
+			descGlobalLabel.setText(myCardWidget.getText());
+			
+			descGlobalPic.removeAll();			
+			simpleCard currentCard = new simpleCard(myCardWidget);
+			descGlobalPic.add(currentCard);
+		}
+
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
 		}
 	}
 }
