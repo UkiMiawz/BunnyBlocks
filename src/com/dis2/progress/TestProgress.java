@@ -37,7 +37,7 @@ public class TestProgress extends JPanel {
             progress.setCurrentStep(5);
             URL url = TestProgress.class.getResource("/resources/bunnyStep.gif");
             progress.setProgressImage(new ImageIcon(url).getImage());
-            url = TestProgress.class.getResource("/resources/gold_2.png");
+            url = TestProgress.class.getResource("/resources/coin_gold.png");
             progress.setGoalImage(new ImageIcon(url).getImage());
             c.fill = GridBagConstraints.HORIZONTAL;
             c.weightx = 0.5;

@@ -153,7 +153,9 @@ public class StepsBar extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-       
+
+        super.paintComponent(g);
+
         if (this.isResizable()) {
             this.setSize(new Dimension(this.getWidth(), this.progressImage.getHeight(this)+this.fixedHeight));
         } else {
