@@ -39,12 +39,12 @@ public class TestCanvas {
             ArrayList<AnimationAction> testActions = new ArrayList<AnimationAction>();
             System.out.println("Adding test movements");
 
-            /*testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEDOWN));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
             testActions.add(new AnimationAction(Actions.MOVEUP));
             testActions.add(new AnimationAction(Actions.MOVEUP));
-            testActions.add(new AnimationAction(Actions.MOVEUP));*/
+            testActions.add(new AnimationAction(Actions.MOVEUP));
 
             testActions.add(new AnimationAction(Actions.MOVERIGHT));
             testActions.add(new AnimationAction(Actions.MOVERIGHT));

@@ -142,7 +142,6 @@ public class CanvasWidget extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //System.out.println("Painting component");
         g.drawImage(backgroundImage, 0, 0, null);
     }
 }
