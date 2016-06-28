@@ -89,6 +89,7 @@ public class CanvasWidget extends JPanel {
 
     public void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
+            character.setImage("/resources/bunny_walk.gif");
             for(AnimationAction action: steps) {
                 System.out.println("Executing step " + action.toString());
                 //get movement value
@@ -114,7 +115,6 @@ public class CanvasWidget extends JPanel {
                         yDifference = -1;
 
                     character.moveObject(xDifference, yDifference);
-                    System.out.println("Character position now x:" + character.getX() + " y:" + character.getY());
 
                     xMovement += -xDifference;
                     yMovement += -yDifference;
@@ -124,6 +124,7 @@ public class CanvasWidget extends JPanel {
                     Thread.sleep(1000/framePerSecond);
                 }
             }
+            character.setImage("/resources/bunny1_stand.png");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
