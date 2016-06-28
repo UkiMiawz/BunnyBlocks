@@ -1,10 +1,14 @@
-import javax.smartcardio.Card;
+package com.dis2.codeblocks;
+import com.dis2.cards.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+
+
 
 /**
  * Created by asifmayilli on 6/27/16.

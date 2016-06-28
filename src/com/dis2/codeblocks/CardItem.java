@@ -1,12 +1,16 @@
-import javax.smartcardio.Card;
+package com.dis2.codeblocks;
+import com.dis2.cards.*;
+
 import javax.swing.*;
 import java.util.UUID;
+
+
 
 /**
  * Created by asifmayilli on 6/27/16.
  */
 public class CardItem extends JPanel{
-    private int  x;
+    private int x;
     private int y;
     private int width;
     private int height;

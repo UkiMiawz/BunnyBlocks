@@ -1,3 +1,6 @@
+package com.dis2.codeblocks;
+import com.dis2.cards.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
