@@ -15,6 +15,7 @@ public class CardPanel extends JLayeredPane  {
     private int y;
     private int width;
     private int height;
+    private CardItem activecard = null;
     private ArrayList<simpleCard> cardlist = new ArrayList<simpleCard>();
     private ArrayList<CardItem> carditemlist = new ArrayList<CardItem>();
 
@@ -38,7 +39,7 @@ public class CardPanel extends JLayeredPane  {
 
                for (simpleCard card : cardlist) {
 
-                CardItem item = new CardItem(0,0,180,280, card);
+                CardItem item = new CardItem(i*10,i*10,180,280, card);
                 item.setBounds(i*10, i*10, 180, 280);
                 this.add(item, new Integer(0),0);
                 this.carditemlist.add(item);
@@ -78,7 +79,7 @@ public class CardPanel extends JLayeredPane  {
         public void mouseClicked(MouseEvent e) {
 
             ArrayList<CardItem> list = carditemlist;
-            System.out.println(e.getX());
+
             if(list.size()!= 0) {
 
                 for (int i = list.size()-1; i>=0; i--) {
@@ -87,9 +88,10 @@ public class CardPanel extends JLayeredPane  {
 
                     if( list.get(i).getXcoord() <= e.getX() && e.getX() <= list.get(i).getXcoord()+180 &&
                             list.get(i).getYcoord() <= e.getX() && e.getY() <= list.get(i).getYcoord()+280){
-                                    System.out.println(list.get(i).getXcoord());
+                                    System.out.println(list.get(i).getXcoord() + " " +e.getX() +" "+ Integer.toString(e.getX()+180));
                                     System.out.println("You clicked elemnt with ID"+ list.get(i).getId());
                                     break;}
+                    else {System.out.println(e.getX() + " "+ e.getY());}
 
 
 
@@ -105,12 +107,33 @@ public class CardPanel extends JLayeredPane  {
 
         @Override
         public void mousePressed(MouseEvent e) {
+            ArrayList<CardItem> list = carditemlist;
+
+            if(list.size()!= 0) {
+
+                for (int i = list.size()-1; i>=0; i--) {
+
+
+
+                    if( list.get(i).getXcoord() <= e.getX() && e.getX() <= list.get(i).getXcoord()+180 &&
+                            list.get(i).getYcoord() <= e.getX() && e.getY() <= list.get(i).getYcoord()+280){
+                            activecard = list.get(i);
+                            System.out.print("Active");
+                            break;}
+
+
+
+
+
+                }
+
+            }
+            else {System.out.println("No elems");}
 
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-
         }
 
         @Override
@@ -126,7 +149,45 @@ public class CardPanel extends JLayeredPane  {
         @Override
         public void mouseDragged(MouseEvent e) {
 
+            int mouseX = e.getX();
+            int mouseY = e.getY();
+
+            ArrayList<CardItem> list = carditemlist;
+
+            if(list.size()!= 0) {
+
+                for (int i = list.size()-1; i>=0; i--) {
+
+
+
+                    if( list.get(i).getXcoord() <= e.getX() && e.getX() <= list.get(i).getXcoord()+180 &&
+                            list.get(i).getYcoord() <= e.getX() && e.getY() <= list.get(i).getYcoord()+280){
+                        list.get(i).setLocation(e.getX(),e.getY());
+
+                       remove(list.get(i));
+                        add(list.get(i));
+                        list.get(i).setVisible(true);
+                        repaint();
+                        break;}
+
+
+
+
+
+                }
+
+            }
+            else {System.out.println("No elems");}
+
+
+
+
+            repaint();
         }
+
+
+
+
 
         @Override
         public void mouseMoved(MouseEvent e) {

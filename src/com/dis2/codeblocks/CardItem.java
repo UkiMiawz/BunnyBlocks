@@ -12,6 +12,7 @@ public class CardItem extends JPanel{
     private int height;
     private simpleCard card;
     private UUID id ;
+
     private CardItem parent = null;
     private CardItem child = null;
 
@@ -51,6 +52,12 @@ public class CardItem extends JPanel{
     public void setCard(simpleCard value){this.card = value;}
     public void setAnc(CardItem value){this.parent = value;}
     public void setChild(CardItem value){this.child = value;}
+
+
+
+
+
+
 
 
 
