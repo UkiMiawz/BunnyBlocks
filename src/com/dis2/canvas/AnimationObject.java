@@ -7,6 +7,7 @@ package com.dis2.canvas;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import java.net.URL;
 
 /**
  *
@@ -15,6 +16,12 @@ import javax.swing.ImageIcon;
 public class AnimationObject extends JLabel {
 
     private ImageIcon image;
+    public void setImage(String value) {
+        URL url = AnimationObject.class.getResource(value);
+        ImageIcon icon = new ImageIcon(url);
+        this.image = icon;
+        setComponent();
+    }
 
     private int xPosition;
     public int getX() { return xPosition; }
@@ -38,6 +45,11 @@ public class AnimationObject extends JLabel {
         setY(yPosition);
         image = imgIcon;
         setComponent();
+    }
+
+    public void moveObject(int xDifference, int yDifference){
+        setX(getX() + xDifference);
+        setY(getY() + yDifference);
     }
 
     private void setComponent(){
