@@ -4,17 +4,19 @@
  * and open the template in the editor.
  */
 package com.dis2.colorPicker;
- 
-import java.awt.Color; 
-import java.awt.Dimension;
+
+import com.dis2.shared.Util;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener; 
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.net.URL;
-import java.util.ArrayList; 
-import javax.swing.ImageIcon; 
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -63,27 +65,25 @@ class Character {
     public int getCharacterWidth() {
         return this.character.getWidth(null);
     }
-
 }
 
 public class WheelColor extends JPanel {
 
-    private ArrayList<Character> characters = new ArrayList<Character>();  
+    private ArrayList<Character> characters = new ArrayList<Character>();
     private int wheelRadius = 50;
     private int selectedCharacter = 0;
     private Point coordinates = new Point(0, 0);
+    private Util util = new Util();
 
     private boolean characterClicked = false;
 
     public WheelColor(int width, int height) {
-        this.setPreferredSize(new Dimension(width, height));
-        this.setSize(new Dimension(width, height));
 
-        this.addMouseListener(new MouseListener() {
+        addMouseListener(new MouseListener() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                if (isInsideCharecter(e.getPoint()) && !isInsideWheelColor(e.getPoint())) {
+                if (isInsideCharecter(e.getPoint()) && !isInsideWheelColor(e.getPoint()) && !isTransparent(e.getPoint())) {
                     setCharacterClicked(true);
                     coordinates = e.getPoint();
                 } else if (isInsideWheelColor(e.getPoint())) {
@@ -97,32 +97,56 @@ public class WheelColor extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+            }
+        });
+
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+                if (isInsideCharecter(e.getPoint()) && !isInsideWheelColor(e.getPoint()) && !isTransparent(e.getPoint())) {
+                    setCursor(new Cursor(Cursor.HAND_CURSOR));
+                } else if (isInsideWheelColor(e.getPoint())) {
+                    setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                } else {
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+                repaint();
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
 
             }
         });
     }
 
+    public boolean isTransparent(Point p) {
+        p.x -= util.getImagenCenterX(this, characters.get(selectedCharacter).getCharacter());
+        p.y -= util.getImagenCenterY(this, characters.get(selectedCharacter).getCharacter());
+        if (util.isPixelTransparent(characters.get(selectedCharacter).getCharacter(), p)) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean isInsideCharecter(Point p) {
-        int xIni = getImagenCenterX(characters.get(selectedCharacter).getCharacter());
-        int yIni = getImagenCenterY(characters.get(selectedCharacter).getCharacter());
+        int xIni = util.getImagenCenterX(this, characters.get(selectedCharacter).getCharacter());
+        int yIni = util.getImagenCenterY(this, characters.get(selectedCharacter).getCharacter());
         int xEnd = xIni + characters.get(selectedCharacter).getCharacterWidth();
         int yEnd = yIni + characters.get(selectedCharacter).getCharacterHeight();
-
         if (p.x >= xIni && p.x <= xEnd && p.y >= yIni && p.y <= yEnd) {
             return true;
         }
@@ -135,13 +159,12 @@ public class WheelColor extends JPanel {
         angle = (angle > 0 ? angle : (2 * Math.PI + angle)) * 360 / (2 * Math.PI);
         selectedCharacter = Math.abs(characters.size() - (int) Math.floor(angle / (360 / characters.size()))) - 1;
         selectedCharacter = (selectedCharacter == -1) ? auxCharacter : selectedCharacter;
-        
     }
 
     public boolean isInsideWheelColor(Point p) {
         if (!isCharacterClicked()) {
             return false;
-        } 
+        }
         int distancesquared = (p.x - coordinates.x) * (p.x - coordinates.x) + (p.y - coordinates.y) * (p.y - coordinates.y);
         return distancesquared <= wheelRadius * wheelRadius;
     }
@@ -152,18 +175,10 @@ public class WheelColor extends JPanel {
 
     public void setWheelRadius(int wheelRadius) {
         this.wheelRadius = wheelRadius;
-    } 
+    }
 
     public void addCharacter(Character character) {
         characters.add(character);
-    }
-
-    public int getImagenCenterX(Image character) {
-        return (this.getWidth() / 2) - (character.getWidth(this) / 2);
-    }
-
-    public int getImagenCenterY(Image character) {
-        return (this.getHeight() / 2) - (character.getHeight(this) / 2);
     }
 
     public boolean isCharacterClicked() {
@@ -180,8 +195,8 @@ public class WheelColor extends JPanel {
 
         Character c = characters.get(this.selectedCharacter);
         g.drawImage(c.getCharacter(),
-                this.getImagenCenterX(c.getCharacter()),
-                this.getImagenCenterY(c.getCharacter()), this);
+                util.getImagenCenterX(this, c.getCharacter()),
+                util.getImagenCenterY(this, c.getCharacter()), this);
 
         if (isCharacterClicked()) {
             int centerX = coordinates.x - this.wheelRadius;
@@ -193,6 +208,6 @@ public class WheelColor extends JPanel {
                 g.fillArc(centerX, centerY, this.wheelRadius * 2, this.wheelRadius * 2, 360 / characters.size() * i, 360 / characters.size());
             }
         }
-    } 
-    
+    }
+
 }
