@@ -30,6 +30,7 @@ public class StepsBar extends JPanel {
     public StepsBar(int width, int height) {
         this.fixedWidth = width;
         this.fixedHeight = height;
+        
     }
 
     public int getFixedWidth() {
@@ -152,10 +153,8 @@ public class StepsBar extends JPanel {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
-
-        super.paintComponent(g);
-
+    protected void paintComponent(Graphics g) { 
+        super.paintComponent(g); 
         if (this.isResizable()) {
             this.setSize(new Dimension(this.getWidth(), this.progressImage.getHeight(this)+this.fixedHeight));
         } else {
