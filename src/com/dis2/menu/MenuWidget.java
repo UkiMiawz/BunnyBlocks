@@ -1,137 +1,124 @@
 package com.dis2.menu;
-import com.dis2.cards.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.*;
-import java.util.List;
 
+import com.dis2.cards.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.event.MouseInputAdapter;
+
+class DragListener extends MouseInputAdapter {
+
+    Point location;
+    MouseEvent pressed;
+
+    public void mousePressed(MouseEvent me) {
+        pressed = me;
+    }
+
+    public void mouseDragged(MouseEvent me) {
+        Component component = me.getComponent();
+        location = component.getLocation(location);
+        int x = location.x - pressed.getX() + me.getX();
+        int y = location.y - pressed.getY() + me.getY();
+        component.setLocation(x, y);
+    }
+}
 
 public class MenuWidget extends JPanel {
-	private JInternalFrame menuFrame;
-	private JInternalFrame descFrame;	
-	private JLabel descGlobalLabel;
-	private JPanel descGlobalPic;
-	
-	public List<cardWidget> cardContent;
-	public int SizeX;
-	public int SizeY;
-		
-	public MenuWidget(int inputX, int inputY)
-	{
-		cardContent = new ArrayList<cardWidget>();
-		this.SizeX = inputX;
-		this.SizeY = inputY;		
-	}
-	
-	public MenuWidget()
-	{
-		this(400,400);
-	}
-		
-	public void redraw()
-	{
-		setUpDescFrame();
-		setUpMenuFrame();
-		drawMainFrameGUI();		
-	}
-	
-	public void expandCard(cardWidget newCard)
-	{
-		cardContent.add(newCard);		
-	}	
-	
-	public void removeCard(cardWidget removedCard)
-	{
-		cardContent.remove(removedCard);
-	}
 
-	private void drawMainFrameGUI()
-	{
-		this.setSize(SizeX, SizeY);
-		this.setLayout(new GridLayout(2,1));
-		this.add(menuFrame);
-		this.add(descFrame);
-	}
-	
-	private void setUpMenuFrame()
-	{
-		// For the menu frame
-		menuFrame = new JInternalFrame("Menu");
-		menuFrame.setVisible(true);		
+    private JPanel topPanel;
+    private JPanel bottomPanel;
+    private JLabel descGlobalLabel;
+    private JPanel descGlobalCard;
+    public ArrayList<cardWidget> cardContent;
+    private JSplitPane container;
+    private int selectedCard = 0;
 
-		JPanel menuMainPanel = new JPanel(new BorderLayout());
+    public MenuWidget(int width, int height) {
+        descGlobalLabel = new JLabel();
+        descGlobalCard = new JPanel();
+        cardContent = new ArrayList<cardWidget>();
+        bottomPanel = new JPanel();
+        topPanel = new JPanel();
+        container = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                setUpTopPanel(), setUpBottomPanel());
+        container.setOneTouchExpandable(true);
+        container.setDividerLocation(300);
+        container.setResizeWeight(.5d);
+        this.setLayout(new BorderLayout());
+        this.add(container);
+        this.setPreferredSize(new Dimension(width, height));
+    }
 
-		JPanel contentPanel = new JPanel(new GridLayout(0,1));
-		for(cardWidget cards : cardContent)
-		{
-			simpleCard simpC = new simpleCard(cards);
-			simpC.addMouseListener(new MouseClickListener(cards));
-			contentPanel.add(simpC);
-		}			
+    public void addCard(cardWidget card) {
+        cardContent.add(card);
+        simpleCard simpC = new simpleCard(card);
 
-		menuMainPanel.add(contentPanel, BorderLayout.PAGE_START);
+        DragListener drag = new DragListener();
+        simpC.addMouseListener(drag);
+        simpC.addMouseMotionListener(drag);
+        simpC.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                selectedCard = cardContent.indexOf(card);
+                updateCurrentCard(card);
+            }
 
-		JScrollPane scrollPane = new JScrollPane(menuMainPanel);
-		menuFrame.getContentPane().add(scrollPane);
-		menuFrame.setSize(menuFrame.getPreferredSize());
-	}
-	
-	private void setUpDescFrame()
-	{		
-		descFrame = new JInternalFrame("Description");
-		descFrame.setVisible(true);
-		
-		JPanel descMainPanel = new JPanel(new BorderLayout());
-		
-		JPanel contentPanel = new JPanel(new GridLayout(0,1));
-		descGlobalPic = new JPanel();
-		descGlobalPic.add(new simpleCard(cardContent.get(0)));
-		descGlobalLabel = new JLabel("Click the animal logo for description!", JLabel.LEFT);
-		descGlobalLabel.setHorizontalAlignment(JLabel.CENTER);
-		
-		contentPanel.add(descGlobalPic);
-		contentPanel.add(descGlobalLabel);
-		
-		descMainPanel.add(contentPanel, BorderLayout.CENTER);
-		descFrame.add(descMainPanel);
-		descFrame.setSize(descFrame.getPreferredSize());
-	}
-	
-	private class MouseClickListener implements MouseListener
-	{
-		private cardWidget myCardWidget;
-		public MouseClickListener(cardWidget cw)
-		{
-			myCardWidget = cw;
-		}
-		
-		public void mouseClicked(MouseEvent arg0) {
-			descGlobalLabel.setText(myCardWidget.getText());
-			
-			descGlobalPic.removeAll();			
-			simpleCard currentCard = new simpleCard(myCardWidget);
-			descGlobalPic.add(currentCard);
-		}
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
 
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
 
-		}
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
 
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        topPanel.setPreferredSize(new Dimension(simpC.getHeight(), simpC.getHeight() * cardContent.size()));
+        topPanel.add(simpC);
+    }
 
-		}
+    public JScrollPane setUpTopPanel() {
+        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        JScrollPane scrollPane = new JScrollPane(topPanel,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        return scrollPane;
+    }
 
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+    private JScrollPane setUpBottomPanel() {
+        bottomPanel.setPreferredSize(new Dimension(240, 300));
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        bottomPanel.add(descGlobalCard);
+        bottomPanel.add(descGlobalLabel);
+        JScrollPane scrollPane = new JScrollPane(bottomPanel,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        return scrollPane;
+    }
 
-		}
-
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-	}
+    private void updateCurrentCard(cardWidget card) {
+        descGlobalLabel.setText(card.getText());
+        simpleCard currentCard = new simpleCard(cardContent.get(selectedCard));
+        descGlobalCard.removeAll();
+        descGlobalCard.add(currentCard);
+        container.setBottomComponent(setUpBottomPanel());
+    }
 }

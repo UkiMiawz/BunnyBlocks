@@ -65,7 +65,7 @@ public class TestProgress extends JPanel {
     public static void main(String args[]) {
         try {
             JFrame frame = new JFrame("Test Progress");
-            frame.setSize(600, 400);
+            frame.setSize(400, 300);
             frame.getContentPane().add(new TestProgress());
 
             frame.setVisible(true);
