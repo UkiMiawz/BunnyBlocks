@@ -27,6 +27,8 @@ import java.lang.Thread;
  */
 public class CanvasWidget extends JPanel {
 
+    private String logger = "Canvas Widget: ";
+
     private Image backgroundImage;
     private AnimationObject character;
     private ArrayList<AnimationObject> animationObjects = new ArrayList<AnimationObject>();
@@ -45,7 +47,7 @@ public class CanvasWidget extends JPanel {
 
     public CanvasWidget(Image backgroundImage) {
         try{
-            System.out.println("Initiating canvas widget with image");
+            System.out.println(logger + "Initiating canvas widget with image");
             this.backgroundImage = backgroundImage;
             Dimension size = new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null));
             setPreferredSize(size);
@@ -54,31 +56,25 @@ public class CanvasWidget extends JPanel {
             setSize(size);
             setLayout(null);
 
-            System.out.println("Testing add bunny character");
+            System.out.println(logger + "Testing add bunny character");
             URL url = TestCanvas.class.getResource(
                     "/resources/bunny1_stand.png");
             System.out.println(url.getPath());
             ImageIcon icon = new ImageIcon(url);
             AnimationObject bunny = new AnimationObject(startingX, startingY, icon);
 
-            System.out.println("Testing add coin");
+            System.out.println(logger + "Testing add coin");
             URL carrotUrl = TestCanvas.class.getResource(
                     "/resources/coin.gif");
             System.out.println(carrotUrl.getPath());
             ImageIcon carrotIcon = new ImageIcon(carrotUrl);
-            AnimationObject carrot = new AnimationObject(startingX + 2*xBlock, startingY + 5*yBlock, carrotIcon);
 
-            System.out.println("Testing add coin");
-            AnimationObject carrot2 = new AnimationObject(startingX + 3*xBlock, startingY + 6*yBlock, carrotIcon);
+            System.out.println(logger + "Testing add target object");
+            AnimationObject target = new AnimationObject(startingX + 4*xBlock, startingY+7*yBlock, carrotIcon);
 
-            System.out.println("Testing add coin3");
-            AnimationObject carrot3 = new AnimationObject(startingX + 4*xBlock, startingY+7*yBlock, carrotIcon);
-
-            System.out.println("Add objects");
+            System.out.println(logger + "Add objects");
             character = bunny;
-            animationObjects.add(carrot);
-            animationObjects.add(carrot2);
-            animationObjects.add(carrot3);
+            animationObjects.add(target);
             redrawCanvas();
         }
         catch (Exception e){
@@ -91,10 +87,9 @@ public class CanvasWidget extends JPanel {
         try {
             character.setImage("/resources/bunny_walk.gif");
             for(AnimationAction action: steps) {
-                System.out.println("Executing step " + action.toString());
+                System.out.println(logger + "Executing step " + action.toString());
                 //get movement value
                 MovementValue movementValue = MovementConstants.getMovement(action.getAction());
-                System.out.println("X value : " + movementValue.getX() + " Y value : " + movementValue.getY());
                 //animate per x & y
                 int xMovement = movementValue.getX();
                 int yMovement = movementValue.getY();
@@ -131,11 +126,13 @@ public class CanvasWidget extends JPanel {
     }
 
     private void redrawCanvas(){
+        System.out.println(logger + "Redraw canvas");
         this.removeAll();
         this.add(character);
         for(AnimationObject animationObject: animationObjects) {
             this.add(animationObject);
         }
+        this.validate();
         this.repaint();
     }
 

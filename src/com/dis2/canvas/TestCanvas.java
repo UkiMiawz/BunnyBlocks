@@ -9,9 +9,9 @@ import com.dis2.shared.AnimationAction;
 
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadFactory;
 
 /**
  *
@@ -31,7 +31,7 @@ public class TestCanvas {
             CanvasWidget panel = new CanvasWidget(icon.getImage());
             JFrame frame = new JFrame("Test Canvas");
             frame.setSize(800,800);
-            frame.getContentPane().setLayout(null);
+            frame.getContentPane().setLayout(new BorderLayout());
             frame.getContentPane().add(panel);
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
