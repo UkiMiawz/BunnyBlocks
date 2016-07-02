@@ -25,6 +25,7 @@ public class complexCard extends JPanel{
 	private JComboBox<String> ifCombo = new JComboBox<String>();
 	    
 	public complexCard(cardWidget c){
+		
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         
 		lpane.setBounds(30, 30, 180, 280);
@@ -39,7 +40,7 @@ public class complexCard extends JPanel{
         if(c.getTextBox()==1){
         
         content.setOpaque(true);
-        text.setBackground(p.green());
+        text.setBackground(c.getFillColor());
         text.setBounds(80, 197, 30, 30);
         text.add(forN);
         text.setOpaque(true);
@@ -53,10 +54,10 @@ public class complexCard extends JPanel{
         	ifCombo.setEditable(false);
         	
         	content.setOpaque(true);
-            combo.setBackground(p.purple());
+            combo.setBackground(c.getFillColor());
             combo.setBounds(25, 200, 120, 30);
             combo.add(ifCombo);
-            text.setOpaque(true);
+            combo.setOpaque(true);
             lpane.add(content, new Integer(0), 0);
             lpane.add(combo, new Integer(1), 0);
         	
@@ -93,6 +94,51 @@ public class complexCard extends JPanel{
           });
 
         add(lpane); 
+        
+	}
+	
+	 /**
+     * Change color of card when the code is running
+     */
+	public void stateChanged(cardWidget c) {
+		
+		if(c.getTextBox()==1){
+			c.setFillColor(p.brightGreen());
+			simpleCard card= new simpleCard(c);
+			text.setBackground(p.brightGreen());
+			
+		} else if(c.getTextBox()==2){
+			c.setFillColor(p.brightPurple());
+			simpleCard card= new simpleCard(c);
+			combo.setBackground(p.brightPurple());
+			
+		}else{
+			c.setFillColor(p.brightRed());
+			simpleCard card= new simpleCard(c);
 	    }
+	    
+	}
+	
+	/**
+     * Get back original color of card 
+     */
+	public void stateBack(cardWidget c) {
+		
+		if(c.getTextBox()==1){
+			c.setFillColor(p.green());
+			simpleCard card= new simpleCard(c);
+			text.setBackground(p.green());
+			
+		} else if(c.getTextBox()==2){
+			c.setFillColor(p.purple());
+			simpleCard card= new simpleCard(c);
+			combo.setBackground(p.purple());
+			
+		}else{
+			c.setFillColor(p.red());
+			simpleCard card= new simpleCard(c);
+	    }
+	    
+	}
 
 }
