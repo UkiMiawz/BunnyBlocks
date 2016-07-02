@@ -42,16 +42,6 @@ public class TestCanvas {
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
-            testActions.add(new AnimationAction(Actions.MOVEUP));
-            testActions.add(new AnimationAction(Actions.MOVEUP));
-            testActions.add(new AnimationAction(Actions.MOVEUP));
-
-            testActions.add(new AnimationAction(Actions.MOVERIGHT));
-            testActions.add(new AnimationAction(Actions.MOVERIGHT));
-            testActions.add(new AnimationAction(Actions.MOVERIGHT));
-            testActions.add(new AnimationAction(Actions.MOVELEFT));
-            testActions.add(new AnimationAction(Actions.MOVELEFT));
-            testActions.add(new AnimationAction(Actions.MOVELEFT));
 
             Thread.sleep(1000);
             System.out.println("Start animating");

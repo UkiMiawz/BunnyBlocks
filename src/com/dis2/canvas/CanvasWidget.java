@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.dis2.canvas;
+
 import com.dis2.shared.AnimationAction;
 import com.dis2.canvas.MovementConstants.MovementValue;
 import com.dis2.shared.AnimationObject;
@@ -14,16 +15,17 @@ import java.util.ArrayList;
 import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import java.lang.Thread;
+import javax.swing.Timer;
 
 /**
- *
  * @author whothefuckcare
- * Canvas widget for drawing level
+ *         Canvas widget for drawing level
  */
 public class CanvasWidget extends JPanel {
 
@@ -41,12 +43,34 @@ public class CanvasWidget extends JPanel {
 
     private static final int framePerSecond = 50;
 
+    private int currentAction;
+
+    private ArrayList<AnimationAction> actions = new ArrayList<AnimationAction>();
+
+    public void setAnimations(ArrayList<AnimationAction> value) {
+        actions = value;
+    }
+
+    public void addAnimations(ArrayList<AnimationAction> value) {
+        actions.addAll(value);
+    }
+
+    public void addAnimation(AnimationAction value) {
+        actions.add(value);
+    }
+
+    private JPanel parentPanel;
+
+    public void setParentPanel(JPanel value) {
+        parentPanel = value;
+    }
+
     public CanvasWidget(String imgPath) {
         this(new ImageIcon(imgPath).getImage());
     }
 
     public CanvasWidget(Image backgroundImage) {
-        try{
+        try {
             System.out.println(logger + "Initiating canvas widget with image");
             this.backgroundImage = backgroundImage;
             Dimension size = new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null));
@@ -70,70 +94,84 @@ public class CanvasWidget extends JPanel {
             ImageIcon carrotIcon = new ImageIcon(carrotUrl);
 
             System.out.println(logger + "Testing add target object");
-            AnimationObject target = new AnimationObject(startingX + 4*xBlock, startingY+7*yBlock, carrotIcon);
+            AnimationObject target = new AnimationObject(startingX + 4 * xBlock, startingY + 7 * yBlock, carrotIcon);
 
             System.out.println(logger + "Add objects");
             character = bunny;
-            animationObjects.add(target);
+            //animationObjects.add(target);
+
+            this.add(character);
+            animationObjects.forEach(this::add);
             redrawCanvas();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+
+    private MovementValue movementValue;
+    private Timer timer;
+    private int xMovement;
+    private int yMovement;
 
     public void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
             character.setImage("/resources/bunny_walk.gif");
-            for(AnimationAction action: steps) {
+            timer = new Timer(1000 / framePerSecond, new TimerListener());
+
+            for (AnimationAction action : steps) {
                 System.out.println(logger + "Executing step " + action.toString());
                 //get movement value
-                MovementValue movementValue = MovementConstants.getMovement(action.getAction());
+                movementValue = MovementConstants.getMovement(action.getAction());
+                xMovement = movementValue.getX();
+                yMovement = movementValue.getY();
+
                 //animate per x & y
-                int xMovement = movementValue.getX();
-                int yMovement = movementValue.getY();
-
-                while(xMovement != 0 || yMovement != 0){
-
-                    int xDifference = 0;
-                    int yDifference = 0;
-
-                    if(xMovement > 0)
-                        xDifference = 1;
-                    else if(xMovement < 0)
-                        xDifference = -1;
-
-                    if(yMovement > 0)
-                        yDifference = 1;
-                    else if(yMovement < 0)
-                        yDifference = -1;
-
-                    character.moveObject(xDifference, yDifference);
-
-                    xMovement += -xDifference;
-                    yMovement += -yDifference;
-                    redrawCanvas();
-
-                    //wait before set the next movement
-                    Thread.sleep(1000/framePerSecond);
-                }
+                timer.start();
             }
-            character.setImage("/resources/bunny1_stand.png");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void redrawCanvas(){
-        System.out.println(logger + "Redraw canvas");
-        this.removeAll();
-        this.add(character);
-        for(AnimationObject animationObject: animationObjects) {
-            this.add(animationObject);
+    private class TimerListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+
+            if (xMovement == 0 && yMovement == 0) {
+                character.setImage("/resources/bunny1_stand.png");
+                timer.stop();
+            }
+
+            int xDifference = 0;
+            int yDifference = 0;
+
+            if (xMovement > 0)
+                xDifference = 1;
+            else if (xMovement < 0)
+                xDifference = -1;
+
+            if (yMovement > 0)
+                yDifference = 1;
+            else if (yMovement < 0)
+                yDifference = -1;
+
+            character.moveObject(xDifference, yDifference);
+
+            xMovement += -xDifference;
+            yMovement += -yDifference;
+            redrawCanvas();
+
         }
-        this.validate();
-        this.repaint();
+    }
+
+    public void animateCanvas() {
+        this.animateCanvas(actions);
+    }
+
+    private void redrawCanvas() {
+        validate();
+        repaint();
     }
 
     @Override

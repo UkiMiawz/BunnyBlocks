@@ -5,10 +5,14 @@
  */
 package com.dis2.canvasExtended;
 
+import com.dis2.shared.Actions;
+import com.dis2.shared.AnimationAction;
+
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import java.awt.BorderLayout;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,6 +36,13 @@ public class TestExtendedCanvas {
             frame.getContentPane().add(panel);
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            ArrayList<AnimationAction> testActions = new ArrayList<AnimationAction>();
+            System.out.println("Adding test movements");
+
+            testActions.add(new AnimationAction(Actions.MOVEDOWN));
+
+            panel.setAnimations(testActions);
 
         }
         catch (Exception e) {

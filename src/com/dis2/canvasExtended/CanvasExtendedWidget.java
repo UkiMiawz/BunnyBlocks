@@ -1,20 +1,21 @@
 package com.dis2.canvasExtended;
 
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.BorderFactory;
+import javax.swing.*;
 
 import com.dis2.canvas.CanvasWidget;
 import com.dis2.progress.StepsBar;
+import com.dis2.shared.AnimationAction;
 import com.dis2.shared.Palette;
 
 import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 
+import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by woooowowowo.
@@ -25,13 +26,15 @@ public class CanvasExtendedWidget extends JPanel {
     private JPanel bottomPanel = new JPanel();
 
     //Buttons
-    private JButton okButton = new JButton("OK");
+    private JButton okButton = new JButton("Play");
     private JButton nextButton = new JButton("Next");
     private JButton prevButton = new JButton("Prev");
 
     //custom widgets
     private CanvasWidget canvasWidget;
     private StepsBar progressBar;
+
+    private int currentStep;
 
     private String logger = "Canvas Extended Widget: ";
 
@@ -40,6 +43,7 @@ public class CanvasExtendedWidget extends JPanel {
 
         System.out.println(logger + "Setting up upper panel");
         canvasWidget = new CanvasWidget(backgroundImage);
+        canvasWidget.setParentPanel(this);
         upperPanel.setLayout(new BorderLayout());
         upperPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         upperPanel.add(canvasWidget, BorderLayout.CENTER);
@@ -66,14 +70,27 @@ public class CanvasExtendedWidget extends JPanel {
         bottomPanel.add(prevButton, BorderLayout.WEST);
         bottomPanel.add(progressBar, BorderLayout.CENTER);
 
+        //add action listeners
+        okButton.addActionListener(new ActionAnimate());
+
         //add both panel to widget
         this.setLayout(new BorderLayout());
         this.add(upperPanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    public void setAnimations(ArrayList<AnimationAction> value){ canvasWidget.setAnimations(value); }
+    public void addAnimations(ArrayList<AnimationAction> value){ canvasWidget.addAnimations(value); }
+    public void addAnimation(AnimationAction value) { canvasWidget.addAnimation(value); }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+    }
+
+    private class ActionAnimate implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            canvasWidget.animateCanvas();
+        }
     }
 }
