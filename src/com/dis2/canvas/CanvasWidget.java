@@ -43,8 +43,6 @@ public class CanvasWidget extends JPanel {
 
     private static final int framePerSecond = 50;
 
-    private int currentAction;
-
     private ArrayList<AnimationAction> actions = new ArrayList<AnimationAction>();
 
     public void setAnimations(ArrayList<AnimationAction> value) {
@@ -109,26 +107,23 @@ public class CanvasWidget extends JPanel {
 
     }
 
+    //animation only properties
     private MovementValue movementValue;
     private Timer timer;
     private int xMovement;
     private int yMovement;
+    private ArrayList<AnimationAction> currentQueue = new ArrayList<AnimationAction>();
+    private boolean needNewAnimation = true;
+    AnimationAction currentAction;
+
 
     public void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
             character.setImage("/resources/bunny_walk.gif");
             timer = new Timer(1000 / framePerSecond, new TimerListener());
-
-            for (AnimationAction action : steps) {
-                System.out.println(logger + "Executing step " + action.toString());
-                //get movement value
-                movementValue = MovementConstants.getMovement(action.getAction());
-                xMovement = movementValue.getX();
-                yMovement = movementValue.getY();
-
-                //animate per x & y
-                timer.start();
-            }
+            currentQueue.addAll(steps);
+            System.out.println(logger + "Current Queue set " + currentQueue.size());
+            timer.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,9 +133,25 @@ public class CanvasWidget extends JPanel {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            if (xMovement == 0 && yMovement == 0) {
+            if(currentQueue.isEmpty() && xMovement == 0 && yMovement == 0){
+                System.out.println(logger + "Animation queue finished");
                 character.setImage("/resources/bunny1_stand.png");
                 timer.stop();
+                return;
+            }
+
+            //get next action
+            if(needNewAnimation){
+                currentAction = currentQueue.remove(0);
+                needNewAnimation = false;
+                movementValue = MovementConstants.getMovement(currentAction.getAction());
+                xMovement = movementValue.getX();
+                yMovement = movementValue.getY();
+                System.out.println(logger + "X : " + xMovement + " Y : " + yMovement + currentQueue.size());
+            }
+
+            if (xMovement == 0 && yMovement == 0) {
+                needNewAnimation = true;
             }
 
             int xDifference = 0;
@@ -161,7 +172,6 @@ public class CanvasWidget extends JPanel {
             xMovement += -xDifference;
             yMovement += -yDifference;
             redrawCanvas();
-
         }
     }
 

@@ -41,6 +41,7 @@ public class TestExtendedCanvas {
             System.out.println("Adding test movements");
 
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
 
             panel.setAnimations(testActions);
 

@@ -40,7 +40,7 @@ public class TestCanvas {
             System.out.println("Adding test movements");
 
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
-            testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
 
             Thread.sleep(1000);
