@@ -96,7 +96,7 @@ public class CanvasWidget extends JPanel {
 
             System.out.println(logger + "Add objects");
             character = bunny;
-            //animationObjects.add(target);
+            animationObjects.add(target);
 
             this.add(character);
             animationObjects.forEach(this::add);
