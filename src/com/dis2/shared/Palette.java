@@ -8,26 +8,26 @@ import java.awt.Color;
 public class Palette {
 
     //Colors with specified RGB values in the range (0 - 255)
-    private Color white = new Color(255, 255, 255);
-    private Color black = new Color(0, 0, 0);
-    private Color green = new Color(0, 127, 7);
-    private Color red = new Color(204, 25, 43);
-    private Color purple = new Color(109, 25, 204);
+    private static Color white = new Color(255, 255, 255);
+    private static Color black = new Color(0, 0, 0);
+    private static Color green = new Color(0, 127, 7);
+    private static Color red = new Color(204, 25, 43);
+    private static Color purple = new Color(109, 25, 204);
 
-    private Color brown = new Color(182, 123, 63);
-    private Color blue = new Color(40, 89, 182); 
-    private Color lila = new Color(182, 54, 167); 
-    private Color yellow = new Color(237, 204, 0);
+    private static Color brown = new Color(182, 123, 63);
+    private static Color blue = new Color(40, 89, 182);
+    private static Color lila = new Color(182, 54, 167);
+    private static Color yellow = new Color(237, 204, 0);
 
     //Methods to call the value of a color from the other classes
-    public Color black(){return black;}
-    public Color white(){return white;}
-    public Color green(){return green;}
-    public Color red(){return red;}
-    public Color purple(){return purple;}
-    public Color lila(){return lila;}
-    public Color brown(){return brown;}
-    public Color blue(){return blue;}
-    public Color yellow(){return yellow;}
+    public static Color black(){return black;}
+    public static Color white(){return white;}
+    public static Color green(){return green;}
+    public static Color red(){return red;}
+    public static Color purple(){return purple;}
+    public static Color lila(){return lila;}
+    public static Color brown(){return brown;}
+    public static Color blue(){return blue;}
+    public static Color yellow(){return yellow;}
 
 }

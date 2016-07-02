@@ -5,11 +5,9 @@
  */
 package com.dis2.canvasExtended;
 
-import com.dis2.canvas.CanvasWidget;
-
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.net.URL;
 
 /**

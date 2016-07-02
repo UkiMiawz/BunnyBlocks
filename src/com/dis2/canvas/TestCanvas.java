@@ -9,7 +9,7 @@ import com.dis2.shared.AnimationAction;
 
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.net.URL;
 import java.util.ArrayList;
 

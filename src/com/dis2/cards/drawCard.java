@@ -1,5 +1,7 @@
 package com.dis2.cards;
 
+import com.dis2.shared.Palette;
+
 import java.awt.BorderLayout;
 
 import java.awt.Dimension;
@@ -12,8 +14,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.dis2.shared.Palette;
-
 public class drawCard extends cardWidget{
 
 	private JFrame window = new JFrame("Cards");
@@ -21,7 +21,6 @@ public class drawCard extends cardWidget{
     private JPanel content = new JPanel();
     private JPanel text = new JPanel();
     private JPanel combo = new JPanel();
-    private Palette p = new Palette();
     private JTextField forN = new JTextField("0",2);  //Use only with snake card
     private JComboBox<String> ifCombo = new JComboBox<String>();
     
@@ -47,7 +46,7 @@ public class drawCard extends cardWidget{
         if(c.getTextBox()==1){
         
         content.setOpaque(true);
-        text.setBackground(p.green());
+        text.setBackground(Palette.green());
         text.setBounds(80, 197, 30, 30);
         text.add(forN);
         text.setOpaque(true);
@@ -61,7 +60,7 @@ public class drawCard extends cardWidget{
         	ifCombo.setEditable(false);
         	
         	content.setOpaque(true);
-            combo.setBackground(p.purple());
+            combo.setBackground(Palette.purple());
             combo.setBounds(25, 200, 120, 30);
             combo.add(ifCombo);
             text.setOpaque(true);

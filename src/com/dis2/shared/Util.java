@@ -17,15 +17,15 @@ import javax.swing.JPanel;
  */
 public class Util {
 
-    public int getImagenCenterX(JPanel panel, Image character) {
+    public static int getImagenCenterX(JPanel panel, Image character) {
         return (panel.getWidth() / 2) - (character.getWidth(panel) / 2);
     }
 
-    public int getImagenCenterY(JPanel panel, Image character) {
+    public static int getImagenCenterY(JPanel panel, Image character) {
         return (panel.getHeight() / 2) - (character.getHeight(panel) / 2);
     }
 
-    public boolean isPixelTransparent(Image img, Point p) {
+    public static boolean isPixelTransparent(Image img, Point p) {
         try {
             int pixel = toBufferedImage(img).getRGB(p.x, p.y);
             if ((pixel >> 24) == 0x00) {

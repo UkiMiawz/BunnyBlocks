@@ -10,8 +10,7 @@ import com.dis2.shared.Palette;
 
 
 public class simpleCard extends JPanel{
-	
-	public Palette palette = new Palette();
+
 	cardWidget cw;
 	
 	public static JTextField forN;

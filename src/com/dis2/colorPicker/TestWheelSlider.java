@@ -15,29 +15,29 @@ import javax.swing.JFrame;
  * @author David
  */
 public class TestWheelSlider extends JFrame {
-    Palette pallete = new Palette();
+
     public TestWheelSlider() {
         try {
             WheelColor wc = new WheelColor(300, 300);
-            wc.setBackground(pallete.black());
+            wc.setBackground(Palette.black());
             wc.setWheelRadius(30);
             URL url = TestWheelSlider.class.getResource("/resources/bunny_brown.png");
-            wc.addCharacter(new Character(pallete.brown(), new ImageIcon(url).getImage()));
+            wc.addCharacter(new Character(Palette.brown(), new ImageIcon(url).getImage()));
 
             url = TestWheelSlider.class.getResource("/resources/bunny_blue.png");
-            wc.addCharacter(new Character(pallete.blue(), new ImageIcon(url).getImage()));
+            wc.addCharacter(new Character(Palette.blue(), new ImageIcon(url).getImage()));
 
             url = TestWheelSlider.class.getResource("/resources/bunny_green.png");
-            wc.addCharacter(new Character(pallete.green(), new ImageIcon(url).getImage()));
+            wc.addCharacter(new Character(Palette.green(), new ImageIcon(url).getImage()));
 
             url = TestWheelSlider.class.getResource("/resources/bunny_purple.png");
-            wc.addCharacter(new Character(pallete.lila(), new ImageIcon(url).getImage()));
+            wc.addCharacter(new Character(Palette.lila(), new ImageIcon(url).getImage()));
 
             url = TestWheelSlider.class.getResource("/resources/bunny_red.png");
-            wc.addCharacter(new Character(pallete.red(), new ImageIcon(url).getImage()));
+            wc.addCharacter(new Character(Palette.red(), new ImageIcon(url).getImage()));
 
             url = TestWheelSlider.class.getResource("/resources/bunny_yellow.png");
-            wc.addCharacter(new Character(pallete.yellow(), new ImageIcon(url).getImage()));
+            wc.addCharacter(new Character(Palette.yellow(), new ImageIcon(url).getImage()));
             
             this.setSize(600, 400);
             this.add(wc); 
