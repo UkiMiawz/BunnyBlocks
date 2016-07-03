@@ -1,5 +1,7 @@
 package com.dis2.progress;
 
+import com.dis2.shared.Palette;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -172,7 +174,17 @@ public class StepsBar extends JPanel {
         //Progress background
         g.setColor(this.getBorderColor());
         g.drawRoundRect(0, getPositionBarY(), this.getWidth(), this.fixedHeight, this.arcWidth, this.arcHeight);
-        
+
+        //calculate width per steps
+        int WidthPerStep = this.fixedWidth / stepNumbers;
+        int currentPosition = 0;
+        g.setColor(Palette.blue());
+        for (int i=0; i<stepNumbers + 1; i++){
+            //add pointers
+            g.fillRoundRect(currentPosition, getPositionBarY(), 3, this.fixedHeight, this.arcWidth, this.arcHeight);
+            currentPosition += WidthPerStep;
+        }
+
         g.drawImage(goalImage, this.getWidth()-40, 0, this);
         g.drawImage(progressImage, getProgressImagePosition(), 0, this);
     }

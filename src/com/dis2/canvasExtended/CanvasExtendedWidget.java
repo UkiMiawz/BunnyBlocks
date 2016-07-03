@@ -35,6 +35,7 @@ public class CanvasExtendedWidget extends JPanel {
     private StepsBar progressBar;
 
     private int currentStep;
+    private int totalSteps;
 
     private String logger = "Canvas Extended Widget: ";
 
@@ -79,9 +80,28 @@ public class CanvasExtendedWidget extends JPanel {
         this.add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    public void setAnimations(ArrayList<AnimationAction> value){ canvasWidget.setAnimations(value); }
-    public void addAnimations(ArrayList<AnimationAction> value){ canvasWidget.addAnimations(value); }
-    public void addAnimation(AnimationAction value) { canvasWidget.addAnimation(value); }
+    //animation steps related
+
+    public void setAnimations(ArrayList<AnimationAction> value){
+        canvasWidget.setAnimations(value);
+        totalSteps = value.size();
+        recalculateSteps();
+    }
+
+    public void addAnimations(ArrayList<AnimationAction> value){
+        canvasWidget.addAnimations(value);
+        recalculateSteps();
+    }
+
+    public void addAnimation(AnimationAction value) {
+        canvasWidget.addAnimation(value);
+        totalSteps += 1;
+        recalculateSteps();
+    }
+
+    public void recalculateSteps(){
+        progressBar.setStepNumbers(totalSteps);
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
