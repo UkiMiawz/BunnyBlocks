@@ -115,7 +115,7 @@ public class CanvasWidget extends JPanel {
     private ArrayList<AnimationAction> currentQueue = new ArrayList<AnimationAction>();
     private boolean needNewAnimation = true;
     AnimationAction currentAction;
-    private int currentStep = 0;
+    private int currentStep = 1;
 
     public void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
@@ -142,6 +142,9 @@ public class CanvasWidget extends JPanel {
 
             //get next action
             if(needNewAnimation){
+                System.out.println(logger + "Current step " + currentStep);
+                parentPanel.setCurrentStep(currentStep);
+                currentStep += 1;
                 currentAction = currentQueue.remove(0);
                 needNewAnimation = false;
                 movementValue = MovementConstants.getMovement(currentAction.getAction());
@@ -149,8 +152,6 @@ public class CanvasWidget extends JPanel {
                 yMovement = movementValue.getY();
                 System.out.println(logger + "X : " + xMovement + " Y : " + yMovement + currentQueue.size());
                 //inform parent current step number
-                parentPanel.setCurrentStep(currentStep);
-                currentStep += 1;
             }
 
             if (xMovement == 0 && yMovement == 0) {
