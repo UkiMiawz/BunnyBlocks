@@ -11,6 +11,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
+import static com.dis2.shared.Actions.MOVEDOWN;
+
 /**
  *
  * @author David
@@ -49,5 +51,20 @@ public class Util {
         bGr.dispose();
         // Return the buffered image
         return bimage;
+    }
+
+    public static Actions getBackward(Actions action){
+        switch (action){
+            case MOVEDOWN:
+                return Actions.MOVEUP;
+            case MOVEUP:
+                return Actions.MOVEDOWN;
+            case MOVELEFT:
+                return Actions.MOVERIGHT;
+            case MOVERIGHT:
+                return Actions.MOVELEFT;
+            default:
+                return Actions.MOVEUP;
+        }
     }
 }

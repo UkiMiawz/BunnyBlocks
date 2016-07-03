@@ -79,6 +79,12 @@ public class CanvasExtendedWidget extends JPanel {
         //add action listeners
         okButton.addActionListener(new ActionAnimate());
 
+        //add action listeners for prev and next
+        prevButton.setActionCommand("prev");
+        nextButton.setActionCommand("next");
+        prevButton.addActionListener(new ActionSteps());
+        nextButton.addActionListener(new ActionSteps());
+
         //add both panel to widget
         this.setLayout(new BorderLayout());
         this.add(upperPanel, BorderLayout.CENTER);
@@ -115,6 +121,18 @@ public class CanvasExtendedWidget extends JPanel {
     private class ActionAnimate implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             canvasWidget.animateCanvas();
+        }
+    }
+
+    private class ActionSteps implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            if ("prev".equals(e.getActionCommand())) {
+                setCurrentStep(currentStep -= 1);
+                canvasWidget.playOneStep(currentStep, true);
+            } else if ("next".equals(e.getActionCommand())) {
+                setCurrentStep(currentStep += 1);
+                canvasWidget.playOneStep(currentStep, false);
+            }
         }
     }
 }

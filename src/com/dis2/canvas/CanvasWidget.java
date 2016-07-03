@@ -9,6 +9,7 @@ import com.dis2.canvasExtended.CanvasExtendedWidget;
 import com.dis2.shared.AnimationAction;
 import com.dis2.canvas.MovementConstants.MovementValue;
 import com.dis2.shared.AnimationObject;
+import com.dis2.shared.Util;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -121,8 +122,30 @@ public class CanvasWidget extends JPanel {
         try {
             character.setImage("/resources/bunny_walk.gif");
             timer = new Timer(1000 / framePerSecond, new TimerListener());
-            currentQueue.addAll(steps);
+            //add queue start from last step
+            for(int i = currentStep - 1; i < steps.size(); i++){
+                currentQueue.add(steps.get(i));
+            }
             System.out.println(logger + "Current Queue set " + currentQueue.size());
+            timer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playOneStep(int stepNumber, boolean isBackward) {
+        try {
+            currentStep = stepNumber;
+            character.setImage("/resources/bunny_walk.gif");
+            timer = new Timer(1000 / framePerSecond, new TimerListener());
+            //add queue start from last step
+            AnimationAction step = actions.get(stepNumber);
+
+            if(isBackward)
+                step.setAction(Util.getBackward(step.getAction()));
+
+            currentQueue.add(step);
+            System.out.println(logger + "Playing step number " + stepNumber);
             timer.start();
         } catch (Exception e) {
             e.printStackTrace();
