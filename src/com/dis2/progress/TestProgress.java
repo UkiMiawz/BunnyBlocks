@@ -33,8 +33,8 @@ public class TestProgress extends JPanel {
             progress.setBorderColor(new Color(173,119,65));
             progress.setProgressColor(new Color(46,204,113));
             progress.setResizable(true);
-            progress.setStepNumbers(10);
-            progress.setCurrentStep(5);
+            progress.setStepNumbers(8);
+            progress.setCurrentStep(0);
             URL url = TestProgress.class.getResource("/resources/bunnyStep.gif");
             progress.setProgressImage(new ImageIcon(url).getImage());
             url = TestProgress.class.getResource("/resources/coin_gold.png");

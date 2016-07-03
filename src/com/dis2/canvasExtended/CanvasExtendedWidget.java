@@ -35,6 +35,11 @@ public class CanvasExtendedWidget extends JPanel {
     private StepsBar progressBar;
 
     private int currentStep;
+    public void setCurrentStep(int value){
+        currentStep = value;
+        progressBar.setCurrentStep(value);
+    }
+
     private int totalSteps;
 
     private String logger = "Canvas Extended Widget: ";
@@ -59,8 +64,8 @@ public class CanvasExtendedWidget extends JPanel {
         progressBar.setBaseBackgroundColor(Palette.brown());
         progressBar.setProgressColor(Palette.green());
         progressBar.setResizable(true);
-        progressBar.setStepNumbers(10);
-        progressBar.setCurrentStep(5);
+        progressBar.setStepNumbers(1);
+        progressBar.setCurrentStep(0);
         URL url = CanvasExtendedWidget.class.getResource("/resources/bunnyStep.gif");
         progressBar.setProgressImage(new ImageIcon(url).getImage());
         url = CanvasExtendedWidget.class.getResource("/resources/coin_gold.png");
@@ -81,7 +86,6 @@ public class CanvasExtendedWidget extends JPanel {
     }
 
     //animation steps related
-
     public void setAnimations(ArrayList<AnimationAction> value){
         canvasWidget.setAnimations(value);
         totalSteps = value.size();

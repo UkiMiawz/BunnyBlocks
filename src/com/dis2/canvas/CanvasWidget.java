@@ -5,6 +5,7 @@
  */
 package com.dis2.canvas;
 
+import com.dis2.canvasExtended.CanvasExtendedWidget;
 import com.dis2.shared.AnimationAction;
 import com.dis2.canvas.MovementConstants.MovementValue;
 import com.dis2.shared.AnimationObject;
@@ -57,9 +58,8 @@ public class CanvasWidget extends JPanel {
         actions.add(value);
     }
 
-    private JPanel parentPanel;
-
-    public void setParentPanel(JPanel value) {
+    private CanvasExtendedWidget parentPanel;
+    public void setParentPanel(CanvasExtendedWidget value) {
         parentPanel = value;
     }
 
@@ -115,7 +115,7 @@ public class CanvasWidget extends JPanel {
     private ArrayList<AnimationAction> currentQueue = new ArrayList<AnimationAction>();
     private boolean needNewAnimation = true;
     AnimationAction currentAction;
-
+    private int currentStep = 0;
 
     public void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
@@ -148,6 +148,9 @@ public class CanvasWidget extends JPanel {
                 xMovement = movementValue.getX();
                 yMovement = movementValue.getY();
                 System.out.println(logger + "X : " + xMovement + " Y : " + yMovement + currentQueue.size());
+                //inform parent current step number
+                parentPanel.setCurrentStep(currentStep);
+                currentStep += 1;
             }
 
             if (xMovement == 0 && yMovement == 0) {
