@@ -36,6 +36,7 @@ public class CanvasExtendedWidget extends JPanel {
 
     private int currentStep;
     public void setCurrentStep(int value){
+        System.out.println(logger + "Set current step " + value);
         currentStep = value;
         progressBar.setCurrentStep(value);
     }
@@ -82,6 +83,7 @@ public class CanvasExtendedWidget extends JPanel {
         //add action listeners for prev and next
         prevButton.setActionCommand("prev");
         nextButton.setActionCommand("next");
+
         prevButton.addActionListener(new ActionSteps());
         nextButton.addActionListener(new ActionSteps());
 
@@ -127,11 +129,9 @@ public class CanvasExtendedWidget extends JPanel {
     private class ActionSteps implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             if ("prev".equals(e.getActionCommand())) {
-                setCurrentStep(currentStep -= 1);
-                canvasWidget.playOneStep(currentStep, true);
+                canvasWidget.playOneStepBefore();
             } else if ("next".equals(e.getActionCommand())) {
-                setCurrentStep(currentStep += 1);
-                canvasWidget.playOneStep(currentStep, false);
+                canvasWidget.playOneStepAfter();
             }
         }
     }

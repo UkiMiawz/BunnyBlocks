@@ -117,6 +117,10 @@ public class CanvasWidget extends JPanel {
     private boolean needNewAnimation = true;
     AnimationAction currentAction;
     private int currentStep = 1;
+    public void setCurrentStep(int value){
+        currentStep = value;
+        System.out.println(logger + "Setter - Current step now " + currentStep);
+    }
 
     public void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
@@ -127,25 +131,56 @@ public class CanvasWidget extends JPanel {
                 currentQueue.add(steps.get(i));
             }
             System.out.println(logger + "Current Queue set " + currentQueue.size());
+            for(AnimationAction test: currentQueue){
+                System.out.println("===============ANIMATE CANVAS================");
+                System.out.println(test.getAction().name());
+                System.out.println("===============ANIMATE CANVAS================");
+            }
             timer.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void playOneStep(int stepNumber, boolean isBackward) {
+    public void playOneStepBefore() {
         try {
-            currentStep = stepNumber;
+            currentStep -= 1;
             character.setImage("/resources/bunny_walk.gif");
             timer = new Timer(1000 / framePerSecond, new TimerListener());
             //add queue start from last step
-            AnimationAction step = actions.get(stepNumber);
-
-            if(isBackward)
-                step.setAction(Util.getBackward(step.getAction()));
+            AnimationAction step = actions.get(currentStep - 1);
+            step.setAction(Util.getBackward(step.getAction()));
 
             currentQueue.add(step);
-            System.out.println(logger + "Playing step number " + stepNumber);
+            System.out.println(logger + "Playing step number " + currentStep);
+
+            for(AnimationAction test: currentQueue){
+                System.out.println("===============PLAY STEP BEFORE================");
+                System.out.println(test.getAction().name());
+                System.out.println("===============PLAY STEP BEFORE================");
+            }
+            currentStep -= 1;
+            timer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playOneStepAfter() {
+        try {
+            character.setImage("/resources/bunny_walk.gif");
+            timer = new Timer(1000 / framePerSecond, new TimerListener());
+            //add queue start from last step
+            AnimationAction step = actions.get(currentStep - 1);
+            currentQueue.add(step);
+            System.out.println(logger + "Playing step number " + currentStep);
+
+            for(AnimationAction test: currentQueue){
+                System.out.println("===============PLAY STEP AFTER================");
+                System.out.println(test.getAction().name());
+                System.out.println("===============PLAY STEP AFTER================");
+            }
+
             timer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -158,6 +193,7 @@ public class CanvasWidget extends JPanel {
 
             if(currentQueue.isEmpty() && xMovement == 0 && yMovement == 0){
                 System.out.println(logger + "Animation queue finished");
+                System.out.println(logger + "Animation finished - Current step now " + currentStep);
                 character.setImage("/resources/bunny1_stand.png");
                 timer.stop();
                 return;
@@ -165,7 +201,7 @@ public class CanvasWidget extends JPanel {
 
             //get next action
             if(needNewAnimation){
-                System.out.println(logger + "Current step " + currentStep);
+                System.out.println(logger + "Need new animation - Current step " + currentStep);
                 parentPanel.setCurrentStep(currentStep);
                 currentStep += 1;
                 currentAction = currentQueue.remove(0);
@@ -174,6 +210,7 @@ public class CanvasWidget extends JPanel {
                 xMovement = movementValue.getX();
                 yMovement = movementValue.getY();
                 System.out.println(logger + "X : " + xMovement + " Y : " + yMovement + currentQueue.size());
+                System.out.println(logger + "Need new animation - Current step now " + currentStep);
                 //inform parent current step number
             }
 
