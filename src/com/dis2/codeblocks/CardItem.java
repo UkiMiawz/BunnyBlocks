@@ -17,21 +17,17 @@ public class CardItem extends JPanel{
     private simpleCard card;
     private UUID id ;
 
-<<<<<<< HEAD
-=======
     private int index;
 
->>>>>>> AsifBranch
+
 
     private CardItem parent = null;
     private CardItem child = null;
     private CardPanel.MyAppMouseListener listener ;
 
-<<<<<<< HEAD
-    public CardItem(int x, int y, int width, int height, simpleCard card, CardPanel panel){
-=======
+
     public CardItem(int x, int y, int width, int height, simpleCard card, CardPanel panel,int index){
->>>>>>> AsifBranch
+
         this.x = x;
         this.y = y;
         this.height = height;
@@ -42,10 +38,9 @@ public class CardItem extends JPanel{
         panel.getCardItemList().add(this);
         this.add(this.card);
         this.id= UUID.randomUUID();
-<<<<<<< HEAD
-=======
+
         this.index = index;
->>>>>>> AsifBranch
+
 
         setSize(this.width,this.height);
         //listener =  panel.new MyAppMouseListener();
@@ -57,11 +52,8 @@ public class CardItem extends JPanel{
     }
 
     //getters
-<<<<<<< HEAD
 
-=======
     public int getIndex(){return this.index;}
->>>>>>> AsifBranch
     public int getXcoord(){return this.x;}
     public int getYcoord(){return this.y;}
 
