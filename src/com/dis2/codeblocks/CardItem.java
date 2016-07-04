@@ -1,5 +1,5 @@
 package com.dis2.codeblocks;
-import com.dis2.cards.*;
+import com.dis2.cards.simpleCard;
 
 import javax.swing.*;
 import java.util.UUID;
@@ -17,20 +17,27 @@ public class CardItem extends JPanel{
     private simpleCard card;
     private UUID id ;
 
+
     private CardItem parent = null;
     private CardItem child = null;
+    private CardPanel.MyAppMouseListener listener ;
 
-    public CardItem(int x, int y, int width, int height, simpleCard card){
+    public CardItem(int x, int y, int width, int height, simpleCard card, CardPanel panel){
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.card = card;
+        this.setBounds(x,y,width,height);
+        panel.add(this, new Integer(0),0);
+        panel.getCardItemList().add(this);
         this.add(this.card);
         this.id= UUID.randomUUID();
 
         setSize(this.width,this.height);
-
+        //listener =  panel.new MyAppMouseListener();
+        //this.addMouseListener(listener);
+        //this.addMouseMotionListener(listener);
         setVisible(true);
 
 
@@ -52,11 +59,16 @@ public class CardItem extends JPanel{
     public void setX(int value){this.x = value;}
     public void setY(int value){this.y = value;}
     public void setWidth(int value){this.width = value;}
-    public void setHeigt(int value){this.height = value;}
+    public void setHeight(int value){this.height = value;}
     public void setCard(simpleCard value){this.card = value;}
     public void setAnc(CardItem value){this.parent = value;}
     public void setChild(CardItem value){this.child = value;}
 
+
+    //motion
+    public void moveCard(int x, int y){
+        return;
+    }
 
 
 

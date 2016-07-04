@@ -20,9 +20,9 @@ public class MyPart {
         snakeCard snake;
         pandaCard panda;
 
-        snake = new snakeCard(0,0,180, 280, 10, 10, 0.5, 20);
-        fish = new fishCard(0,0,180, 280, 10, 10, 0.5, 20);
-        panda = new pandaCard(0,0,180, 280, 10, 10, 0.5, 20);
+        snake = new snakeCard(0,0,180, 280, 10, 10, 0.47, 20);
+        fish = new fishCard(0,0,180, 280, 10, 10, 0.47, 20);
+        panda = new pandaCard(0,0,180, 280, 10, 10, 0.47, 20);
 
         simpleCard card1= new simpleCard(snake);
         simpleCard card2= new simpleCard(fish);

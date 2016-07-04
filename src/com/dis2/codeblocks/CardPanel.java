@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-
+import java.util.function.Supplier;
 
 
 /**
@@ -20,8 +20,11 @@ public class CardPanel extends JLayeredPane  {
     private int width;
     private int height;
     private CardItem activecard = null;
+
+
     private ArrayList<simpleCard> cardlist = new ArrayList<simpleCard>();
     private ArrayList<CardItem> carditemlist = new ArrayList<CardItem>();
+
 
     public void addCard(simpleCard card){cardlist.add(card);}
 
@@ -35,20 +38,18 @@ public class CardPanel extends JLayeredPane  {
         this.height = height;
         this.width = width;
         this.cardlist = cardlist;
-        this.addMouseListener(new MyAppMouseListener());
+        MyAppMouseListener listener =  new MyAppMouseListener();
+        this.addMouseListener(listener);
+        this.addMouseMotionListener(listener);
+
 
         setSize(this.width,this.height);
 
         if (cardlist.size() != 0) {
 
                for (simpleCard card : cardlist) {
-
-                CardItem item = new CardItem(i*10,i*10,180,280, card);
-                item.setBounds(i*10, i*10, 180, 280);
-                this.add(item, new Integer(0),0);
-                this.carditemlist.add(item);
-                i=i+2;
-
+                CardItem item = new CardItem(i*100,i*100,180,280, card,this);
+                i=i+1;
             }
         }
         setVisible(true);
@@ -62,12 +63,46 @@ public class CardPanel extends JLayeredPane  {
     public void setWidth(int value){this.width = value;}
     public void setHeight(int value){this.height = value;}
 
+    public void setActivecard(int x, int y){
+
+            ArrayList<CardItem> list = carditemlist;
+
+
+            for (int i = list.size()-1; i>=0; i--) {
+
+                int posX = list.get(i).getXcoord();
+                int posY = list.get(i).getYcoord();
+
+                int a = posX + 180;
+                int b = posY + 280;
+
+
+
+                if (posX < x && x< posX + 180 && posY < y && y < (posY + 280) ){
+                    System.out.println(posX +  " " + x + " " + a);
+                    System.out.println(posY + " " + y + " " + b);
+                    activecard = list.get(i);
+                    break;}
+
+
+
+            }
+
+
+
+
+
+    }
+
     //getters
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     public int getWidth(){return this.width;}
     public int getHeight(){return this.height;}
     public ArrayList<CardItem> getCardItemList(){return this.carditemlist;}
+    public CardItem getActivecard(){return this.activecard;}
+
+
 
 
 
@@ -78,32 +113,21 @@ public class CardPanel extends JLayeredPane  {
 
     public class MyAppMouseListener implements MouseListener, MouseMotionListener {
 
-        private int clicks = 0;
+
+        private int oldX;
+        private int oldY;
+
         @Override
         public void mouseClicked(MouseEvent e) {
 
-            ArrayList<CardItem> list = carditemlist;
 
-            if(list.size()!= 0) {
-
-                for (int i = list.size()-1; i>=0; i--) {
-
-
-
-                    if( list.get(i).getXcoord() <= e.getX() && e.getX() <= list.get(i).getXcoord()+180 &&
-                            list.get(i).getYcoord() <= e.getX() && e.getY() <= list.get(i).getYcoord()+280){
-                                    System.out.println(list.get(i).getXcoord() + " " +e.getX() +" "+ Integer.toString(e.getX()+180));
-                                    System.out.println("You clicked elemnt with ID"+ list.get(i).getId());
-                                    break;}
-                    else {System.out.println(e.getX() + " "+ e.getY());}
+            setActivecard(e.getX(),e.getY());
 
 
 
 
-                }
 
-            }
-            else {System.out.println("No elems");}
+
 
 
 
@@ -111,33 +135,28 @@ public class CardPanel extends JLayeredPane  {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            ArrayList<CardItem> list = carditemlist;
+            oldX = e.getX();
+            oldY = e.getY();
 
-            if(list.size()!= 0) {
-
-                for (int i = list.size()-1; i>=0; i--) {
-
-
-
-                    if( list.get(i).getXcoord() <= e.getX() && e.getX() <= list.get(i).getXcoord()+180 &&
-                            list.get(i).getYcoord() <= e.getX() && e.getY() <= list.get(i).getYcoord()+280){
-                            activecard = list.get(i);
-                            System.out.print("Active");
-                            break;}
+            System.out.println("pressed");
+            if (activecard == null)  {setActivecard(e.getX(),e.getY());}
 
 
-
-
-
-                }
-
-            }
-            else {System.out.println("No elems");}
 
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            System.out.println("released");
+            if (activecard != null){
+                remove(activecard);
+                add(activecard);
+                activecard = null;}
+
+
+
+
+
         }
 
         @Override
@@ -148,45 +167,34 @@ public class CardPanel extends JLayeredPane  {
         @Override
         public void mouseExited(MouseEvent e) {
 
+
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
 
-            int mouseX = e.getX();
-            int mouseY = e.getY();
-
-            ArrayList<CardItem> list = carditemlist;
-
-            if(list.size()!= 0) {
-
-                for (int i = list.size()-1; i>=0; i--) {
 
 
 
-                    if( list.get(i).getXcoord() <= e.getX() && e.getX() <= list.get(i).getXcoord()+180 &&
-                            list.get(i).getYcoord() <= e.getX() && e.getY() <= list.get(i).getYcoord()+280){
-                        list.get(i).setLocation(e.getX(),e.getY());
+            if (activecard!=null){
+                int dx = e.getX()-oldX ;
+                int dy = e.getY()-oldY ;
+                int newX = activecard.getX()+dx;
+                int newY = activecard.getY()+dy;
+                oldX = e.getX();
+                oldY = e.getY();
 
-                       remove(list.get(i));
-                        add(list.get(i));
-                        list.get(i).setVisible(true);
-                        repaint();
-                        break;}
+
+
+                activecard.setX(newX);
+                activecard.setY(newY);
+               activecard.setLocation(newX,newY);}
+            else return;
 
 
 
 
 
-                }
-
-            }
-            else {System.out.println("No elems");}
-
-
-
-
-            repaint();
         }
 
 
