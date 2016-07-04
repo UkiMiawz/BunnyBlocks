@@ -45,7 +45,7 @@ public class TestProgress extends JPanel {
             c.gridy = 0;
             this.add(progress, c);
 
-            JSlider steps = new JSlider(0, 10,5);
+            JSlider steps = new JSlider(0, 8,5);
             steps.addChangeListener(new ChangeListener() {
                 @Override
                 public void stateChanged(ChangeEvent e) {

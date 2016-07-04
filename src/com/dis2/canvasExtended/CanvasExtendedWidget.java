@@ -24,6 +24,7 @@ public class CanvasExtendedWidget extends JPanel {
 
     private JPanel upperPanel = new JPanel();
     private JPanel bottomPanel = new JPanel();
+    private JPanel progressPanel = new JPanel();
 
     //Buttons
     private JButton okButton = new JButton("Play");
@@ -34,10 +35,8 @@ public class CanvasExtendedWidget extends JPanel {
     private CanvasWidget canvasWidget;
     private StepsBar progressBar;
 
-    private int currentStep;
     public void setCurrentStep(int value){
         System.out.println(logger + "Set current step " + value);
-        currentStep = value;
         progressBar.setCurrentStep(value);
     }
 
@@ -60,11 +59,10 @@ public class CanvasExtendedWidget extends JPanel {
         bottomPanel.setLayout(new BorderLayout());
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        progressBar = new StepsBar(600, 10);
+        progressBar = new StepsBar(650, 10);
         progressBar.setPreferredSize(new Dimension(100, 100));
         progressBar.setBaseBackgroundColor(Palette.brown());
         progressBar.setProgressColor(Palette.green());
-        progressBar.setResizable(true);
         progressBar.setStepNumbers(1);
         progressBar.setCurrentStep(0);
         URL url = CanvasExtendedWidget.class.getResource("/resources/bunnyStep.gif");
@@ -75,7 +73,10 @@ public class CanvasExtendedWidget extends JPanel {
         //add prev next button
         bottomPanel.add(nextButton, BorderLayout.EAST);
         bottomPanel.add(prevButton, BorderLayout.WEST);
-        bottomPanel.add(progressBar, BorderLayout.CENTER);
+
+        progressPanel.setLayout(new BorderLayout());
+        progressPanel.add(progressBar, BorderLayout.CENTER);
+        bottomPanel.add(progressPanel, BorderLayout.CENTER);
 
         //add action listeners
         okButton.addActionListener(new ActionAnimate());
