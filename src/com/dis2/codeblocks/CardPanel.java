@@ -48,7 +48,7 @@ public class CardPanel extends JLayeredPane  {
         if (cardlist.size() != 0) {
 
                for (simpleCard card : cardlist) {
-                CardItem item = new CardItem(i*100,i*100,180,280, card,this);
+                CardItem item = new CardItem(i*100,i*100,180,280, card,this,i);
                 i=i+1;
             }
         }
@@ -104,7 +104,21 @@ public class CardPanel extends JLayeredPane  {
 
 
 
+    //redraw
+    public void redraw(CardItem active){
+        this.carditemlist.remove(active);
+        this.carditemlist.add(active);
+        this.removeAll();
+        for(int i = this.carditemlist.size()-1; i>=0;i--){
+            this.add(this.carditemlist.get(i));
+        }
 
+        this.revalidate();
+        this.repaint();
+
+
+
+    }
 
 
 
@@ -148,9 +162,13 @@ public class CardPanel extends JLayeredPane  {
         @Override
         public void mouseReleased(MouseEvent e) {
             System.out.println("released");
+            for (CardItem card:carditemlist
+                 ) { System.out.println(card.getIndex());
+
+            }
             if (activecard != null){
-                remove(activecard);
-                add(activecard);
+
+
                 activecard = null;}
 
 
@@ -190,6 +208,7 @@ public class CardPanel extends JLayeredPane  {
                 activecard.setY(newY);
                activecard.setLocation(newX,newY);}
             else return;
+            redraw(activecard);
 
 
 
