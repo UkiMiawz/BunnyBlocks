@@ -25,8 +25,11 @@ public class TestProgress extends JPanel {
 
     public TestProgress() {
         try {
+            //set layout
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
+
+            //setting up progress bar
             StepsBar progress = new StepsBar(30, 600);
             progress.setPreferredSize(new Dimension(100, 100));
             progress.setBaseBackgroundColor(new Color(203,138,72));
@@ -35,12 +38,16 @@ public class TestProgress extends JPanel {
             progress.setStepNumbers(8);
             progress.setCurrentStep(4);
             progress.setResizable(false);
+
+            //set up pictures
             URL url = TestProgress.class.getResource("/resources/bunnyStep.gif");
             progress.setProgressImage(new ImageIcon(url).getImage());
             url = TestProgress.class.getResource("/resources/coin_gold.png");
             progress.setGoalImage(new ImageIcon(url).getImage());
-            c.fill = GridBagConstraints.VERTICAL;
-            c.weightx = 0.5;
+
+            this.add(progress);
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.weighty = 0.5;
             c.gridx = 0;
             c.gridy = 0;
             this.add(progress, c);
@@ -52,10 +59,11 @@ public class TestProgress extends JPanel {
                     progress.setCurrentStep(steps.getValue());
                 }
             });
-            c.fill = GridBagConstraints.VERTICAL;
-            c.gridx = 0;
-            c.gridy = 1;
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.gridx = 1;
+            c.gridy = 0;
             this.add(steps, c);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
