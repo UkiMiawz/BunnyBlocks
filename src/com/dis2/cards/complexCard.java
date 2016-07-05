@@ -1,6 +1,7 @@
 package com.dis2.cards;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -11,6 +12,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.dis2.shared.Palette;
 
 public class complexCard extends JPanel implements MouseListener{
 	
@@ -25,14 +28,19 @@ public class complexCard extends JPanel implements MouseListener{
 	JTextField forN = new JTextField("0",2);  //Use only with snake card
 	JComboBox<String> ifCombo = new JComboBox<String>(); //Use only with panda card
 	Boolean flagAnim = false;
+	int framePerSecond = 50;
+	cardWidget c;
 	
-	
-	    
 	public complexCard(cardWidget c){
+		this.c = c;
+	}
+	    
+	public void paintComponent(Graphics g){
+    	super.paintComponent(g);
 		
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         
-		lpane.setBounds(30, 30, 180, 280);
+		lpane.setBounds(0, 0, 180, 280);
 		lpane.setPreferredSize(new Dimension(180, 280));
         content.setBounds(0, 0, 180, 280);
         
@@ -72,7 +80,7 @@ public class complexCard extends JPanel implements MouseListener{
         }
         
         /**
-         * Gif on Card for Menu Component 
+         * Trigger GIF for animation in card
          */
         if(flagAnim){
         	content.setOpaque(true);
@@ -180,18 +188,26 @@ public class complexCard extends JPanel implements MouseListener{
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Mouse Entered Space");
-		flagAnim = true;
-		repaint(); //does not do anything, it doesn't give error but it should repaint
-		
+		//flagAnim = true; //this starts the animation of the gif
+		stateChanged(c); //test for highlight color in cards
+		revalidate();
+		repaint();
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Mouse Exit Space");
-		flagAnim = false;
+		flagAnim = false; //this should end the animation of the gif and repaint regular img, does not
+		stateBack(c); // //test for highlight color in cards
+		revalidate();
 		repaint();
 		
 	}
+	
+	public Dimension getPreferredSize() {
+	    return new Dimension(180, 280); // appropriate constants
+	  }
 
 }
