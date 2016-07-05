@@ -14,6 +14,7 @@ public class cardWidget {
 	private int arcWidth;
 	private int arcHeight;
 	private double imageScale;
+	private double gifScale;
 	private int imageWidth;
 	private int imageHeight;
 	private Color fillColor;
@@ -27,6 +28,7 @@ public class cardWidget {
     private String text = "";
     private String label = "";
     private Image img;
+    private Image gif;
     private int textBox = 0;
     private String[] options;
     public Palette palette = new Palette();
@@ -174,6 +176,22 @@ public class cardWidget {
 
 	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
+	}
+
+	public Image getGif() {
+		return gif;
+	}
+
+	public void setGif(Image gif) {
+		this.gif = gif;
+	}
+
+	public double getGifScale() {
+		return gifScale;
+	}
+
+	public void setGifScale(double gifScale) {
+		this.gifScale = gifScale;
 	}
 
 	public int getxMargin() {

@@ -3,6 +3,8 @@ package com.dis2.cards;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -10,19 +12,21 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.dis2.shared.Palette;
-
-public class complexCard extends JPanel{
+public class complexCard extends JPanel implements MouseListener{
 	
 	private static final long serialVersionUID = 2L;
 
-	private JLayeredPane lpane = new JLayeredPane();
-	private JPanel content = new JPanel();
-	private JPanel text = new JPanel();
-	private JPanel combo = new JPanel();
-	private Palette p = new Palette();
-	private JTextField forN = new JTextField("0",2);  //Use only with snake card
-	private JComboBox<String> ifCombo = new JComboBox<String>();
+	JLayeredPane lpane = new JLayeredPane();
+	JPanel content = new JPanel();
+	JPanel text = new JPanel();
+	JPanel combo = new JPanel();
+	JPanel animate = new JPanel();
+	Palette p = new Palette();
+	JTextField forN = new JTextField("0",2);  //Use only with snake card
+	JComboBox<String> ifCombo = new JComboBox<String>(); //Use only with panda card
+	Boolean flagAnim = false;
+	
+	
 	    
 	public complexCard(cardWidget c){
 		
@@ -35,7 +39,7 @@ public class complexCard extends JPanel{
         simpleCard card= new simpleCard(c);
         
         content.add(card);
-        content.addMouseListener(new CustomMouseListener());
+        content.addMouseListener(this);
         
         if(c.getTextBox()==1){
         
@@ -65,6 +69,18 @@ public class complexCard extends JPanel{
         	
         lpane.add(content, new Integer(0), 0);
         
+        }
+        
+        /**
+         * Gif on Card for Menu Component 
+         */
+        if(flagAnim){
+        	content.setOpaque(true);
+        	animate = new cardAnimation(c, c.getGif());
+            animate.setBounds(15,25, 140, 160);
+            animate.setOpaque(true);
+            lpane.add(content, new Integer(0), 0);
+        	lpane.add(animate, new Integer(1), 0);
         }
         
         /**
@@ -139,6 +155,43 @@ public class complexCard extends JPanel{
 			simpleCard card= new simpleCard(c);
 	    }
 	    
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Click");
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Mouse Entered Space");
+		flagAnim = true;
+		repaint(); //does not do anything, it doesn't give error but it should repaint
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Mouse Exit Space");
+		flagAnim = false;
+		repaint();
+		
 	}
 
 }
