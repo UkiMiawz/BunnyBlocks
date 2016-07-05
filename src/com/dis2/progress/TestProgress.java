@@ -27,32 +27,32 @@ public class TestProgress extends JPanel {
         try {
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
-            StepsBar progress = new StepsBar(600, 10);
+            StepsBar progress = new StepsBar(30, 600);
             progress.setPreferredSize(new Dimension(100, 100));
             progress.setBaseBackgroundColor(new Color(203,138,72));
             progress.setBorderColor(new Color(173,119,65));
             progress.setProgressColor(new Color(46,204,113));
-            progress.setResizable(true);
             progress.setStepNumbers(8);
-            progress.setCurrentStep(0);
+            progress.setCurrentStep(4);
+            progress.setResizable(false);
             URL url = TestProgress.class.getResource("/resources/bunnyStep.gif");
             progress.setProgressImage(new ImageIcon(url).getImage());
             url = TestProgress.class.getResource("/resources/coin_gold.png");
             progress.setGoalImage(new ImageIcon(url).getImage());
-            c.fill = GridBagConstraints.HORIZONTAL;
+            c.fill = GridBagConstraints.VERTICAL;
             c.weightx = 0.5;
             c.gridx = 0;
             c.gridy = 0;
             this.add(progress, c);
 
-            JSlider steps = new JSlider(0, 8,5);
+            JSlider steps = new JSlider(JSlider.VERTICAL, 0, 8,5);
             steps.addChangeListener(new ChangeListener() {
                 @Override
                 public void stateChanged(ChangeEvent e) {
                     progress.setCurrentStep(steps.getValue());
                 }
             });
-            c.fill = GridBagConstraints.HORIZONTAL;
+            c.fill = GridBagConstraints.VERTICAL;
             c.gridx = 0;
             c.gridy = 1;
             this.add(steps, c);
@@ -65,7 +65,7 @@ public class TestProgress extends JPanel {
     public static void main(String args[]) {
         try {
             JFrame frame = new JFrame("Test Progress");
-            frame.setSize(600, 400);
+            frame.setSize(400, 800);
             frame.getContentPane().add(new TestProgress());
 
             frame.setVisible(true);

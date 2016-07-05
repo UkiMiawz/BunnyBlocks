@@ -140,16 +140,16 @@ public class StepsBar extends JPanel {
     }
     
     public int getProgressInPixels(){ 
-        return currentStep * this.getWidth() / this.stepNumbers;   
+        return currentStep * this.getHeight() / this.stepNumbers;
     }
     
     public int getProgressImagePosition(){
-        return getProgressInPixels()-(this.progressImage.getWidth(this));
+        return getProgressInPixels()-(this.progressImage.getHeight(this));
     }
     
-    public int getPositionBarY(){
+    public int getPositionBarX(){
         if(progressImage != null){
-            return this.progressImage.getHeight(this);
+            return this.progressImage.getWidth(this);
         }
         return 0;
     }
@@ -158,34 +158,34 @@ public class StepsBar extends JPanel {
     protected void paintComponent(Graphics g) { 
         super.paintComponent(g); 
         if (this.isResizable()) {
-            this.setSize(new Dimension(this.getWidth(), this.progressImage.getHeight(this)+this.fixedHeight));
+            this.setSize(new Dimension(this.progressImage.getWidth(this)+this.fixedWidth, this.getHeight()));
         } else {
-            this.setSize(new Dimension(this.fixedWidth, this.progressImage.getHeight(this)+this.fixedHeight));
+            this.setSize(new Dimension(this.progressImage.getWidth(this)+this.fixedWidth, this.fixedHeight));
         }
         
         //Progress container
         g.setColor(this.getBaseBackgroundColor());
-        g.fillRoundRect(0, getPositionBarY(), this.getWidth(), this.fixedHeight, this.arcWidth, this.arcHeight);
+        g.fillRoundRect(0, 0, this.fixedWidth, this.getHeight(), this.arcWidth, this.arcHeight);
        
         //Current progress
         g.setColor(this.getProgressColor());
-        g.fillRoundRect(0, getPositionBarY(), getProgressInPixels(), this.fixedHeight, this.arcWidth, this.arcHeight);
-        
+        g.fillRoundRect(0, 0, this.fixedWidth, getProgressInPixels(), this.arcWidth, this.arcHeight);
+
         //Progress background
         g.setColor(this.getBorderColor());
-        g.drawRoundRect(0, getPositionBarY(), this.getWidth(), this.fixedHeight, this.arcWidth, this.arcHeight);
+        g.drawRoundRect(0, 0, this.fixedWidth, this.getHeight(), this.arcWidth, this.arcHeight);
 
         //calculate width per steps
-        int WidthPerStep = this.fixedWidth / stepNumbers;
+        int WidthPerStep = this.fixedHeight / stepNumbers;
         int currentPosition = 0;
         g.setColor(Palette.blue());
         for (int i=0; i<stepNumbers + 1; i++){
             //add pointers
-            g.fillRoundRect(currentPosition, getPositionBarY(), 3, this.fixedHeight, this.arcWidth, this.arcHeight);
+            g.fillRoundRect(0, currentPosition, this.fixedHeight, 3, this.arcWidth, this.arcHeight);
             currentPosition += WidthPerStep;
         }
 
-        g.drawImage(goalImage, this.getWidth()-40, 0, this);
-        g.drawImage(progressImage, getProgressImagePosition(), 0, this);
+        g.drawImage(goalImage, 0, this.getHeight()+40, this);
+        g.drawImage(progressImage, 0, getProgressImagePosition(), this);
     }
 }
