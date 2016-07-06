@@ -109,12 +109,12 @@ public class drawCard extends cardWidget{
 	public static void main(String[] args) {
 		
 		//fish = new fishCard(5,5, 160, 240, 10, 10, 1.2, 20);
-		//snake = new snakeCard(5,5,160, 240, 10, 10, 0.5, 20);
-		panda = new pandaCard(5,5, 160, 240, 10, 10, 0.47, 20);
-		panda.setOptions(new String[] {"Red Apple", "Green Apple", "Blue Apple"});
+		snake = new snakeCard(5,5,160, 240, 10, 10, 0.5, 20);
+		//panda = new pandaCard(5,5, 160, 240, 10, 10, 0.47, 20);
+		//panda.setOptions(new String[] {"Red Apple", "Green Apple", "Blue Apple"});
 		//new drawCard(fish);
-		//new drawCard(snake);
-		new drawCard(panda);
+		new drawCard(snake);
+		//new drawCard(panda);
 	}
        
 	
