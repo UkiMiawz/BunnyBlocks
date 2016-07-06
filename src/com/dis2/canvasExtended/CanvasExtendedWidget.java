@@ -5,6 +5,7 @@ import javax.swing.*;
 import com.dis2.canvas.CanvasWidget;
 import com.dis2.progress.StepsBar;
 import com.dis2.shared.AnimationAction;
+import com.dis2.shared.MovementConstants;
 import com.dis2.shared.Palette;
 
 import java.awt.Image;
@@ -24,7 +25,6 @@ public class CanvasExtendedWidget extends JPanel {
 
     private JPanel upperPanel = new JPanel();
     private JPanel bottomPanel = new JPanel();
-    private JPanel progressPanel = new JPanel();
 
     //Buttons
     private JButton okButton = new JButton("Play");
@@ -44,21 +44,32 @@ public class CanvasExtendedWidget extends JPanel {
 
     private String logger = "Canvas Extended Widget: ";
 
-    public CanvasExtendedWidget(Image backgroundImage) {
+    public CanvasExtendedWidget(Image backgroundImage, ImageIcon charImage, ImageIcon walkImage, ImageIcon targetImage,
+                                int startingX, int startingY, int targetX, int targetY) {
+        this(backgroundImage, charImage, walkImage, targetImage, startingX, startingY, targetX, targetY, new MovementConstants());
+    }
+
+    public CanvasExtendedWidget(Image backgroundImage, ImageIcon charImage, ImageIcon walkImage, ImageIcon targetImage,
+                                int startingX, int startingY, int targetX, int targetY, MovementConstants movementConstants) {
         System.out.println(logger + "Initiating extended canvas");
 
         System.out.println(logger + "Setting up upper panel");
-        canvasWidget = new CanvasWidget(backgroundImage);
+        canvasWidget = new CanvasWidget(backgroundImage, charImage, walkImage, targetImage, startingX, startingY, targetX, targetY, movementConstants);
         canvasWidget.setParentPanel(this);
         upperPanel.setLayout(new BorderLayout());
         upperPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        //add widget and button
         upperPanel.add(canvasWidget, BorderLayout.CENTER);
         upperPanel.add(okButton, BorderLayout.SOUTH);
 
         System.out.println(logger + "Setting up bottom panel");
         bottomPanel.setLayout(new BorderLayout());
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        //add buttons
+        bottomPanel.add(nextButton, BorderLayout.NORTH);
+        bottomPanel.add(prevButton, BorderLayout.SOUTH);
 
+        //calculate the panel height
         progressBar = new StepsBar(10, 650);
         progressBar.setPreferredSize(new Dimension(100, 100));
         progressBar.setBaseBackgroundColor(Palette.brown());
@@ -70,13 +81,7 @@ public class CanvasExtendedWidget extends JPanel {
         url = CanvasExtendedWidget.class.getResource("/resources/coin_gold.png");
         progressBar.setGoalImage(new ImageIcon(url).getImage());
 
-        //add prev next button
-        bottomPanel.add(nextButton, BorderLayout.NORTH);
-        bottomPanel.add(prevButton, BorderLayout.SOUTH);
-
-        progressPanel.setLayout(new BorderLayout());
-        progressPanel.add(progressBar, BorderLayout.CENTER);
-        bottomPanel.add(progressPanel, BorderLayout.CENTER);
+        bottomPanel.add(progressBar, BorderLayout.CENTER);
 
         //add action listeners
         okButton.addActionListener(new ActionAnimate());

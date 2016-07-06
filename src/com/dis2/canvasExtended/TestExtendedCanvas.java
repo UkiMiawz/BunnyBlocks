@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Idontgiveafuck
+ * @author zaphod
  */
 public class TestExtendedCanvas {
 
@@ -29,7 +29,26 @@ public class TestExtendedCanvas {
             System.out.println(url.getPath());
             ImageIcon icon = new ImageIcon(url);
 
-            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage());
+            System.out.println("Testing add bunny character");
+            URL urlChar = TestExtendedCanvas.class.getResource(
+                    "/resources/bunny1_stand.png");
+            System.out.println(urlChar.getPath());
+            ImageIcon iconChar = new ImageIcon(urlChar);
+
+            System.out.println("Testing add coin");
+            URL urlCoin = TestExtendedCanvas.class.getResource(
+                    "/resources/coin.gif");
+            System.out.println(urlCoin.getPath());
+            ImageIcon iconCoin = new ImageIcon(urlCoin);
+
+            System.out.println("Testing add bunny walk");
+            URL urlWalk = TestExtendedCanvas.class.getResource(
+                    "/resources/bunny_walk.gif");
+            System.out.println(urlWalk.getPath());
+            ImageIcon iconWalk = new ImageIcon(urlWalk);
+
+            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar, iconWalk, iconCoin, 80, 30, 340, 275);
+
             JFrame frame = new JFrame("Test Extended Canvas");
             frame.setSize(800,800);
             frame.getContentPane().setLayout(new BorderLayout());
