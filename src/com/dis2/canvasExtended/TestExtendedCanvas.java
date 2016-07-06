@@ -41,7 +41,7 @@ public class TestExtendedCanvas {
             System.out.println(urlCoin.getPath());
             ImageIcon iconCoin = new ImageIcon(urlCoin);
 
-            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar, iconCoin, 80, 30);
+            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar, iconCoin, 80, 30, 340, 275);
 
             JFrame frame = new JFrame("Test Extended Canvas");
             frame.setSize(800,800);

@@ -40,7 +40,7 @@ public class TestCanvas {
             System.out.println(urlCoin.getPath());
             ImageIcon iconCoin = new ImageIcon(urlCoin);
 
-            CanvasWidget panel = new CanvasWidget(icon.getImage(), iconChar, iconCoin, 80, 30);
+            CanvasWidget panel = new CanvasWidget(icon.getImage(), iconChar, iconCoin, 80, 30, 340, 275);
             JFrame frame = new JFrame("Test Canvas");
             frame.setSize(800,800);
             frame.getContentPane().setLayout(new BorderLayout());

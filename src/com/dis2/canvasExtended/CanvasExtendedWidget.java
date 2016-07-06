@@ -43,11 +43,12 @@ public class CanvasExtendedWidget extends JPanel {
 
     private String logger = "Canvas Extended Widget: ";
 
-    public CanvasExtendedWidget(Image backgroundImage, ImageIcon charImage, ImageIcon targetImage, int startingX, int startingY) {
+    public CanvasExtendedWidget(Image backgroundImage, ImageIcon charImage, ImageIcon targetImage,
+                                int startingX, int startingY, int targetX, int targetY) {
         System.out.println(logger + "Initiating extended canvas");
 
         System.out.println(logger + "Setting up upper panel");
-        canvasWidget = new CanvasWidget(backgroundImage, charImage, targetImage, startingX, startingY);
+        canvasWidget = new CanvasWidget(backgroundImage, charImage, targetImage, startingX, startingY, targetX, targetY);
         canvasWidget.setParentPanel(this);
         upperPanel.setLayout(new BorderLayout());
         upperPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
