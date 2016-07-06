@@ -1,13 +1,21 @@
-package com.dis2.canvas;
-
-import com.dis2.shared.Actions;
+package com.dis2.shared;
 
 public class MovementConstants {
 
-    private static final int xBlockVertical = 55;
-    private static final int yBlockVertical = 33;
-    private static final int xBlockHorizontal = 55;
-    private static final int yBlockHorizontal = -33;
+    //initiate common value
+    private int xBlockVertical = 55;
+    private int yBlockVertical = 33;
+    private int xBlockHorizontal = 55;
+    private int yBlockHorizontal = -33;
+
+    public MovementConstants(int xBlockSize, int yBlockSize){
+        xBlockVertical = xBlockSize;
+        yBlockVertical = yBlockSize;
+        xBlockHorizontal = xBlockSize;
+        yBlockHorizontal = -yBlockSize;
+    }
+
+    public MovementConstants(){}
 
     public static class MovementValue {
         private int xValue;
@@ -22,7 +30,7 @@ public class MovementConstants {
         }
     }
 
-    public static MovementValue getMovement(Actions movementAction) {
+    public MovementValue getMovement(Actions movementAction) {
         switch (movementAction){
             case MOVEDOWN:
                 return new MovementValue(xBlockVertical, yBlockVertical);

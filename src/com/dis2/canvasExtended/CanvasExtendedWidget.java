@@ -5,6 +5,7 @@ import javax.swing.*;
 import com.dis2.canvas.CanvasWidget;
 import com.dis2.progress.StepsBar;
 import com.dis2.shared.AnimationAction;
+import com.dis2.shared.MovementConstants;
 import com.dis2.shared.Palette;
 
 import java.awt.Image;
@@ -45,10 +46,15 @@ public class CanvasExtendedWidget extends JPanel {
 
     public CanvasExtendedWidget(Image backgroundImage, ImageIcon charImage, ImageIcon targetImage,
                                 int startingX, int startingY, int targetX, int targetY) {
+        this(backgroundImage, charImage, targetImage, startingX, startingY, targetX, targetY, new MovementConstants());
+    }
+
+    public CanvasExtendedWidget(Image backgroundImage, ImageIcon charImage, ImageIcon targetImage,
+                                int startingX, int startingY, int targetX, int targetY, MovementConstants movementConstants) {
         System.out.println(logger + "Initiating extended canvas");
 
         System.out.println(logger + "Setting up upper panel");
-        canvasWidget = new CanvasWidget(backgroundImage, charImage, targetImage, startingX, startingY, targetX, targetY);
+        canvasWidget = new CanvasWidget(backgroundImage, charImage, targetImage, startingX, startingY, targetX, targetY, movementConstants);
         canvasWidget.setParentPanel(this);
         upperPanel.setLayout(new BorderLayout());
         upperPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Idontgiveafuck
+ * @author 42
  */
 public class TestCanvas {
 
@@ -58,7 +58,7 @@ public class TestCanvas {
 
             Thread.sleep(1000);
             System.out.println("Start animating");
-            //panel.animateCanvas();
+            panel.animateCanvas();
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -7,11 +7,11 @@ package com.dis2.canvas;
 
 import com.dis2.canvasExtended.CanvasExtendedWidget;
 import com.dis2.shared.AnimationAction;
-import com.dis2.canvas.MovementConstants.MovementValue;
+import com.dis2.shared.MovementConstants;
+import com.dis2.shared.MovementConstants.MovementValue;
 import com.dis2.shared.AnimationObject;
 import com.dis2.shared.Util;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import java.awt.Image;
@@ -22,11 +22,10 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
 import javax.swing.Timer;
 
 /**
- * @author whothefuckcare
+ * @author martin
  *         Canvas widget for drawing level
  */
 public class CanvasWidget extends JPanel {
@@ -47,6 +46,7 @@ public class CanvasWidget extends JPanel {
     private int targetY = 0;
 
     private static final int framePerSecond = 50;
+    private MovementConstants movementConstants = new MovementConstants();
 
     private ArrayList<AnimationAction> actions = new ArrayList<>();
 
@@ -63,20 +63,27 @@ public class CanvasWidget extends JPanel {
     }
 
     private CanvasExtendedWidget parentPanel;
+
     public void setParentPanel(CanvasExtendedWidget value) {
         parentPanel = value;
     }
 
     public CanvasWidget(String imgPath, String imgCharacter, String targetCharacter,
-                        int startingX, int startingY, int targetX, int targetY) {
+                        int startingX, int startingY, int targetX, int targetY, MovementConstants movementConstants) {
         this(new ImageIcon(imgPath).getImage(),
                 new ImageIcon(CanvasWidget.class.getResource(imgCharacter)),
                 new ImageIcon(CanvasWidget.class.getResource(targetCharacter)),
-                startingX, startingY, targetX, targetY);
+                startingX, startingY, targetX, targetY, movementConstants);
     }
 
     public CanvasWidget(Image backgroundImage, ImageIcon characterImage, ImageIcon targetImage,
                         int startingX, int startingY, int targetX, int targetY) {
+        this(backgroundImage, characterImage, targetImage, startingX, startingY, targetX, targetY, new MovementConstants());
+    }
+
+    public CanvasWidget(Image backgroundImage, ImageIcon characterImage, ImageIcon targetImage,
+                        int startingX, int startingY, int targetX, int targetY,
+                        MovementConstants movementConstants) {
         try {
 
             System.out.println(logger + "Initiating canvas widget with image");
@@ -85,6 +92,7 @@ public class CanvasWidget extends JPanel {
             this.startingY = startingY;
             this.targetX = targetX;
             this.targetY = targetY;
+            this.movementConstants = movementConstants;
 
             Dimension size = new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null));
             setPreferredSize(size);
@@ -121,7 +129,7 @@ public class CanvasWidget extends JPanel {
     AnimationAction currentAction;
     private int currentStep = 1;
 
-    private void moveCharacterToStartPosition(){
+    private void moveCharacterToStartPosition() {
         character.setX(startingX);
         character.setY(startingY);
     }
@@ -131,7 +139,7 @@ public class CanvasWidget extends JPanel {
             character.setImage("/resources/bunny_walk.gif");
             timer = new Timer(1000 / framePerSecond, new TimerListener());
             //add queue start from last step
-            for(int i = currentStep - 1; i < steps.size(); i++){
+            for (int i = currentStep - 1; i < steps.size(); i++) {
                 currentQueue.add(steps.get(i));
             }
             timer.start();
@@ -174,7 +182,7 @@ public class CanvasWidget extends JPanel {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            if(currentQueue.isEmpty() && xMovement == 0 && yMovement == 0){
+            if (currentQueue.isEmpty() && xMovement == 0 && yMovement == 0) {
                 System.out.println(logger + "Animation queue finished");
                 System.out.println(logger + "Animation finished - Current step now " + currentStep);
                 character.setImage("/resources/bunny1_stand.png");
@@ -183,14 +191,14 @@ public class CanvasWidget extends JPanel {
             }
 
             //get next action
-            if(needNewAnimation){
+            if (needNewAnimation) {
                 System.out.println(logger + "Need new animation - Current step " + currentStep);
-                if(parentPanel != null)
+                if (parentPanel != null)
                     parentPanel.setCurrentStep(currentStep);
                 currentStep += 1;
                 currentAction = currentQueue.remove(0);
                 needNewAnimation = false;
-                movementValue = MovementConstants.getMovement(currentAction.getAction());
+                movementValue = movementConstants.getMovement(currentAction.getAction());
                 xMovement = movementValue.getX();
                 yMovement = movementValue.getY();
                 System.out.println(logger + "X : " + xMovement + " Y : " + yMovement + currentQueue.size());

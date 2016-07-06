@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Idontgiveafuck
+ * @author zaphod
  */
 public class TestExtendedCanvas {
 
