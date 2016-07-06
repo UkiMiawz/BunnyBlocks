@@ -32,7 +32,6 @@ public class StepsBar extends JPanel {
     public StepsBar(int width, int height) {
         this.fixedWidth = width;
         this.fixedHeight = height;
-        
     }
 
     public int getFixedWidth() {
