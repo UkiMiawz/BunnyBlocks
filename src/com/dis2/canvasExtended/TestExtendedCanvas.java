@@ -41,7 +41,13 @@ public class TestExtendedCanvas {
             System.out.println(urlCoin.getPath());
             ImageIcon iconCoin = new ImageIcon(urlCoin);
 
-            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar, iconCoin, 80, 30, 340, 275);
+            System.out.println("Testing add bunny walk");
+            URL urlWalk = TestExtendedCanvas.class.getResource(
+                    "/resources/bunny_walk.gif");
+            System.out.println(urlWalk.getPath());
+            ImageIcon iconWalk = new ImageIcon(urlWalk);
+
+            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar, iconWalk, iconCoin, 80, 30, 340, 275);
 
             JFrame frame = new JFrame("Test Extended Canvas");
             frame.setSize(800,800);

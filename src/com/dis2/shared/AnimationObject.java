@@ -21,12 +21,23 @@ public class AnimationObject extends JLabel {
         URL url = AnimationObject.class.getResource(value);
         ImageIcon icon = new ImageIcon(url);
         this.image = icon;
-        setComponent();
+        setComponent(image);
     }
 
-    public void setImage(ImageIcon image){
-        this.image = image;
-        setComponent();
+    public void setImage(ImageIcon value){
+        this.image = value;
+        setComponent(image);
+    }
+
+    private ImageIcon moveImage;
+    public void setMoveImage(String value){
+        URL url = AnimationObject.class.getResource(value);
+        ImageIcon icon = new ImageIcon(url);
+        this.moveImage = icon;
+    }
+
+    public void setMoveImage(ImageIcon value){
+        this.moveImage = value;
     }
 
     private int xPosition;
@@ -43,14 +54,22 @@ public class AnimationObject extends JLabel {
 
     public AnimationObject(ImageIcon image) {
         this.image = image;
-        setComponent();
+        setComponent(image);
     }
 
     public AnimationObject(int xPosition, int yPosition, ImageIcon imgIcon) {
         setX(xPosition);
         setY(yPosition);
         image = imgIcon;
-        setComponent();
+        setComponent(image);
+    }
+
+    public AnimationObject(int xPosition, int yPosition, ImageIcon imgIcon, ImageIcon imgMove) {
+        setX(xPosition);
+        setY(yPosition);
+        image = imgIcon;
+        moveImage = imgMove;
+        setComponent(image);
     }
 
     public void moveObject(int xDifference, int yDifference){
@@ -58,10 +77,18 @@ public class AnimationObject extends JLabel {
         setY(getY() + yDifference);
     }
 
-    private void setComponent(){
-        System.out.println("Set components");
+    public void move(){
+        if(moveImage != null)
+            setComponent(moveImage);
+    }
+
+    public void stand(){
+        setComponent(image);
+    }
+
+    private void setComponent(ImageIcon imageIcon){
         try {
-            setIcon(image);
+            setIcon(imageIcon);
             setIconTextGap(0);
             setBorder(null);
             setText(null);

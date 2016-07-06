@@ -33,7 +33,6 @@ public class CanvasWidget extends JPanel {
     private String logger = "Canvas Widget: ";
 
     private Image backgroundImage;
-    private ImageIcon characterImage;
 
     private AnimationObject character;
     private ArrayList<AnimationObject> animationObjects = new ArrayList<AnimationObject>();
@@ -70,27 +69,27 @@ public class CanvasWidget extends JPanel {
         parentPanel = value;
     }
 
-    public CanvasWidget(String imgPath, String imgCharacter, String targetCharacter,
+    public CanvasWidget(String imgPath, String imgCharacter, String imgWalk, String targetCharacter,
                         int startingX, int startingY, int targetX, int targetY, MovementConstants movementConstants) {
         this(new ImageIcon(imgPath).getImage(),
                 new ImageIcon(CanvasWidget.class.getResource(imgCharacter)),
+                new ImageIcon(CanvasWidget.class.getResource(imgWalk)),
                 new ImageIcon(CanvasWidget.class.getResource(targetCharacter)),
                 startingX, startingY, targetX, targetY, movementConstants);
     }
 
-    public CanvasWidget(Image backgroundImage, ImageIcon characterImage, ImageIcon targetImage,
+    public CanvasWidget(Image backgroundImage, ImageIcon characterImage, ImageIcon walkImage, ImageIcon targetImage,
                         int startingX, int startingY, int targetX, int targetY) {
-        this(backgroundImage, characterImage, targetImage, startingX, startingY, targetX, targetY, new MovementConstants());
+        this(backgroundImage, characterImage, walkImage, targetImage, startingX, startingY, targetX, targetY, new MovementConstants());
     }
 
-    public CanvasWidget(Image backgroundImage, ImageIcon characterImage, ImageIcon targetImage,
+    public CanvasWidget(Image backgroundImage, ImageIcon characterImage, ImageIcon walkImage, ImageIcon targetImage,
                         int startingX, int startingY, int targetX, int targetY,
                         MovementConstants movementConstants) {
         try {
 
             System.out.println(logger + "Initiating canvas widget with image");
             this.backgroundImage = backgroundImage;
-            this.characterImage = characterImage;
             this.startingX = startingX;
             this.startingY = startingY;
             this.targetX = targetX;
@@ -104,7 +103,7 @@ public class CanvasWidget extends JPanel {
             setSize(size);
             setLayout(null);
 
-            AnimationObject bunny = new AnimationObject(startingX, startingY, characterImage);
+            AnimationObject bunny = new AnimationObject(startingX, startingY, characterImage, walkImage);
 
             System.out.println(logger + "Testing add target object");
             AnimationObject target = new AnimationObject(targetX, targetY, targetImage);
@@ -139,7 +138,7 @@ public class CanvasWidget extends JPanel {
 
     private void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
-            character.setImage("/resources/bunny_walk.gif");
+            character.move();
             timer = new Timer(1000 / framePerSecond, new TimerListener());
             //add queue start from last step
             for (int i = currentStep - 1; i < steps.size(); i++) {
@@ -154,7 +153,7 @@ public class CanvasWidget extends JPanel {
     public void playOneStepBefore() {
         try {
             currentStep -= 1;
-            character.setImage("/resources/bunny_walk.gif");
+            character.move();
             timer = new Timer(1000 / framePerSecond, new TimerListener());
             //add queue start from last step
             AnimationAction step = actions.get(currentStep - 1);
@@ -170,7 +169,7 @@ public class CanvasWidget extends JPanel {
 
     public void playOneStepAfter() {
         try {
-            character.setImage("/resources/bunny_walk.gif");
+            character.move();
             timer = new Timer(1000 / framePerSecond, new TimerListener());
             AnimationAction step = actions.get(currentStep - 1);
             currentQueue.add(step);
@@ -188,7 +187,7 @@ public class CanvasWidget extends JPanel {
             if (currentQueue.isEmpty() && xMovement == 0 && yMovement == 0) {
                 System.out.println(logger + "Animation queue finished");
                 System.out.println(logger + "Animation finished - Current step now " + currentStep);
-                character.setImage(characterImage);
+                character.stand();
                 timer.stop();
                 return;
             }
