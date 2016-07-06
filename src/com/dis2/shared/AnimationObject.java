@@ -24,6 +24,11 @@ public class AnimationObject extends JLabel {
         setComponent();
     }
 
+    public void setImage(ImageIcon image){
+        this.image = image;
+        setComponent();
+    }
+
     private int xPosition;
     public int getX() { return xPosition; }
     public void setX(int value) { xPosition = value; }

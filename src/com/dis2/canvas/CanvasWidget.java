@@ -33,6 +33,8 @@ public class CanvasWidget extends JPanel {
     private String logger = "Canvas Widget: ";
 
     private Image backgroundImage;
+    private ImageIcon characterImage;
+
     private AnimationObject character;
     private ArrayList<AnimationObject> animationObjects = new ArrayList<AnimationObject>();
 
@@ -88,6 +90,7 @@ public class CanvasWidget extends JPanel {
 
             System.out.println(logger + "Initiating canvas widget with image");
             this.backgroundImage = backgroundImage;
+            this.characterImage = characterImage;
             this.startingX = startingX;
             this.startingY = startingY;
             this.targetX = targetX;
@@ -185,7 +188,7 @@ public class CanvasWidget extends JPanel {
             if (currentQueue.isEmpty() && xMovement == 0 && yMovement == 0) {
                 System.out.println(logger + "Animation queue finished");
                 System.out.println(logger + "Animation finished - Current step now " + currentStep);
-                character.setImage("/resources/bunny1_stand.png");
+                character.setImage(characterImage);
                 timer.stop();
                 return;
             }
