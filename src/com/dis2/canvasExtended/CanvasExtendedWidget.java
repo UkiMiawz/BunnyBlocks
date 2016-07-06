@@ -59,7 +59,7 @@ public class CanvasExtendedWidget extends JPanel {
         bottomPanel.setLayout(new BorderLayout());
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        progressBar = new StepsBar(650, 10);
+        progressBar = new StepsBar(10, 650);
         progressBar.setPreferredSize(new Dimension(100, 100));
         progressBar.setBaseBackgroundColor(Palette.brown());
         progressBar.setProgressColor(Palette.green());
@@ -71,8 +71,8 @@ public class CanvasExtendedWidget extends JPanel {
         progressBar.setGoalImage(new ImageIcon(url).getImage());
 
         //add prev next button
-        bottomPanel.add(nextButton, BorderLayout.EAST);
-        bottomPanel.add(prevButton, BorderLayout.WEST);
+        bottomPanel.add(nextButton, BorderLayout.NORTH);
+        bottomPanel.add(prevButton, BorderLayout.SOUTH);
 
         progressPanel.setLayout(new BorderLayout());
         progressPanel.add(progressBar, BorderLayout.CENTER);
@@ -91,7 +91,7 @@ public class CanvasExtendedWidget extends JPanel {
         //add both panel to widget
         this.setLayout(new BorderLayout());
         this.add(upperPanel, BorderLayout.CENTER);
-        this.add(bottomPanel, BorderLayout.SOUTH);
+        this.add(bottomPanel, BorderLayout.WEST);
     }
 
     //animation steps related
