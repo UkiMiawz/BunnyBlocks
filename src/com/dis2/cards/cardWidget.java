@@ -6,7 +6,7 @@ import java.awt.Color;
 import com.dis2.shared.Palette;
 
 public class cardWidget {
-	
+
 	private int x;
 	private int y;
 	private int rectWidth;
@@ -32,20 +32,21 @@ public class cardWidget {
     private int textBox = 0;
     private String[] options;
     public Palette palette = new Palette();
-	
-	//constructor
-    public cardWidget(){}
-    
-	public cardWidget(int x, int y, int w, int h, int arcW, int arcH){
-		this.x = x;
-		this.y = y;
-		this.rectWidth = w;
-		this.rectHeight = h;
-		this.arcWidth = arcW;
-		this.arcHeight = arcH;
-	}
-	
-	/*
+
+    //constructor
+    public cardWidget() {
+    }
+
+    public cardWidget(int x, int y, int w, int h, int arcW, int arcH) {
+        this.x = x;
+        this.y = y;
+        this.rectWidth = w;
+        this.rectHeight = h;
+        this.arcWidth = arcW;
+        this.arcHeight = arcH;
+    }
+
+    /*
      * Set and get for all attributes and components
      */
 	
@@ -241,8 +242,5 @@ public class cardWidget {
 	public void setOptions(String[] options) {
 		this.options = options;
 	}
-	
-	
-	
-	
+
 }

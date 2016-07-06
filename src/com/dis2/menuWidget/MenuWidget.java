@@ -1,12 +1,13 @@
-package com.dis2.menu;
+package com.dis2.menuWidget;
 
-import com.dis2.cards.*;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -20,17 +21,68 @@ class DragListener extends MouseInputAdapter {
 
     Point location;
     MouseEvent pressed;
+    MenuWidget mw;
+    JPanel itemCollided = new JPanel();
+    Component targetComponet = new JPanel();
+    Component selectedComponent = new JPanel();
+
+    DragListener(MenuWidget mw) {
+        this.mw = mw;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        for (JPanel panel : mw.getCards()) {  
+            if(panel== targetComponet && isInsideComponet(selectedComponent.getX(),selectedComponent.getY(),panel)){
+                panel.setBounds(panel.getX(),panel.getY(),
+                        (int)panel.getBounds().getWidth(),
+                        (int)panel.getBounds().getHeight()+ 100);
+            }else{
+                
+            }
+        }
+      
+    }
 
     public void mousePressed(MouseEvent me) {
         pressed = me;
     }
 
     public void mouseDragged(MouseEvent me) {
-        Component component = me.getComponent();
-        location = component.getLocation(location);
+        selectedComponent = me.getComponent();
+        location = selectedComponent.getLocation(location);
         int x = location.x - pressed.getX() + me.getX();
         int y = location.y - pressed.getY() + me.getY();
-        component.setLocation(x, y);
+
+        selectedComponent.setLocation(x, y);
+
+        for (JPanel panel : mw.getCards()) {
+            if(isInsideComponet(x,y,panel)){
+                targetComponet = panel;
+                panel.setBackground(Color.black);
+            }else{ 
+                panel.setBackground(Color.red);
+            }
+        }
+
+    }
+
+    public boolean isInsideComponet(int x, int y, JPanel panel) {
+        int xPos = (int) panel.getBounds().getX();
+        int yPos = (int) panel.getBounds().getY();
+        int w = (int) panel.getBounds().getWidth();
+        int h = (int) panel.getBounds().getHeight();
+
+        if (x > xPos && x < xPos + w && y > yPos && y < yPos + h) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -40,14 +92,14 @@ public class MenuWidget extends JPanel {
     private JPanel bottomPanel;
     private JLabel descGlobalLabel;
     private JPanel descGlobalCard;
-    public ArrayList<cardWidget> cardContent;
+    public ArrayList<JPanel> cardContent;
     private JSplitPane container;
     private int selectedCard = 0;
 
     public MenuWidget(int width, int height) {
         descGlobalLabel = new JLabel();
         descGlobalCard = new JPanel();
-        cardContent = new ArrayList<cardWidget>();
+        cardContent = new ArrayList<JPanel>();
         bottomPanel = new JPanel();
         topPanel = new JPanel();
         container = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -60,43 +112,23 @@ public class MenuWidget extends JPanel {
         this.setPreferredSize(new Dimension(width, height));
     }
 
-    public void addCard(cardWidget card) {
+    public void addCard(JPanel card) {
         cardContent.add(card);
-        simpleCard simpC = new simpleCard(card);
 
-        DragListener drag = new DragListener();
-        simpC.addMouseListener(drag);
-        simpC.addMouseMotionListener(drag);
-        simpC.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                selectedCard = cardContent.indexOf(card);
-                updateCurrentCard(card);
-            }
+        DragListener drag = new DragListener(this);
+        card.addMouseListener(drag);
+        card.addMouseMotionListener(drag);
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
+        topPanel.setLayout(null);;
+        topPanel.setPreferredSize(new Dimension(card.getHeight(), card.getHeight() * cardContent.size()));
+        topPanel.add(card);
+    }
 
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        topPanel.setPreferredSize(new Dimension(simpC.getHeight(), simpC.getHeight() * cardContent.size()));
-        topPanel.add(simpC);
+    public ArrayList<JPanel> getCards() {
+        return this.cardContent;
     }
 
     public JScrollPane setUpTopPanel() {
-        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JScrollPane scrollPane = new JScrollPane(topPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -114,11 +146,9 @@ public class MenuWidget extends JPanel {
         return scrollPane;
     }
 
-    private void updateCurrentCard(cardWidget card) {
-        descGlobalLabel.setText(card.getText());
-        simpleCard currentCard = new simpleCard(cardContent.get(selectedCard));
+    private void updateCurrentCard(JPanel card) {
+        //descGlobalLabel.setText(card.getBounds().getCenterX()); 
         descGlobalCard.removeAll();
-        descGlobalCard.add(currentCard);
         container.setBottomComponent(setUpBottomPanel());
     }
 }

@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 package com.dis2.canvas;
-import com.dis2.shared.Actions;
 import com.dis2.shared.AnimationAction;
 import com.dis2.canvas.MovementConstants.MovementValue;
+import com.dis2.shared.AnimationObject;
 
 import java.net.URL;
 import java.util.ArrayList;
