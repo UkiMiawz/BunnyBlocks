@@ -13,6 +13,7 @@ public class cardAnimation extends JPanel{
 	Image image;
 	double w;
 	double h;
+	int t=500;
 	
 	public cardAnimation(cardWidget cw, Image i){
 		this.cw = cw;
@@ -24,9 +25,13 @@ public class cardAnimation extends JPanel{
 		  double h = (cw.getGifScale())/2.3 * image.getHeight(this);
 		  
 	    super.paintComponent(g);
-	    if (image != null) {
-	    	g.drawImage(image, 0, 0, (int)w, (int)h, this);
+	    while(t>0){
+	    	if (image != null) {
+	    		g.drawImage(image, 0, 0, (int)w, (int)h, this);
+	    	}
+	    	t--;
 	    }
+	    this.setVisible(false);
 	  }
 	
 
