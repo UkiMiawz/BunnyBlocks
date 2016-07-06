@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dis2.canvas;
+package com.dis2.canvasExtended;
+
 import com.dis2.shared.Actions;
 import com.dis2.shared.AnimationAction;
 
@@ -17,19 +18,19 @@ import java.util.ArrayList;
  *
  * @author Idontgiveafuck
  */
-public class TestCanvas {
+public class TestExtendedCanvas {
 
     public static void main(String args[]){
         try {
-            System.out.println("Running testing canvas");
+            System.out.println("Running testing extended canvas");
 
-            URL url = TestCanvas.class.getResource(
+            URL url = TestExtendedCanvas.class.getResource(
                     "/resources/mockMap.png");
             System.out.println(url.getPath());
             ImageIcon icon = new ImageIcon(url);
 
-            CanvasWidget panel = new CanvasWidget(icon.getImage());
-            JFrame frame = new JFrame("Test Canvas");
+            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage());
+            JFrame frame = new JFrame("Test Extended Canvas");
             frame.setSize(800,800);
             frame.getContentPane().setLayout(new BorderLayout());
             frame.getContentPane().add(panel);
@@ -40,12 +41,16 @@ public class TestCanvas {
             System.out.println("Adding test movements");
 
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
-            testActions.add(new AnimationAction(Actions.MOVEUP));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
 
-            Thread.sleep(1000);
-            System.out.println("Start animating");
-            panel.animateCanvas(testActions);
+            panel.setAnimations(testActions);
+
         }
         catch (Exception e) {
             e.printStackTrace();

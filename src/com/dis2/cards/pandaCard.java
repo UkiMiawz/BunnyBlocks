@@ -1,15 +1,14 @@
 package com.dis2.cards;
 
+import com.dis2.shared.Palette;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-
-import com.dis2.shared.Palette;
 
 public class pandaCard extends cardWidget{
 	
@@ -32,14 +31,14 @@ public class pandaCard extends cardWidget{
 				    e.printStackTrace();
 		}
 		
-		this.setFillColor(palette.purple());
+		this.setFillColor(Palette.purple());
 		this.setImg(img);
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setImageScale(s);
 		this.setxMargin(x+ w/18);
 		this.setyMargin(y + h/7);
-		this.setFontColor(palette.white());
+		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
 		this.setLabel(" If");

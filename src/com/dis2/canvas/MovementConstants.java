@@ -1,9 +1,6 @@
 package com.dis2.canvas;
 
-import static com.dis2.shared.Actions.*;
-
 import com.dis2.shared.Actions;
-import com.dis2.shared.AnimationAction;
 
 public class MovementConstants {
 
