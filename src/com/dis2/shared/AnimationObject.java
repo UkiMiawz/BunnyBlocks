@@ -7,6 +7,7 @@ package com.dis2.shared;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import java.awt.*;
 import java.net.URL;
 
 /**

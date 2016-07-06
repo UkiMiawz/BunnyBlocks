@@ -34,7 +34,13 @@ public class TestCanvas {
             System.out.println(urlChar.getPath());
             ImageIcon iconChar = new ImageIcon(urlChar);
 
-            CanvasWidget panel = new CanvasWidget(icon.getImage(), iconChar);
+            System.out.println("Testing add coin");
+            URL urlCoin = TestCanvas.class.getResource(
+                    "/resources/coin.gif");
+            System.out.println(urlCoin.getPath());
+            ImageIcon iconCoin = new ImageIcon(urlCoin);
+
+            CanvasWidget panel = new CanvasWidget(icon.getImage(), iconChar, iconCoin, 80, 30);
             JFrame frame = new JFrame("Test Canvas");
             frame.setSize(800,800);
             frame.getContentPane().setLayout(new BorderLayout());
@@ -52,7 +58,7 @@ public class TestCanvas {
 
             Thread.sleep(1000);
             System.out.println("Start animating");
-            panel.animateCanvas();
+            //panel.animateCanvas();
         }
         catch (Exception e) {
             e.printStackTrace();

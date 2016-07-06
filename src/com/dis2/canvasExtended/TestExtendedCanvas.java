@@ -35,7 +35,14 @@ public class TestExtendedCanvas {
             System.out.println(urlChar.getPath());
             ImageIcon iconChar = new ImageIcon(urlChar);
 
-            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar);
+            System.out.println("Testing add coin");
+            URL urlCoin = TestExtendedCanvas.class.getResource(
+                    "/resources/coin.gif");
+            System.out.println(urlCoin.getPath());
+            ImageIcon iconCoin = new ImageIcon(urlCoin);
+
+            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar, iconCoin, 80, 30);
+
             JFrame frame = new JFrame("Test Extended Canvas");
             frame.setSize(800,800);
             frame.getContentPane().setLayout(new BorderLayout());

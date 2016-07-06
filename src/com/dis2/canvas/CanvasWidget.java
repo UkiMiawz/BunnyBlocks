@@ -40,8 +40,8 @@ public class CanvasWidget extends JPanel {
     private static final int xBlock = 65;
     private static final int yBlock = 35;
 
-    private static final int startingX = 80;
-    private static final int startingY = 30;
+    private int startingX = 0;
+    private int startingY = 0;
 
     private static final int framePerSecond = 50;
 
@@ -64,14 +64,21 @@ public class CanvasWidget extends JPanel {
         parentPanel = value;
     }
 
-    public CanvasWidget(String imgPath, String imgCharacter) {
-        this(new ImageIcon(imgPath).getImage(), new ImageIcon(CanvasWidget.class.getResource(imgCharacter)));
+    public CanvasWidget(String imgPath, String imgCharacter, String targetCharacter, int startingX, int startingY) {
+        this(new ImageIcon(imgPath).getImage(),
+                new ImageIcon(CanvasWidget.class.getResource(imgCharacter)),
+                new ImageIcon(CanvasWidget.class.getResource(targetCharacter)),
+                startingX, startingY);
     }
 
-    public CanvasWidget(Image backgroundImage, ImageIcon characterImage) {
+    public CanvasWidget(Image backgroundImage, ImageIcon characterImage, ImageIcon targetImage, int startingX, int startingY) {
         try {
+
             System.out.println(logger + "Initiating canvas widget with image");
             this.backgroundImage = backgroundImage;
+            this.startingX = startingX;
+            this.startingY = startingY;
+
             Dimension size = new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null));
             setPreferredSize(size);
             setMinimumSize(size);
@@ -81,14 +88,8 @@ public class CanvasWidget extends JPanel {
 
             AnimationObject bunny = new AnimationObject(startingX, startingY, characterImage);
 
-            System.out.println(logger + "Testing add coin");
-            URL carrotUrl = TestCanvas.class.getResource(
-                    "/resources/coin.gif");
-            System.out.println(carrotUrl.getPath());
-            ImageIcon carrotIcon = new ImageIcon(carrotUrl);
-
             System.out.println(logger + "Testing add target object");
-            AnimationObject target = new AnimationObject(startingX + 4 * xBlock, startingY + 7 * yBlock, carrotIcon);
+            AnimationObject target = new AnimationObject(startingX + 4 * xBlock, startingY + 7 * yBlock, targetImage);
 
             System.out.println(logger + "Add objects");
             character = bunny;
@@ -112,6 +113,11 @@ public class CanvasWidget extends JPanel {
     private boolean needNewAnimation = true;
     AnimationAction currentAction;
     private int currentStep = 1;
+
+    private void moveCharacterToStartPosition(){
+        character.setX(startingX);
+        character.setY(startingY);
+    }
 
     private void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
