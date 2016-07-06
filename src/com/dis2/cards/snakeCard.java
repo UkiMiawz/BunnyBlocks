@@ -18,6 +18,9 @@ public class snakeCard extends cardWidget{
 	URL imageUrl = fishCard.class.getResource(
 			"/resources/snake.png");
 	Image img = Toolkit.getDefaultToolkit().getImage(imageUrl);
+	URL gifUrl = fishCard.class.getResource(
+		"/resources/snake_hd.gif");
+	Image gif = Toolkit.getDefaultToolkit().createImage(gifUrl);
 	BufferedImage bimg;
 	int iw;
 	int ih;
@@ -48,6 +51,8 @@ public class snakeCard extends cardWidget{
 		this.setyTextMargin(h - h/10);
 		this.setText("The Snake card helps your character repeat an instruction N times");
 		this.setTextBox(1);
+		this.setGif(gif);
+		this.setGifScale(s);
 	}
 
 	public int getNtimes() {

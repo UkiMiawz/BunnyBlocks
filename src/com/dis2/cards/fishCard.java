@@ -18,6 +18,9 @@ public class fishCard extends cardWidget{
 	URL imageUrl = fishCard.class.getResource(
 			"/resources/fishPink.png");
 	Image img = Toolkit.getDefaultToolkit().getImage(imageUrl);
+	URL gifUrl = fishCard.class.getResource(
+		"/resources/fish_hd.gif");
+	Image gif = Toolkit.getDefaultToolkit().createImage(gifUrl);
 	BufferedImage bimg;
 	int iw;
 	int ih; 
@@ -48,6 +51,8 @@ public class fishCard extends cardWidget{
 		this.setxTextMargin(x + w/3);
 		this.setyTextMargin(h - h/10);
 		this.setText("The Fish card helps your character to move one position in a straight line");
+		this.setGif(gif);
+		this.setGifScale(s);
 		
 	}
 
