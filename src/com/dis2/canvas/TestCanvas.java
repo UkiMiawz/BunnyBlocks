@@ -42,10 +42,11 @@ public class TestCanvas {
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
             testActions.add(new AnimationAction(Actions.MOVEUP));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            panel.addAnimations(testActions);
 
             Thread.sleep(1000);
             System.out.println("Start animating");
-            panel.animateCanvas(testActions);
+            panel.animateCanvas();
         }
         catch (Exception e) {
             e.printStackTrace();

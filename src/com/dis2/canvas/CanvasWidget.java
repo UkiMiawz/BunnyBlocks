@@ -118,7 +118,7 @@ public class CanvasWidget extends JPanel {
     AnimationAction currentAction;
     private int currentStep = 1;
 
-    public void animateCanvas(ArrayList<AnimationAction> steps) {
+    private void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
             character.setImage("/resources/bunny_walk.gif");
             timer = new Timer(1000 / framePerSecond, new TimerListener());
@@ -177,7 +177,8 @@ public class CanvasWidget extends JPanel {
             //get next action
             if(needNewAnimation){
                 System.out.println(logger + "Need new animation - Current step " + currentStep);
-                parentPanel.setCurrentStep(currentStep);
+                if(parentPanel != null)
+                    parentPanel.setCurrentStep(currentStep);
                 currentStep += 1;
                 currentAction = currentQueue.remove(0);
                 needNewAnimation = false;
