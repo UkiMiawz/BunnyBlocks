@@ -29,7 +29,13 @@ public class TestExtendedCanvas {
             System.out.println(url.getPath());
             ImageIcon icon = new ImageIcon(url);
 
-            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage());
+            System.out.println("Testing add bunny character");
+            URL urlChar = TestExtendedCanvas.class.getResource(
+                    "/resources/bunny1_stand.png");
+            System.out.println(urlChar.getPath());
+            ImageIcon iconChar = new ImageIcon(urlChar);
+
+            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar);
             JFrame frame = new JFrame("Test Extended Canvas");
             frame.setSize(800,800);
             frame.getContentPane().setLayout(new BorderLayout());

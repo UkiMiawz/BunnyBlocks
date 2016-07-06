@@ -28,7 +28,13 @@ public class TestCanvas {
             System.out.println(url.getPath());
             ImageIcon icon = new ImageIcon(url);
 
-            CanvasWidget panel = new CanvasWidget(icon.getImage());
+            System.out.println("Testing add bunny character");
+            URL urlChar = TestCanvas.class.getResource(
+                    "/resources/bunny1_stand.png");
+            System.out.println(urlChar.getPath());
+            ImageIcon iconChar = new ImageIcon(urlChar);
+
+            CanvasWidget panel = new CanvasWidget(icon.getImage(), iconChar);
             JFrame frame = new JFrame("Test Canvas");
             frame.setSize(800,800);
             frame.getContentPane().setLayout(new BorderLayout());

@@ -64,11 +64,11 @@ public class CanvasWidget extends JPanel {
         parentPanel = value;
     }
 
-    public CanvasWidget(String imgPath) {
-        this(new ImageIcon(imgPath).getImage());
+    public CanvasWidget(String imgPath, String imgCharacter) {
+        this(new ImageIcon(imgPath).getImage(), new ImageIcon(CanvasWidget.class.getResource(imgCharacter)));
     }
 
-    public CanvasWidget(Image backgroundImage) {
+    public CanvasWidget(Image backgroundImage, ImageIcon characterImage) {
         try {
             System.out.println(logger + "Initiating canvas widget with image");
             this.backgroundImage = backgroundImage;
@@ -79,12 +79,7 @@ public class CanvasWidget extends JPanel {
             setSize(size);
             setLayout(null);
 
-            System.out.println(logger + "Testing add bunny character");
-            URL url = TestCanvas.class.getResource(
-                    "/resources/bunny1_stand.png");
-            System.out.println(url.getPath());
-            ImageIcon icon = new ImageIcon(url);
-            AnimationObject bunny = new AnimationObject(startingX, startingY, icon);
+            AnimationObject bunny = new AnimationObject(startingX, startingY, characterImage);
 
             System.out.println(logger + "Testing add coin");
             URL carrotUrl = TestCanvas.class.getResource(
