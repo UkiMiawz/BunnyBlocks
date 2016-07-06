@@ -78,7 +78,7 @@ public class complexCard extends JPanel implements MouseListener{
         }
         
         /**
-         * Trigger GIF for animation in card
+         * Animation in card for MenuWidget
          */
         if(flagAnim){
         	content.setOpaque(true);
@@ -135,7 +135,7 @@ public class complexCard extends JPanel implements MouseListener{
 			combo.setBackground(Palette.brightPurple());
 			
 		}else{
-			c.setFillColor(Palette.brightRed());
+			c.setFillColor(Palette.brightViolet());
 			simpleCard card= new simpleCard(c);
 	    }
 	    
@@ -157,7 +157,7 @@ public class complexCard extends JPanel implements MouseListener{
 			combo.setBackground(Palette.purple());
 			
 		}else{
-			c.setFillColor(Palette.red());
+			c.setFillColor(Palette.violet());
 			simpleCard card= new simpleCard(c);
 	    }
 	    
@@ -186,8 +186,8 @@ public class complexCard extends JPanel implements MouseListener{
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Mouse Entered Space");
-		//flagAnim = true; //this starts the animation of the gif
-		stateChanged(c); //test for highlight color in cards
+		flagAnim = true; //this starts the animation of the gif
+		//stateChanged(c); //test for highlight color in cards
 		revalidate();
 		repaint();
 
@@ -197,8 +197,8 @@ public class complexCard extends JPanel implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Mouse Exit Space");
-		flagAnim = false; //this should end the animation of the gif and repaint regular img, does not
-		stateBack(c); // //test for highlight color in cards
+		flagAnim = false; //this ends the animation of the gif and repaint regular img
+		//stateBack(c); // //test for highlight color in cards
 		revalidate();
 		repaint();
 		

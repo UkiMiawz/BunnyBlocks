@@ -36,8 +36,8 @@ public class fishCard extends cardWidget{
 		}catch (IOException e) {
 				    e.printStackTrace();
 		}
-		
-		this.setFillColor(Palette.red());
+		this.setFillColor(Palette.violet());
+
 		this.setImg(img);
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
