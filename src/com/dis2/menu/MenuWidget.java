@@ -1,38 +1,18 @@
 package com.dis2.menu;
 
 import com.dis2.cards.*;
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.BorderLayout; 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Point;
+import java.awt.FlowLayout; 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.event.MouseInputAdapter;
-
-class DragListener extends MouseInputAdapter {
-
-    Point location;
-    MouseEvent pressed;
-
-    public void mousePressed(MouseEvent me) {
-        pressed = me;
-    }
-
-    public void mouseDragged(MouseEvent me) {
-        Component component = me.getComponent();
-        location = component.getLocation(location);
-        int x = location.x - pressed.getX() + me.getX();
-        int y = location.y - pressed.getY() + me.getY();
-        component.setLocation(x, y);
-    }
-}
+import javax.swing.TransferHandler; 
 
 public class MenuWidget extends JPanel {
 
@@ -64,9 +44,8 @@ public class MenuWidget extends JPanel {
         cardContent.add(card);
         simpleCard simpC = new simpleCard(card);
 
-        DragListener drag = new DragListener();
-        simpC.addMouseListener(drag);
-        simpC.addMouseMotionListener(drag);
+        //especificamos qué tipo de dato vamos a transferir
+        simpC.setTransferHandler(new TransferHandler("text"));
         simpC.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -76,6 +55,9 @@ public class MenuWidget extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                JComponent jc = (JComponent) e.getSource();
+                TransferHandler th = jc.getTransferHandler();
+                th.exportAsDrag(jc, e, TransferHandler.COPY);
             }
 
             @Override
@@ -108,6 +90,7 @@ public class MenuWidget extends JPanel {
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         bottomPanel.add(descGlobalCard);
         bottomPanel.add(descGlobalLabel);
+        
         JScrollPane scrollPane = new JScrollPane(bottomPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
