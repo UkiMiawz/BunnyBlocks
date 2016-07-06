@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dis2.canvas;
+package com.dis2.canvasExtended;
+
 import com.dis2.shared.Actions;
 import com.dis2.shared.AnimationAction;
 
@@ -15,39 +16,40 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 42
+ * @author zaphod
  */
-public class TestCanvas {
+public class TestExtendedCanvas {
 
     public static void main(String args[]){
         try {
-            System.out.println("Running testing canvas");
+            System.out.println("Running testing extended canvas");
 
-            URL url = TestCanvas.class.getResource(
+            URL url = TestExtendedCanvas.class.getResource(
                     "/resources/mockMap.png");
             System.out.println(url.getPath());
             ImageIcon icon = new ImageIcon(url);
 
             System.out.println("Testing add bunny character");
-            URL urlChar = TestCanvas.class.getResource(
+            URL urlChar = TestExtendedCanvas.class.getResource(
                     "/resources/bunny1_stand.png");
             System.out.println(urlChar.getPath());
             ImageIcon iconChar = new ImageIcon(urlChar);
 
-            System.out.println("Testing add bunny walk");
-            URL urlWalk = TestCanvas.class.getResource(
-                    "/resources/bunny_walk.gif");
-            System.out.println(urlWalk.getPath());
-            ImageIcon iconWalk = new ImageIcon(urlWalk);
-
             System.out.println("Testing add coin");
-            URL urlCoin = TestCanvas.class.getResource(
+            URL urlCoin = TestExtendedCanvas.class.getResource(
                     "/resources/coin.gif");
             System.out.println(urlCoin.getPath());
             ImageIcon iconCoin = new ImageIcon(urlCoin);
 
-            CanvasWidget panel = new CanvasWidget(icon.getImage(), iconChar, iconWalk, iconCoin, 80, 30, 340, 275);
-            JFrame frame = new JFrame("Test Canvas");
+            System.out.println("Testing add bunny walk");
+            URL urlWalk = TestExtendedCanvas.class.getResource(
+                    "/resources/bunny_walk.gif");
+            System.out.println(urlWalk.getPath());
+            ImageIcon iconWalk = new ImageIcon(urlWalk);
+
+            CanvasExtendedWidget panel = new CanvasExtendedWidget(icon.getImage(), iconChar, iconWalk, iconCoin, 80, 30, 340, 275);
+
+            JFrame frame = new JFrame("Test Extended Canvas");
             frame.setSize(800,800);
             frame.getContentPane().setLayout(new BorderLayout());
             frame.getContentPane().add(panel);
@@ -58,13 +60,16 @@ public class TestCanvas {
             System.out.println("Adding test movements");
 
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
-            testActions.add(new AnimationAction(Actions.MOVEUP));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
-            panel.addAnimations(testActions);
+            testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEDOWN));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
 
-            Thread.sleep(1000);
-            System.out.println("Start animating");
-            panel.animateCanvas();
+            panel.setAnimations(testActions);
+
         }
         catch (Exception e) {
             e.printStackTrace();

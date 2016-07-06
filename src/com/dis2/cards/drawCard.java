@@ -4,7 +4,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 public class drawCard extends JPanel{
 	
 	private static final long serialVersionUID = 3L;

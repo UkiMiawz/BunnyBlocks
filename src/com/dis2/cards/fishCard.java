@@ -1,6 +1,7 @@
 package com.dis2.cards;
 
 import com.dis2.shared.Actions;
+import com.dis2.shared.Palette;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -35,15 +36,15 @@ public class fishCard extends cardWidget{
 		}catch (IOException e) {
 				    e.printStackTrace();
 		}
-		
-		this.setFillColor(palette.violet());
+		this.setFillColor(Palette.violet());
+
 		this.setImg(img);
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setxMargin(x+ w/24);
 		this.setyMargin(y + h/10);
 		this.setImageScale(s);
-		this.setFontColor(palette.white());
+		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
 		this.setLabel("Move");

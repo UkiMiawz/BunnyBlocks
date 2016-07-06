@@ -1,5 +1,7 @@
 package com.dis2.cards;
 
+import com.dis2.shared.Palette;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -34,14 +36,14 @@ public class snakeCard extends cardWidget{
 				    e.printStackTrace();
 		}
 		
-		this.setFillColor(palette.green());
+		this.setFillColor(Palette.green());
 		this.setImg(img);
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setImageScale(s);
 		this.setxMargin(x+ w/10);
 		this.setyMargin(y + h/8);
-		this.setFontColor(palette.white());
+		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
 		this.setLabel("For");

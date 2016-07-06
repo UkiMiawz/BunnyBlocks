@@ -3,8 +3,6 @@ package com.dis2.cards;
 import java.awt.Image;
 import java.awt.Color;
 
-import com.dis2.shared.Palette;
-
 public class cardWidget {
 
 	private int x;
@@ -31,7 +29,6 @@ public class cardWidget {
     private Image gif;
     private int textBox = 0;
     private String[] options;
-    public Palette palette = new Palette();
 
     //constructor
     public cardWidget() {

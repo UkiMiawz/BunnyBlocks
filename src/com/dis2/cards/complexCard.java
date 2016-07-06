@@ -24,11 +24,9 @@ public class complexCard extends JPanel implements MouseListener{
 	JPanel text = new JPanel();
 	JPanel combo = new JPanel();
 	JPanel animate = new JPanel();
-	Palette p = new Palette();
 	JTextField forN = new JTextField("0",2);  //Use only with snake card
 	JComboBox<String> ifCombo = new JComboBox<String>(); //Use only with panda card
 	Boolean flagAnim = false;
-	int framePerSecond = 50;
 	cardWidget c;
 	
 	public complexCard(cardWidget c){
@@ -127,17 +125,17 @@ public class complexCard extends JPanel implements MouseListener{
 	public void stateChanged(cardWidget c) {
 		
 		if(c.getTextBox()==1){
-			c.setFillColor(p.brightGreen());
+			c.setFillColor(Palette.brightGreen());
 			simpleCard card= new simpleCard(c);
-			text.setBackground(p.brightGreen());
+			text.setBackground(Palette.brightGreen());
 			
 		} else if(c.getTextBox()==2){
-			c.setFillColor(p.brightPurple());
+			c.setFillColor(Palette.brightPurple());
 			simpleCard card= new simpleCard(c);
-			combo.setBackground(p.brightPurple());
+			combo.setBackground(Palette.brightPurple());
 			
 		}else{
-			c.setFillColor(p.brightViolet());
+			c.setFillColor(Palette.brightViolet());
 			simpleCard card= new simpleCard(c);
 	    }
 	    
@@ -149,17 +147,17 @@ public class complexCard extends JPanel implements MouseListener{
 	public void stateBack(cardWidget c) {
 		
 		if(c.getTextBox()==1){
-			c.setFillColor(p.green());
+			c.setFillColor(Palette.green());
 			simpleCard card= new simpleCard(c);
-			text.setBackground(p.green());
+			text.setBackground(Palette.green());
 			
 		} else if(c.getTextBox()==2){
-			c.setFillColor(p.purple());
+			c.setFillColor(Palette.purple());
 			simpleCard card= new simpleCard(c);
-			combo.setBackground(p.purple());
+			combo.setBackground(Palette.purple());
 			
 		}else{
-			c.setFillColor(p.violet());
+			c.setFillColor(Palette.violet());
 			simpleCard card= new simpleCard(c);
 	    }
 	    

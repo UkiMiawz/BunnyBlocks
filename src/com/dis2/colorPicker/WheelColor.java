@@ -73,7 +73,6 @@ public class WheelColor extends JPanel {
     private int wheelRadius = 50;
     private int selectedCharacter = 0;
     private Point coordinates = new Point(0, 0);
-    private Util util = new Util();
 
     private boolean characterClicked = false;
 
@@ -134,17 +133,17 @@ public class WheelColor extends JPanel {
     }
 
     public boolean isTransparent(Point p) {
-        p.x -= util.getImagenCenterX(this, characters.get(selectedCharacter).getCharacter());
-        p.y -= util.getImagenCenterY(this, characters.get(selectedCharacter).getCharacter());
-        if (util.isPixelTransparent(characters.get(selectedCharacter).getCharacter(), p)) {
+        p.x -= Util.getImagenCenterX(this, characters.get(selectedCharacter).getCharacter());
+        p.y -= Util.getImagenCenterY(this, characters.get(selectedCharacter).getCharacter());
+        if (Util.isPixelTransparent(characters.get(selectedCharacter).getCharacter(), p)) {
             return true;
         }
         return false;
     }
 
     public boolean isInsideCharecter(Point p) {
-        int xIni = util.getImagenCenterX(this, characters.get(selectedCharacter).getCharacter());
-        int yIni = util.getImagenCenterY(this, characters.get(selectedCharacter).getCharacter());
+        int xIni = Util.getImagenCenterX(this, characters.get(selectedCharacter).getCharacter());
+        int yIni = Util.getImagenCenterY(this, characters.get(selectedCharacter).getCharacter());
         int xEnd = xIni + characters.get(selectedCharacter).getCharacterWidth();
         int yEnd = yIni + characters.get(selectedCharacter).getCharacterHeight();
         if (p.x >= xIni && p.x <= xEnd && p.y >= yIni && p.y <= yEnd) {
@@ -195,8 +194,8 @@ public class WheelColor extends JPanel {
 
         Character c = characters.get(this.selectedCharacter);
         g.drawImage(c.getCharacter(),
-                util.getImagenCenterX(this, c.getCharacter()),
-                util.getImagenCenterY(this, c.getCharacter()), this);
+                Util.getImagenCenterX(this, c.getCharacter()),
+                Util.getImagenCenterY(this, c.getCharacter()), this);
 
         if (isCharacterClicked()) {
             int centerX = coordinates.x - this.wheelRadius;
