@@ -1,11 +1,15 @@
 package com.dis2.app;
   
-import com.dis2.codeBlocks.CodeBlocks;
+import com.dis2.codeblocks.CodeBlocks;
+import com.dis2.cards.complexCard;
+import com.dis2.cards.snakeCard;
 import com.dis2.cards2.LoopCard;
 import com.dis2.menuWidget.MenuWidget;
 import java.awt.BorderLayout;
 import java.awt.Color;  
-import java.awt.Label; 
+import java.awt.Label;
+
+import javax.swing.JComponent;
 import javax.swing.JFrame;  
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -28,7 +32,10 @@ public class app extends JFrame{
     
     public MenuWidget initMenu(){
         menuWidget = new MenuWidget(200, 400);
+        snakeCard snake = new snakeCard(5,5,160, 240, 10, 10, 0.5, 20);
         
+        JComponent one = new complexCard(snake);
+        /*
         LoopCard one = new LoopCard(0,0,70,100);
         one.setName("1");
         one.setDefaultColor(Color.ORANGE);
@@ -77,7 +84,9 @@ public class app extends JFrame{
         menuWidget.addCard(two); 
         menuWidget.addCard(three);
         menuWidget.addCard(four); 
+        */
         
+        menuWidget.addCard(one);
         return menuWidget;
     }
     

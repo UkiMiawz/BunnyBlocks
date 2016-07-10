@@ -2,6 +2,7 @@ package com.dis2.cards;
 
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.Dimension;
 
 public class cardWidget {
 
@@ -29,6 +30,7 @@ public class cardWidget {
     private Image gif;
     private int textBox = 0;
     private String[] options;
+ 
 
     //constructor
     public cardWidget() {
@@ -41,6 +43,7 @@ public class cardWidget {
         this.rectHeight = h;
         this.arcWidth = arcW;
         this.arcHeight = arcH;
+       
     }
 
     /*
@@ -239,5 +242,13 @@ public class cardWidget {
 	public void setOptions(String[] options) {
 		this.options = options;
 	}
+	
+	public int getDefaultHeight() {
+        return rectHeight;
+    }
+
+    public int getDefaultWidth() {
+        return rectWidth;
+    }
 
 }

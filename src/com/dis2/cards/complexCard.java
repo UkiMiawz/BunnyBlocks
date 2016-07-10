@@ -1,11 +1,14 @@
 package com.dis2.cards;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -13,9 +16,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.dis2.cards2.Card;
 import com.dis2.shared.Palette;
 
-public class complexCard extends JPanel implements MouseListener{
+public class complexCard extends JPanel implements Cloneable{
 	
 	private static final long serialVersionUID = 2L;
 
@@ -29,8 +33,14 @@ public class complexCard extends JPanel implements MouseListener{
 	Boolean flagAnim = false;
 	cardWidget c;
 	
+	public complexCard(){}
+	
 	public complexCard(cardWidget c){
 		this.c = c;
+	}
+	
+	public cardWidget getCardWidget(){
+		return this.c;
 	}
 	    
 	public void paintComponent(Graphics g){
@@ -45,7 +55,7 @@ public class complexCard extends JPanel implements MouseListener{
         simpleCard card= new simpleCard(c);
         
         content.add(card);
-        content.addMouseListener(this);
+        //content.addMouseListener(this);
         
         if(c.getTextBox()==1){
         
@@ -119,10 +129,46 @@ public class complexCard extends JPanel implements MouseListener{
         
 	}
 	
+	public void setBounds(int width, int height) {
+        this.setBounds(this.getX(), this.getY(), width, height);
+    }
+	
+	public void addChild(complexCard child) {
+        this.add(child); 
+        int w = this.getWidth() <= child.getWidth() ? child.getWidth()+20 : this.getWidth();
+        int h =0; 
+        if(this.getChildren().size()==1){
+            h=child.getHeight()+40;
+            child.setLocation(10, 20);
+        }else{
+            h=this.getHeight()+child.getHeight()+20;
+            child.setLocation(10, this.getHeight());
+        } 
+        this.setBounds(w, h); 
+    }
+	
+	public ArrayList<complexCard> getChildren() {
+        ArrayList<complexCard> children = new ArrayList<complexCard>();
+        for (Component c : this.getComponents()) {
+            if (c.getClass().getSuperclass().getSimpleName().equals("Card")) {
+                children.add((complexCard) c);
+            }
+        }
+        return children;
+    }
+	
+	public boolean hasChildren() {
+        return getChildren().size() == 0 ? false : true;
+    }
+	
+	public Point getMidPoint() {
+        return new Point(this.getX() + this.getWidth() / 2, this.getY() + this.getHeight() / 2);
+    }
+	
 	 /**
      * Change color of card when the code is running
      */
-	public void stateChanged(cardWidget c) {
+	public void setHighlight() {
 		
 		if(c.getTextBox()==1){
 			c.setFillColor(Palette.brightGreen());
@@ -144,7 +190,7 @@ public class complexCard extends JPanel implements MouseListener{
 	/**
      * Get back original color of card 
      */
-	public void stateBack(cardWidget c) {
+	public void setDefaultState() {
 		
 		if(c.getTextBox()==1){
 			c.setFillColor(Palette.green());
@@ -162,8 +208,12 @@ public class complexCard extends JPanel implements MouseListener{
 	    }
 	    
 	}
+	
+	public void setDefaultBounds() {
+        this.setBounds(c.getX(), c.getY(), c.getDefaultWidth(), c.getDefaultHeight());
+    }
 
-	@Override
+/*	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Click");
@@ -185,24 +235,33 @@ public class complexCard extends JPanel implements MouseListener{
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Mouse Entered Space");
+		/*System.out.println("Mouse Entered Space");
 		flagAnim = true; //this starts the animation of the gif
 		//stateChanged(c); //test for highlight color in cards
 		revalidate();
-		repaint();
+		repaint();*/
 
-	}
+	/*}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Mouse Exit Space");
+		/*System.out.println("Mouse Exit Space");
 		flagAnim = false; //this ends the animation of the gif and repaint regular img
 		//stateBack(c); // //test for highlight color in cards
 		revalidate();
-		repaint();
+		repaint();*/
 		
-	}
+	//}
+	
+	 @Override public complexCard clone() {
+	        try {
+	            final complexCard result = (complexCard) super.clone();
+	            return result;
+	        } catch (final CloneNotSupportedException ex) {
+	            throw new AssertionError();
+	        }
+	     }
 	
 	public Dimension getPreferredSize() {
 	    return new Dimension(180, 280); // appropriate constants
