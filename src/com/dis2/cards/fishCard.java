@@ -1,6 +1,7 @@
 package com.dis2.cards;
 
 import com.dis2.shared.Actions;
+import com.dis2.shared.Palette;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -17,6 +18,9 @@ public class fishCard extends cardWidget{
 	URL imageUrl = fishCard.class.getResource(
 			"/resources/fishPink.png");
 	Image img = Toolkit.getDefaultToolkit().getImage(imageUrl);
+	URL gifUrl = fishCard.class.getResource(
+		"/resources/fish_hd.gif");
+	Image gif = Toolkit.getDefaultToolkit().createImage(gifUrl);
 	BufferedImage bimg;
 	int iw;
 	int ih; 
@@ -32,21 +36,23 @@ public class fishCard extends cardWidget{
 		}catch (IOException e) {
 				    e.printStackTrace();
 		}
-		
-		this.setFillColor(palette.red());
+		this.setFillColor(Palette.violet());
+
 		this.setImg(img);
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setxMargin(x+ w/24);
 		this.setyMargin(y + h/10);
 		this.setImageScale(s);
-		this.setFontColor(palette.white());
+		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
 		this.setLabel("Move");
 		this.setxTextMargin(x + w/3);
 		this.setyTextMargin(h - h/10);
 		this.setText("The Fish card helps your character to move one position in a straight line");
+		this.setGif(gif);
+		this.setGifScale(s);
 		
 	}
 

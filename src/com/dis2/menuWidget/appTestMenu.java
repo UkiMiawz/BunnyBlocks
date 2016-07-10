@@ -1,8 +1,6 @@
-package com.dis2.menuWidget; 
-import com.dis2.cards2.Card;
+package com.dis2.menuWidget;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.datatransfer.DataFlavor;
 import javax.swing.JFrame;  
 import javax.swing.JPanel;
 

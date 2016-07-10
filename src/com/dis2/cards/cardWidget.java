@@ -3,10 +3,8 @@ package com.dis2.cards;
 import java.awt.Image;
 import java.awt.Color;
 
-import com.dis2.shared.Palette;
-
 public class cardWidget {
-	
+
 	private int x;
 	private int y;
 	private int rectWidth;
@@ -14,6 +12,7 @@ public class cardWidget {
 	private int arcWidth;
 	private int arcHeight;
 	private double imageScale;
+	private double gifScale;
 	private int imageWidth;
 	private int imageHeight;
 	private Color fillColor;
@@ -27,23 +26,24 @@ public class cardWidget {
     private String text = "";
     private String label = "";
     private Image img;
+    private Image gif;
     private int textBox = 0;
     private String[] options;
-    public Palette palette = new Palette();
-	
-	//constructor
-    public cardWidget(){}
-    
-	public cardWidget(int x, int y, int w, int h, int arcW, int arcH){
-		this.x = x;
-		this.y = y;
-		this.rectWidth = w;
-		this.rectHeight = h;
-		this.arcWidth = arcW;
-		this.arcHeight = arcH;
-	}
-	
-	/*
+
+    //constructor
+    public cardWidget() {
+    }
+
+    public cardWidget(int x, int y, int w, int h, int arcW, int arcH) {
+        this.x = x;
+        this.y = y;
+        this.rectWidth = w;
+        this.rectHeight = h;
+        this.arcWidth = arcW;
+        this.arcHeight = arcH;
+    }
+
+    /*
      * Set and get for all attributes and components
      */
 	
@@ -176,6 +176,22 @@ public class cardWidget {
 		this.imageHeight = imageHeight;
 	}
 
+	public Image getGif() {
+		return gif;
+	}
+
+	public void setGif(Image gif) {
+		this.gif = gif;
+	}
+
+	public double getGifScale() {
+		return gifScale;
+	}
+
+	public void setGifScale(double gifScale) {
+		this.gifScale = gifScale;
+	}
+
 	public int getxMargin() {
 		return xMargin;
 	}
@@ -223,8 +239,5 @@ public class cardWidget {
 	public void setOptions(String[] options) {
 		this.options = options;
 	}
-	
-	
-	
-	
+
 }

@@ -11,21 +11,23 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
+import static com.dis2.shared.Actions.MOVEDOWN;
+
 /**
  *
  * @author David
  */
 public class Util {
 
-    public int getImagenCenterX(JPanel panel, Image character) {
+    public static int getImagenCenterX(JPanel panel, Image character) {
         return (panel.getWidth() / 2) - (character.getWidth(panel) / 2);
     }
 
-    public int getImagenCenterY(JPanel panel, Image character) {
+    public static int getImagenCenterY(JPanel panel, Image character) {
         return (panel.getHeight() / 2) - (character.getHeight(panel) / 2);
     }
 
-    public boolean isPixelTransparent(Image img, Point p) {
+    public static boolean isPixelTransparent(Image img, Point p) {
         try {
             int pixel = toBufferedImage(img).getRGB(p.x, p.y);
             if ((pixel >> 24) == 0x00) {
@@ -49,5 +51,20 @@ public class Util {
         bGr.dispose();
         // Return the buffered image
         return bimage;
+    }
+
+    public static Actions getBackward(Actions action){
+        switch (action){
+            case MOVEDOWN:
+                return Actions.MOVEUP;
+            case MOVEUP:
+                return Actions.MOVEDOWN;
+            case MOVELEFT:
+                return Actions.MOVERIGHT;
+            case MOVERIGHT:
+                return Actions.MOVELEFT;
+            default:
+                return Actions.MOVEUP;
+        }
     }
 }

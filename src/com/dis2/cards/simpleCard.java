@@ -6,12 +6,8 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.dis2.shared.Palette;
-
-
 public class simpleCard extends JPanel{
-	
-	public Palette palette = new Palette();
+	private static final long serialVersionUID = 1L;
 	cardWidget cw;
 	
 	public static JTextField forN;
