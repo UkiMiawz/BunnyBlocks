@@ -1,28 +1,13 @@
 package com.dis2.app;
- 
-import com.dis2.cards2.Card;
+  
 import com.dis2.codeBlocks.CodeBlocks;
-import com.dis2.cards2.LoopCard;
+import com.dis2.card.LoopCard;
 import com.dis2.menuWidget.MenuWidget;
 import java.awt.BorderLayout;
-import java.awt.Color; 
-import java.awt.Cursor;
-import java.awt.Label;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DragGestureEvent;
-import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetAdapter;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetListener;
-import java.io.IOException;
-import java.util.Locale;
-import javax.swing.JFrame; 
-import javax.swing.JPanel;
+import java.awt.Color;  
+import java.awt.Label; 
+import javax.swing.JFrame;  
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 
@@ -32,10 +17,9 @@ public class app extends JFrame{
     CodeBlocks codeBlocks; 
     
     
-    public app(){
-        this.setLayout(new BorderLayout());  
-        codeBlocks = initCodeBlocks();
-        this.add(codeBlocks,BorderLayout.LINE_END);
+    public app(){ 
+        this.setLayout(new BorderLayout());   
+        this.add(initCodeBlocks(),BorderLayout.LINE_END);
         this.add(initMenu(),BorderLayout.LINE_START); 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -43,7 +27,7 @@ public class app extends JFrame{
     }
     
     public MenuWidget initMenu(){
-        menuWidget = new MenuWidget(200, 600);
+        menuWidget = new MenuWidget(200, 400);
         
         LoopCard one = new LoopCard(0,0,70,100);
         one.setName("1");
@@ -99,9 +83,11 @@ public class app extends JFrame{
         return menuWidget;
     }
     
-    public CodeBlocks initCodeBlocks(){
-        codeBlocks = new CodeBlocks(500,600);    
-        return codeBlocks;
+    public JScrollPane initCodeBlocks(){
+        codeBlocks = new CodeBlocks(500,400);
+        JScrollPane scrollPane = new JScrollPane(codeBlocks);
+        
+        return scrollPane;
     }  
 
     

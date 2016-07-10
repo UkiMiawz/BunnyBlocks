@@ -1,6 +1,6 @@
 package com.dis2.menuWidget;
  
-import com.dis2.cards2.Card; 
+import com.dis2.card.Card; 
 import java.awt.BorderLayout; 
 import java.awt.Cursor; 
 import java.awt.Dimension;

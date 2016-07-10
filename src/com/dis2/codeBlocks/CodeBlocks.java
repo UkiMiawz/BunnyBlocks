@@ -1,6 +1,6 @@
 package com.dis2.codeBlocks;
 
-import com.dis2.cards2.Card;
+import com.dis2.card.Card;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -43,10 +43,9 @@ class DragListener extends MouseInputAdapter {
             targetCard.setDefaultState();
             if (isInsideCard(selectedCard, targetCard)) {
                 selectedCard.setDefaultState();
-                targetCard.add(selectedCard);
-            }
-        }
-        cb.fixSize();
+                targetCard.addChild(selectedCard);
+            }  
+        } 
     }
 
     public void mousePressed(MouseEvent me) {
@@ -55,9 +54,8 @@ class DragListener extends MouseInputAdapter {
     }
 
     public void mouseDragged(MouseEvent me) {
-
-        targetCard = null;
         selectedCard = (Card) me.getComponent();
+        targetCard = null;
         cb.bringToFront(selectedCard);
         selectedCard.setDragState();
         location = selectedCard.getLocation(location);
@@ -66,8 +64,6 @@ class DragListener extends MouseInputAdapter {
         selectedCard.setLocation(x, y);
         solveCollitions();
     }
-
-    
 
     public void solveCollitions() {
         ArrayList<Card> collitions = new ArrayList<Card>();
@@ -82,8 +78,8 @@ class DragListener extends MouseInputAdapter {
         }
         double distance = -1;
         for (Card card : collitions) {
-            Point sP = getMidPoint(selectedCard);
-            Point cP = getMidPoint(card);
+            Point sP = selectedCard.getMidPoint();
+            Point cP = card.getMidPoint();
             if (getDistanceBetweenPoints(sP, cP) < distance || distance == -1) {
                 targetCard = card;
                 distance = getDistanceBetweenPoints(sP, cP);
@@ -104,9 +100,8 @@ class DragListener extends MouseInputAdapter {
         int target = 0;
         double distance = -1;
         for (int i = 0; i > cards.size(); i++) {
-            Point sP = getMidPoint(selectedCard);
-            Point cP = getMidPoint((Card) cards.get(i));
-
+            Point sP = selectedCard.getMidPoint();
+            Point cP = cards.get(i).getMidPoint();
             if (i == 0) {
                 distance = getDistanceBetweenPoints(sP, cP);
                 target = 0;
@@ -122,10 +117,6 @@ class DragListener extends MouseInputAdapter {
         double b = Math.pow((p1.y - p2.y), 2);
         double c = Math.sqrt(a + b);
         return c;
-    }
-
-    public Point getMidPoint(Card card) {
-        return new Point(card.getX() + card.getWidth() / 2, card.getY() + card.getHeight() / 2);
     }
 
     public boolean isInsideCard(Card selected, Card target) {
@@ -149,8 +140,7 @@ class DragListener extends MouseInputAdapter {
 
 }
 
-public class CodeBlocks extends JPanel {
-
+public class CodeBlocks extends JPanel { 
     DataFlavor dataFlavor = new DataFlavor(Card.class,
             Card.class.getSimpleName());
 
@@ -161,11 +151,13 @@ public class CodeBlocks extends JPanel {
     }
 
     public ArrayList<Card> getCards() {
-        ArrayList<Card> cds = new ArrayList<Card>();
+        ArrayList<Card> children = new ArrayList<Card>();
         for (Component c : this.getComponents()) {
-            cds.add((Card) c);
+            if (c.getClass().getSuperclass().getSimpleName().equals("Card")) {
+                children.add((Card) c);
+            }
         }
-        return cds;
+        return children;
     }
 
     public void addCard(Card card) {
@@ -173,42 +165,20 @@ public class CodeBlocks extends JPanel {
         card.addMouseListener(drag);
         card.addMouseMotionListener(drag);
         card.setDefaultState();
-       Component temp = this.getComponentAt(card.getX(), card.getY());
-        if(temp.getClass().getSimpleName().equals("CodeBlocks")){
+        card.setDefaultBounds();
+        Component temp = this.getComponentAt(card.getX(), card.getY());
+        if (temp.getClass().getSimpleName().equals("CodeBlocks")) {
             this.add(card);
             this.bringToFront(card);
-        }else{
-            ((Card)temp).add(card);
-            this.fixSize(); 
-        } 
+        } else {
+            ((Card) temp).addChild(card); 
+        }
     }
 
     public void bringToFront(Card card) {
         this.setComponentZOrder(card, 0);
         for (Card c : this.getCards()) {
             c.setDefaultState();
-        }
-    }
-    
-    public void fixSize() {
-        for (Card card : this.getCards()) {
-            int h = 30;
-            int w = 0;
-            if (card.getComponents().length > 1) {
-                for (Component child : card.getComponents()) {
-                    if (!(child.getClass().getName().equals("java.awt.Label"))) {
-                        child.setLocation(15, h);
-                        h += child.getHeight() + 20;
-                        if (w < child.getWidth()) {
-                            w += child.getWidth() + 20;
-                        }
-                    }
-                    card.setBounds(card.getX(), card.getY(), w, h);
-                    card.setDefaultState();
-                }
-            } else {
-                card.setBounds(card.getX(), card.getY(), card.getDefaultWidth(), card.getDefaultHeight());
-            }
         }
     }
 
@@ -234,7 +204,7 @@ public class CodeBlocks extends JPanel {
                     e.acceptDrop(DnDConstants.ACTION_COPY);
                     e.dropComplete(true);
                     this.cb.validate();
-                    this.cb.addCard(card); 
+                    this.cb.addCard(card);
                     repaint();
                     return;
                 }

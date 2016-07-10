@@ -1,5 +1,5 @@
 package com.dis2.menuWidget; 
-import com.dis2.cards2.Card;
+import com.dis2.card.Card;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;

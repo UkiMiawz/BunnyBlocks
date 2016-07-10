@@ -1,6 +1,6 @@
 
 package com.dis2.codeBlocks; 
-import com.dis2.cards2.LoopCard;
+import com.dis2.card.LoopCard;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Label;
