@@ -18,6 +18,16 @@ public class Card extends JPanel implements Cloneable{
     private Color dropColor = Color.BLACK;
     private Color selectedColor = Color.BLACK;
 
+    private int Ntimes = 0;
+
+    public int getNtimes() {
+        return Ntimes;
+    }
+
+    public void setNtimes(int ntimes) {
+        Ntimes = ntimes;
+    }
+
     private Dimension defaultSize;
 
     public Card(int x, int y, int width, int height) {
