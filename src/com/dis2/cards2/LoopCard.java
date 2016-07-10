@@ -1,5 +1,5 @@
 
-package com.dis2.card;
+package com.dis2.cards2;
   
 import java.awt.Color;
 

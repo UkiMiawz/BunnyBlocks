@@ -1,6 +1,6 @@
 package com.dis2.codeBlocks;
 
-import com.dis2.card.Card;
+import com.dis2.cards2.Card;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;

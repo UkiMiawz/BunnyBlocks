@@ -1,7 +1,7 @@
 package com.dis2.app;
   
-import com.dis2.codeBlocks.CodeBlocks;
-import com.dis2.card.LoopCard;
+import com.dis2.cards2.LoopCard;
+import com.dis2.codeBlocks.CodeBlocks; 
 import com.dis2.menuWidget.MenuWidget;
 import java.awt.BorderLayout;
 import java.awt.Color;  
