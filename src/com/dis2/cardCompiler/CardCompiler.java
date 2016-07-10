@@ -1,6 +1,7 @@
-package com.dis2.shared;
+package com.dis2.cardCompiler;
 
 import com.dis2.cards2.Card;
+import com.dis2.shared.AnimationAction;
 
 import java.util.ArrayList;
 
