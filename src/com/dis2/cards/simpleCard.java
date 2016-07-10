@@ -7,10 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class simpleCard extends JPanel{
-	private static final long serialVersionUID = 1L;
+	
 	cardWidget cw;
 	
-	public static JTextField forN;
+	JTextField forN;
 	JTextField textField;
     JPanel panel;
 

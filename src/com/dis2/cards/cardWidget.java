@@ -1,10 +1,11 @@
 package com.dis2.cards;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class cardWidget {
+public class cardWidget implements Cloneable{
 
 	private int x;
 	private int y;
@@ -250,5 +251,19 @@ public class cardWidget {
     public int getDefaultWidth() {
         return rectWidth;
     }
+    
+    public void setLocation(Point p){
+    	setX(p.x);
+    	setY(p.y);
+    }
+    
+    @Override public cardWidget clone() {
+        try {
+            final cardWidget result = (cardWidget) super.clone();
+            return result;
+        } catch (final CloneNotSupportedException ex) {
+            throw new AssertionError();
+        }
+     }
 
 }

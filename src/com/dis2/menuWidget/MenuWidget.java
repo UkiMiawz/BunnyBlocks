@@ -1,5 +1,6 @@
 package com.dis2.menuWidget;
  
+import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
 import com.dis2.cards2.Card; 
 import java.awt.BorderLayout; 
@@ -32,8 +33,8 @@ public class MenuWidget extends JPanel {
     private JSplitPane container;
     private int selectedCard = 0; 
     
-    DataFlavor dataFlavor = new DataFlavor(complexCard.class,
-            complexCard.class.getSimpleName());
+    DataFlavor dataFlavor = new DataFlavor(cardWidget.class,
+            cardWidget.class.getSimpleName());
 
     public MenuWidget(int width, int height) {
         descGlobalLabel = new JLabel();
@@ -88,7 +89,7 @@ public class MenuWidget extends JPanel {
         public void dragGestureRecognized(DragGestureEvent event) {
         	System.out.println(event.getComponent().getClass().getName());
             Cursor cursor = null;
-            complexCard card = (complexCard) event.getComponent(); 
+            cardWidget card = ((complexCard)event.getComponent()).getCardWidget(); 
             if (event.getDragAction() == DnDConstants.ACTION_COPY) {
                 cursor = DragSource.DefaultCopyDrop;
             } 
@@ -98,9 +99,9 @@ public class MenuWidget extends JPanel {
     
     class TransferableCard implements Transferable {
 
-        private complexCard card;
+        private cardWidget card;
 
-        public TransferableCard(complexCard card) {
+        public TransferableCard(cardWidget card) {
             this.card = card;
         }
 

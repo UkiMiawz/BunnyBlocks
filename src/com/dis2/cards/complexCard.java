@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -32,11 +33,15 @@ public class complexCard extends JPanel implements Cloneable{
 	JComboBox<String> ifCombo = new JComboBox<String>(); //Use only with panda card
 	Boolean flagAnim = false;
 	cardWidget c;
+	Palette p = new Palette();
 	
 	public complexCard(){}
 	
 	public complexCard(cardWidget c){
 		this.c = c;
+		this.setBounds(new Rectangle(c.getX(), c.getY(), c.getRectWidth(), c.getRectHeight()));
+		this.setLayout(null);
+		
 	}
 	
 	public cardWidget getCardWidget(){
@@ -48,9 +53,9 @@ public class complexCard extends JPanel implements Cloneable{
 		
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         
-		lpane.setBounds(0, 0, 180, 280);
-		lpane.setPreferredSize(new Dimension(180, 280));
-        content.setBounds(0, 0, 180, 280);
+		lpane.setBounds(0, 0, c.getRectWidth(), c.getRectHeight());
+		lpane.setPreferredSize(new Dimension(c.getRectWidth(), c.getRectHeight()));
+        content.setBounds(0, 0, c.getRectWidth(), c.getRectHeight());
         
         simpleCard card= new simpleCard(c);
         
@@ -126,7 +131,10 @@ public class complexCard extends JPanel implements Cloneable{
           });
 
         add(lpane); 
-        
+        g.setColor(p.black());
+        g.drawRect(0,0, this.getWidth(), this.getHeight());
+        g.fillRect(0,0, this.getWidth(), this.getHeight());
+       
 	}
 	
 	public void setBounds(int width, int height) {
@@ -171,17 +179,17 @@ public class complexCard extends JPanel implements Cloneable{
 	public void setHighlight() {
 		
 		if(c.getTextBox()==1){
-			c.setFillColor(Palette.brightGreen());
+			c.setFillColor(p.brightGreen());
 			simpleCard card= new simpleCard(c);
-			text.setBackground(Palette.brightGreen());
+			text.setBackground(p.brightGreen());
 			
 		} else if(c.getTextBox()==2){
-			c.setFillColor(Palette.brightPurple());
+			c.setFillColor(p.brightPurple());
 			simpleCard card= new simpleCard(c);
-			combo.setBackground(Palette.brightPurple());
+			combo.setBackground(p.brightPurple());
 			
 		}else{
-			c.setFillColor(Palette.brightViolet());
+			c.setFillColor(p.brightViolet());
 			simpleCard card= new simpleCard(c);
 	    }
 	    
@@ -193,17 +201,17 @@ public class complexCard extends JPanel implements Cloneable{
 	public void setDefaultState() {
 		
 		if(c.getTextBox()==1){
-			c.setFillColor(Palette.green());
+			c.setFillColor(p.green());
 			simpleCard card= new simpleCard(c);
-			text.setBackground(Palette.green());
+			text.setBackground(p.green());
 			
 		} else if(c.getTextBox()==2){
-			c.setFillColor(Palette.purple());
+			c.setFillColor(p.purple());
 			simpleCard card= new simpleCard(c);
-			combo.setBackground(Palette.purple());
+			combo.setBackground(p.purple());
 			
 		}else{
-			c.setFillColor(Palette.violet());
+			c.setFillColor(p.violet());
 			simpleCard card= new simpleCard(c);
 	    }
 	    

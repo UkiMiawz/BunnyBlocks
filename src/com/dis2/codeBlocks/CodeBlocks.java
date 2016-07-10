@@ -32,18 +32,20 @@ class DragListener extends MouseInputAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+    	
         selectedCard = (complexCard) e.getComponent();
         cb.bringToFront(selectedCard);
-        //selectedCard.setSelectedState(); 
+        selectedCard.setHighlight(); 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+    	
         selectedCard = (complexCard) e.getComponent();
         if (targetCard != null) {
-           // targetCard.setDefaultState();
+            targetCard.setDefaultState();
             if (isInsideCard(selectedCard, targetCard)) {
-              //  selectedCard.setDefaultState();
+                selectedCard.setDefaultState();
                 targetCard.addChild(selectedCard);
             }  
             
@@ -76,6 +78,7 @@ class DragListener extends MouseInputAdapter {
     public void solveCollitions() {
         ArrayList<complexCard> collitions = new ArrayList<complexCard>();
         for (complexCard card : cb.getCards()) {
+        	
             if (!selectedCard.equals(card)) {
                 if (isInsideCard(selectedCard, card)) {
                     collitions.add(card);
@@ -128,9 +131,11 @@ class DragListener extends MouseInputAdapter {
     }
 
     public boolean isInsideCard(complexCard selected, complexCard target) {
+    
         if (selected.equals(target)) {
             return false;
         }
+       
         int xt = target.getX();
         int yt = target.getY();
         int wt = target.getWidth();
@@ -149,8 +154,8 @@ class DragListener extends MouseInputAdapter {
 
 public class CodeBlocks extends JPanel {
 
-    DataFlavor dataFlavor = new DataFlavor(complexCard.class,
-            complexCard.class.getSimpleName());
+    DataFlavor dataFlavor = new DataFlavor(cardWidget.class,
+            cardWidget.class.getSimpleName());
 
     public CodeBlocks(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
@@ -195,7 +200,8 @@ public class CodeBlocks extends JPanel {
     public ArrayList<complexCard> getCards() {
         ArrayList<complexCard> children = new ArrayList<complexCard>();
         for (Component c : this.getComponents()) {
-            if (c.getClass().getSuperclass().getSimpleName().equals("Card")) {
+        	System.out.println(c.getClass().getName());
+            if (c.getClass().getSimpleName().equals("complexCard")) {
                 children.add((complexCard) c);
             }
         }
@@ -203,6 +209,7 @@ public class CodeBlocks extends JPanel {
     }
 
     public void addCard(complexCard card) {
+    	card = card.clone();
         DragListener drag = new DragListener(this);
         card.addMouseListener(drag);
         card.addMouseMotionListener(drag);
@@ -237,19 +244,18 @@ public class CodeBlocks extends JPanel {
         }
 
         public void drop(DropTargetDropEvent e) {
-        	System.out.println("DROP");
+        	
             try {
                 Transferable tr = e.getTransferable();
-                complexCard card = (complexCard) tr.getTransferData(dataFlavor);
-                card.setLocation(e.getLocation());
+                cardWidget card = (cardWidget) tr.getTransferData(dataFlavor);
 
                 if (e.isDataFlavorSupported(dataFlavor)) {
-                   /* e.acceptDrop(DnDConstants.ACTION_COPY);
+                    e.acceptDrop(DnDConstants.ACTION_COPY);
                     e.dropComplete(true);
                     this.cb.validate();
-                    this.cb.addCard(card);
-                    repaint();*/
-                	System.out.println("ENTRE");
+                    card.setLocation(e.getLocation());
+                    this.cb.addCard(new complexCard(card.clone()));
+                    repaint();
                     return;
                 }
                 e.rejectDrop();
