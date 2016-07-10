@@ -1,7 +1,7 @@
 package com.dis2.app;
   
+import com.dis2.codeBlocks.CodeBlocks;
 import com.dis2.cards2.LoopCard;
-import com.dis2.codeBlocks.CodeBlocks; 
 import com.dis2.menuWidget.MenuWidget;
 import java.awt.BorderLayout;
 import java.awt.Color;  
@@ -76,9 +76,7 @@ public class app extends JFrame{
         menuWidget.addCard(one); 
         menuWidget.addCard(two); 
         menuWidget.addCard(three);
-        menuWidget.addCard(four);
-        
-        
+        menuWidget.addCard(four); 
         
         return menuWidget;
     }
@@ -88,9 +86,7 @@ public class app extends JFrame{
         JScrollPane scrollPane = new JScrollPane(codeBlocks);
         
         return scrollPane;
-    }  
-
-    
+    }   
     
     public static void main(String args[]){
         new app();

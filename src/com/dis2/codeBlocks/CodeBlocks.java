@@ -32,8 +32,7 @@ class DragListener extends MouseInputAdapter {
     public void mouseClicked(MouseEvent e) {
         selectedCard = (Card) e.getComponent();
         cb.bringToFront(selectedCard);
-        selectedCard.setSelectedState();
-
+        selectedCard.setSelectedState(); 
     }
 
     @Override
@@ -45,7 +44,14 @@ class DragListener extends MouseInputAdapter {
                 selectedCard.setDefaultState();
                 targetCard.addChild(selectedCard);
             }  
-        } 
+            
+            //just test of functio getCode
+            cb.getCode();
+            
+        } else {//if released card is out of container
+            
+            // fix size of the previos container
+        }  
     }
 
     public void mousePressed(MouseEvent me) {
@@ -137,10 +143,10 @@ class DragListener extends MouseInputAdapter {
             return false;
         }
     }
-
 }
 
-public class CodeBlocks extends JPanel { 
+public class CodeBlocks extends JPanel {
+
     DataFlavor dataFlavor = new DataFlavor(Card.class,
             Card.class.getSimpleName());
 
@@ -148,6 +154,40 @@ public class CodeBlocks extends JPanel {
         this.setPreferredSize(new Dimension(width, height));
         this.setLayout(null);
         new DropTargetPanel(this);
+    }
+
+    public ArrayList<Card> getCode() { 
+        ArrayList<Card> code = new ArrayList(); 
+        if (this.getCards().size() == 1) {
+            Card mainCard = new Card(this.getCards().get(0).getBounds()); 
+            mainCard.add(this.getCards().get(0).clone());
+            code = this.buildTree(mainCard, 0);
+            System.out.println("****");
+            repaint();
+        }else{
+            System.out.println("In order to generate the code it must be only one super card Conteiners. now there are "+ this.getCards().size() + " single Cards in the Code");
+        }
+        return code;
+    }
+
+    public ArrayList<Card> buildTree(Card card, int level) {
+        ArrayList<Card> compList = new ArrayList();
+
+        //loop-for only for print the card tree  
+        String tap = "";
+        for (int i = 0; i < level; i++) {
+            tap += " ";
+        }
+
+        for (Card child : card.getChildren()) {
+            System.out.println(tap + child.getName());
+            Card c = child;
+            compList.add(c);
+            if (c.hasChildren()) {
+                compList.addAll(buildTree(c, level + 1));
+            }
+        }
+        return compList;
     }
 
     public ArrayList<Card> getCards() {
@@ -171,7 +211,7 @@ public class CodeBlocks extends JPanel {
             this.add(card);
             this.bringToFront(card);
         } else {
-            ((Card) temp).addChild(card); 
+            ((Card) temp).addChild(card);
         }
     }
 

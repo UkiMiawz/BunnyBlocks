@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
-public class Card extends JPanel {
+public class Card extends JPanel implements Cloneable{
 
     private int type = 0;
     private Color borderColor = Color.BLACK;
@@ -20,10 +20,24 @@ public class Card extends JPanel {
 
     private Dimension defaultSize;
 
-    Card(int x, int y, int width, int height) {
+    public Card(int x, int y, int width, int height) {
         this.defaultSize = new Dimension(width, height);
         this.setLayout(null);
         this.setBounds(new Rectangle(x, y, width, height));
+    }
+    
+     @Override public Card clone() {
+        try {
+            final Card result = (Card) super.clone();
+            return result;
+        } catch (final CloneNotSupportedException ex) {
+            throw new AssertionError();
+        }
+     }
+    
+    public Card(Rectangle bouce){
+        this.setLayout(null);
+        this.setBounds(bouce);
     }
 
     public int getType() {
@@ -93,8 +107,7 @@ public class Card extends JPanel {
     }
 
     public boolean isChild(Card parent) {
-        for (Component c : getComponents()) {
-            System.out.println("c: " + c.getName());
+        for (Component c : getComponents()) { 
             if (c instanceof Card) {
                 if (parent.equals((Card) c)) {
                     return true;
