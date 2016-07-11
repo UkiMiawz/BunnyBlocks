@@ -3,7 +3,6 @@ package com.dis2.cards;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Color;
-import java.awt.Dimension;
 
 public class cardWidget implements Cloneable{
 

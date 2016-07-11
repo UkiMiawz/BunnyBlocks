@@ -42,7 +42,7 @@ public class fishCard extends cardWidget{
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setxMargin(x+ w/24);
-		this.setyMargin(y + h/10);
+		this.setyMargin(y + h/7);
 		this.setImageScale(s);
 		this.setFontColor(p.white());
 		this.setFontSize(fs);
