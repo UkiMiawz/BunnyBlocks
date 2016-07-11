@@ -1,4 +1,4 @@
-package com.dis2.codeblocks;
+package com.dis2.codeBlocks;
 
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;

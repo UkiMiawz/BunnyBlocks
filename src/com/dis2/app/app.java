@@ -1,6 +1,6 @@
 package com.dis2.app;
   
-import com.dis2.codeblocks.CodeBlocks;
+import com.dis2.codeBlocks.CodeBlocks;
 import com.dis2.cards.complexCard;
 import com.dis2.cards.fishCard;
 import com.dis2.cards.snakeCard;
@@ -18,8 +18,7 @@ import javax.swing.SwingConstants;
 public class app extends JFrame{
     
     MenuWidget menuWidget; 
-    CodeBlocks codeBlocks; 
-    
+    CodeBlocks codeBlocks;
     
     public app(){ 
         this.setLayout(new BorderLayout());   
