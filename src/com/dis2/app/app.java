@@ -37,17 +37,12 @@ public class app extends JFrame{
         fishCard fishD = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,3);
         fishCard fishL = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,4);
         
-        JComponent snakeC = new complexCard(snake);
-        JComponent fishRC = new complexCard(fishR);
-        JComponent fishUC = new complexCard(fishU);
-        JComponent fishDC = new complexCard(fishD);
-        JComponent fishLC = new complexCard(fishL);
-       
-        menuWidget.addCard(snakeC);
-        menuWidget.addCard(fishRC);
-        menuWidget.addCard(fishUC);
-        menuWidget.addCard(fishDC);
-        menuWidget.addCard(fishLC);
+        menuWidget.addCard(new complexCard(snake));
+        menuWidget.addCard(new complexCard(fishR));
+        menuWidget.addCard(new complexCard(fishU));
+        menuWidget.addCard(new complexCard(fishD));
+        menuWidget.addCard(new complexCard(fishL));
+        
         return menuWidget;
     }
     
