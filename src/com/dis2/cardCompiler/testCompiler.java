@@ -1,6 +1,8 @@
 package com.dis2.cardCompiler;
 
-import com.dis2.cards2.Card;
+import com.dis2.cards.complexCard;
+import com.dis2.cards.snakeCard;
+import com.dis2.cards.fishCard;
 import com.dis2.shared.AnimationAction;
 
 import java.util.ArrayList;
@@ -12,19 +14,20 @@ public class testCompiler {
 
     public static void main(String args[]){
         ArrayList<AnimationAction> result = new ArrayList<>();
-        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<complexCard> cards = new ArrayList<>();
 
         //add for testing
-        Card testFor = new Card(0,0,0,0);
-        testFor.setType(1);
-        testFor.setNtimes(2);
+        snakeCard cardWidgetFor = new snakeCard(0,0,0,0,0,0,0,0);
+        cardWidgetFor.setCardType(1);
+        cardWidgetFor.setNtimes(2);
+        complexCard testFor = new complexCard(cardWidgetFor);
 
-        Card testMoveUp = new Card(0,0,0,0);
-        testMoveUp.setType(2);
+        fishCard cardWidgetMoveUp = new fishCard(0,0,0,0,0,0,0,0,2);
+        complexCard testMoveUp = new complexCard(cardWidgetMoveUp);
         testFor.addChild(testMoveUp);
 
-        Card testMoveDown = new Card(0,0,0,0);
-        testMoveUp.setType(3);
+        fishCard cardWidgetMoveDown = new fishCard(0,0,0,0,0,0,0,0,3);
+        complexCard testMoveDown = new complexCard(cardWidgetMoveDown);
         testFor.addChild(testMoveDown);
 
         cards.add(testFor);
@@ -34,6 +37,5 @@ public class testCompiler {
         for(AnimationAction action: result){
             System.out.println(action.getAction().name());
         }
-
     }
 }
