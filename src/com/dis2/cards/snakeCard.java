@@ -15,7 +15,6 @@ import javax.imageio.ImageIO;
 public class snakeCard extends cardWidget{
 	
 	private int Ntimes;
-	Palette p = new Palette();
 	URL imageUrl = fishCard.class.getResource(
 			"/resources/snake.png");
 	Image img = Toolkit.getDefaultToolkit().getImage(imageUrl);
@@ -37,14 +36,14 @@ public class snakeCard extends cardWidget{
 				    e.printStackTrace();
 		}
 		
-		this.setFillColor(p.green());
+		this.setFillColor(Palette.green());
 		this.setImg(img);
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setImageScale(s);
 		this.setxMargin(x+ w/10);
 		this.setyMargin(y + h/8);
-		this.setFontColor(p.white());
+		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
 		this.setLabel("For");

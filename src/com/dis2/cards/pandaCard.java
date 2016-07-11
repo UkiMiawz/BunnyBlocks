@@ -45,7 +45,6 @@ public class pandaCard extends cardWidget{
 		this.setxTextMargin(x + w/3);
 		this.setyTextMargin(h - h/5);
 		this.setText("The Panda card helps your character decide between options");
-		this.setTextBox(2);
 	}
 
 	public Conditions getCondition() {

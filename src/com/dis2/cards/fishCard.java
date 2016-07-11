@@ -23,9 +23,7 @@ public class fishCard extends cardWidget{
 	BufferedImage bimg;
 	String text;
 	int iw;
-	int ih; 
-	Palette p = new Palette();
-	
+	int ih;
 	
 	public fishCard(int x, int y, int w, int h, int arcW, int arcH, double s, int fs, int type){
 		super(x,y,w,h,arcW,arcH);
@@ -38,13 +36,13 @@ public class fishCard extends cardWidget{
 				    e.printStackTrace();
 		}
 		this.setImg(img);
-		this.setFillColor(p.violet());
+		this.setFillColor(Palette.violet());
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
 		this.setxMargin(x+ w/24);
 		this.setyMargin(y + h/7);
 		this.setImageScale(s);
-		this.setFontColor(p.white());
+		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
 		this.setLabel(text);
@@ -83,11 +81,9 @@ public class fishCard extends cardWidget{
 		img = Toolkit.getDefaultToolkit().getImage(imageUrl);
 	}
 
-
 	public Actions getAction() {
 		return action;
 	}
-
 
 	public void setAction(Actions action) {
 		this.action = action;

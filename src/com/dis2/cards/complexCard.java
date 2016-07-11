@@ -26,7 +26,6 @@ public class complexCard extends JPanel implements Cloneable{
 	JPanel animate = new JPanel();
 	JTextField forN = new JTextField("0",2);  //Use only with snake card
 	cardWidget c;
-	Palette p = new Palette();
 	Util util = new Util();
 	boolean flagAnim = false;
 	
@@ -218,12 +217,12 @@ public class complexCard extends JPanel implements Cloneable{
 	public void setHighlight() {
 		
 		if(c.getCardType()==1){
-			c.setFillColor(p.brightGreen());
+			c.setFillColor(Palette.brightGreen());
 			repaint();
 			
 			
 		}else{
-			c.setFillColor(p.brightViolet());
+			c.setFillColor(Palette.brightViolet());
 			repaint();
 	    }
 	    
@@ -235,11 +234,11 @@ public class complexCard extends JPanel implements Cloneable{
 	public void setDefaultState() {
 		
 		if(c.getCardType()==1){
-			c.setFillColor(p.green());
+			c.setFillColor(Palette.green());
 			repaint();
 			
 		}else{
-			c.setFillColor(p.violet());
+			c.setFillColor(Palette.violet());
 			repaint();
 	    }
 	    
