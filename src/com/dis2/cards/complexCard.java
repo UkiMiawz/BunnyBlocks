@@ -157,6 +157,7 @@ public class complexCard extends JPanel implements Cloneable{
 		    g.setFont(new Font("Courier", Font.BOLD, 16));
 		    g.drawString(c.getLabel(),(c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())) , 28);
 		    forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);
+		    forN.requestFocus();
 		    this.add(forN);
 		    
 		    /**
