@@ -1,9 +1,10 @@
 package com.dis2.cards;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Color;
 
-public class cardWidget {
+public class cardWidget implements Cloneable{
 
 	private int x;
 	private int y;
@@ -17,6 +18,7 @@ public class cardWidget {
 	private int imageHeight;
 	private Color fillColor;
 	private Color fontColor;
+	private Color borderColor = Color.black;
 	private int typeFace = 0;
     private int fontSize = 12;
     private int xMargin;
@@ -27,8 +29,12 @@ public class cardWidget {
     private String label = "";
     private Image img;
     private Image gif;
-    private int textBox = 0;
     private String[] options;
+    private boolean simpleCard = true;
+    private boolean flagAnim = false;
+    private boolean inStack = false;
+    private int cardType;
+ 
 
     //constructor
     public cardWidget() {
@@ -41,6 +47,7 @@ public class cardWidget {
         this.rectHeight = h;
         this.arcWidth = arcW;
         this.arcHeight = arcH;
+       
     }
 
     /*
@@ -176,6 +183,14 @@ public class cardWidget {
 		this.imageHeight = imageHeight;
 	}
 
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+	}
+
 	public Image getGif() {
 		return gif;
 	}
@@ -224,14 +239,6 @@ public class cardWidget {
 		this.yTextMargin = yTextMargin;
 	}
 
-	public int getTextBox() {
-		return textBox;
-	}
-
-	public void setTextBox(int textBox) {
-		this.textBox = textBox;
-	}
-
 	public String[] getOptions() {
 		return options;
 	}
@@ -239,5 +246,59 @@ public class cardWidget {
 	public void setOptions(String[] options) {
 		this.options = options;
 	}
+	
+	public int getDefaultHeight() {
+        return rectHeight;
+    }
+
+    public int getDefaultWidth() {
+        return rectWidth;
+    }
+    
+    public void setLocation(Point p){
+    	setX(p.x);
+    	setY(p.y);
+    }
+    
+    public int getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(int cardType) {
+		this.cardType = cardType;
+	}
+
+	public void setSimpleCard(boolean val){
+		this.simpleCard = val;
+	}
+	
+	public boolean isSimpleCard(){
+		return simpleCard;
+	}
+	
+	public void setAnimation(boolean val){
+		this.flagAnim = val;
+	}
+	
+	public boolean isAnimated(){
+		return flagAnim;
+	}
+    
+    public boolean isInStack() {
+		return inStack;
+	}
+
+	public void setInStack(boolean inStack) {
+		this.inStack = inStack;
+	}
+
+	@Override public cardWidget clone() {
+        try {
+            final cardWidget result = (cardWidget) super.clone();
+            return result;
+        } catch (final CloneNotSupportedException ex) {
+            throw new AssertionError();
+        }
+     }
 
 }

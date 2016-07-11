@@ -1,7 +1,9 @@
 package com.dis2.menuWidget;
  
-import com.dis2.cards2.Card; 
-import java.awt.BorderLayout; 
+import com.dis2.cards.cardWidget;
+import com.dis2.cards.complexCard;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Cursor; 
 import java.awt.Dimension;
 import java.awt.FlowLayout;  
@@ -11,10 +13,15 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource; 
+import java.awt.dnd.DragSource;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -30,13 +37,12 @@ public class MenuWidget extends JPanel {
     private JSplitPane container;
     private int selectedCard = 0; 
     
-    DataFlavor dataFlavor = new DataFlavor(Card.class,
-            Card.class.getSimpleName());
+    DataFlavor dataFlavor = new DataFlavor(cardWidget.class,
+            cardWidget.class.getSimpleName());
 
     public MenuWidget(int width, int height) {
         descGlobalLabel = new JLabel();
         descGlobalCard = new JPanel();
-        cardContent = new ArrayList<JPanel>();
         bottomPanel = new JPanel();
         topPanel = new JPanel();
         container = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -48,16 +54,19 @@ public class MenuWidget extends JPanel {
         this.add(container);
         this.setPreferredSize(new Dimension(width, height));  
         this.dataFlavor = dataFlavor;
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10,30,10,35));
+        
     }
 
-    public void addCard(JPanel card) {
-        topPanel.setLayout(new BoxLayout(topPanel,BoxLayout.Y_AXIS)); 
-        topPanel.setPreferredSize(new Dimension(card.getHeight(), card.getHeight() * cardContent.size()));
-        topPanel.add(card);
-        cardContent.add(card);  
+    public void addCard(JComponent card) {
+        topPanel.add(card); 
+        topPanel.setPreferredSize(new Dimension(card.getHeight(), card.getHeight() * topPanel.getComponents().length));
          DragSource ds = new DragSource();
         ds.createDefaultDragGestureRecognizer(card,
                 DnDConstants.ACTION_COPY, new DragGesture());
+        
+        
     }
 
     public ArrayList<JPanel> getCards() {
@@ -85,21 +94,23 @@ public class MenuWidget extends JPanel {
     class DragGesture implements DragGestureListener { 
         @Override
         public void dragGestureRecognized(DragGestureEvent event) {
+        	System.out.println(event.getComponent().getClass().getName());
             Cursor cursor = null;
-            Card card = (Card) event.getComponent(); 
+            cardWidget card = ((complexCard)event.getComponent()).getCardWidget(); 
             if (event.getDragAction() == DnDConstants.ACTION_COPY) {
                 cursor = DragSource.DefaultCopyDrop;
             } 
             event.startDrag(cursor, new MenuWidget.TransferableCard(card));
         }
+        
     }
     
     class TransferableCard implements Transferable {
 
-        private Card card;
+        private cardWidget card;
 
-        public TransferableCard(Card card) {
-            this.card = card;
+        public TransferableCard(cardWidget card) {
+            this.card = card.clone();
         }
 
         @Override
