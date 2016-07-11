@@ -1,11 +1,16 @@
 package com.dis2.app;
   
-import com.dis2.codeBlocks.CodeBlocks;
+import com.dis2.codeblocks.CodeBlocks;
+import com.dis2.cards.complexCard;
+import com.dis2.cards.fishCard;
+import com.dis2.cards.snakeCard;
 import com.dis2.cards2.LoopCard;
 import com.dis2.menuWidget.MenuWidget;
 import java.awt.BorderLayout;
 import java.awt.Color;  
-import java.awt.Label; 
+import java.awt.Label;
+
+import javax.swing.JComponent;
 import javax.swing.JFrame;  
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -28,56 +33,23 @@ public class app extends JFrame{
     
     public MenuWidget initMenu(){
         menuWidget = new MenuWidget(200, 400);
+        snakeCard snake = new snakeCard(3,3,160, 240, 10, 10, 0.5, 20);
+        fishCard fishR = new fishCard(3,3, 160, 240, 10, 10, 0.5, 20 ,5);
+        fishCard fishU = new fishCard(3,3, 160, 240, 10, 10, 0.5, 20 ,2);
+        fishCard fishD = new fishCard(3,3, 160, 240, 10, 10, 0.5, 20 ,3);
+        fishCard fishL = new fishCard(3,3, 160, 240, 10, 10, 0.5, 20 ,4);
         
-        LoopCard one = new LoopCard(0,0,70,100);
-        one.setName("1");
-        one.setDefaultColor(Color.ORANGE);
-        one.setDragColor(Color.gray);
-        one.setDropColor(Color.black);
-        one.setSelectedColor(Color.yellow);
-        one.setDefaultState();
-        Label oL1 =  new Label("1",SwingConstants.CENTER);
-        oL1.setBounds(0, 0, 70, 20); 
-        one.add(oL1);
-        
-        LoopCard two = new LoopCard(75,0,70,100);
-        two.setName("2");
-        two.setDefaultColor(Color.BLUE);
-        two.setDragColor(Color.gray);
-        two.setDropColor(Color.black);
-        two.setSelectedColor(Color.yellow);
-        Label oL2 = new Label("2",SwingConstants.CENTER);
-        oL2.setBounds(0, 0, 70, 20);  
-        two.add(oL2);
-        two.setDefaultState();
-        
-        LoopCard three = new LoopCard(150,0,70,100);
-        three.setName("3"); 
-        three.setDefaultColor(Color.GREEN);
-        three.setDragColor(Color.gray);
-        three.setDropColor(Color.black);
-        three.setSelectedColor(Color.yellow);
-        Label oL3 =  new Label("3",SwingConstants.CENTER);
-        oL3.setBounds(0, 0, 70, 20);  
-        three.add(oL3);
-        three.setDefaultState();
-        
-        LoopCard four = new LoopCard(225,0,70,100);
-        four.setName("4"); 
-        four.setDefaultColor(Color.PINK);
-        four.setDragColor(Color.gray);
-        four.setDropColor(Color.black);
-        four.setSelectedColor(Color.yellow);
-        Label oL4 =  new Label("4",SwingConstants.CENTER);
-        oL4.setBounds(0, 0, 70, 20);  
-        four.add(oL4);
-        four.setDefaultState(); 
-        
-        menuWidget.addCard(one); 
-        menuWidget.addCard(two); 
-        menuWidget.addCard(three);
-        menuWidget.addCard(four); 
-        
+        JComponent snakeC = new complexCard(snake);
+        JComponent fishRC = new complexCard(fishR);
+        JComponent fishUC = new complexCard(fishU);
+        JComponent fishDC = new complexCard(fishD);
+        JComponent fishLC = new complexCard(fishL);
+       
+        menuWidget.addCard(snakeC);
+        menuWidget.addCard(fishRC);
+        menuWidget.addCard(fishUC);
+        menuWidget.addCard(fishDC);
+        menuWidget.addCard(fishLC);
         return menuWidget;
     }
     

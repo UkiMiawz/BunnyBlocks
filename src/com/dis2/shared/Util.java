@@ -22,9 +22,17 @@ public class Util {
     public static int getImagenCenterX(JPanel panel, Image character) {
         return (panel.getWidth() / 2) - (character.getWidth(panel) / 2);
     }
+    
+    public static int getImagenCenterX(JPanel panel, int w) {
+        return (panel.getWidth() / 2) - (w / 2);
+    }
 
     public static int getImagenCenterY(JPanel panel, Image character) {
         return (panel.getHeight() / 2) - (character.getHeight(panel) / 2);
+    }
+    
+    public static int getStringCenterX(JPanel panel, int label){
+    	return (panel.getWidth() / 2) - (label/2);
     }
 
     public static boolean isPixelTransparent(Image img, Point p) {
