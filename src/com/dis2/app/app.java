@@ -4,7 +4,6 @@ import com.dis2.codeblocks.CodeBlocks;
 import com.dis2.cards.complexCard;
 import com.dis2.cards.fishCard;
 import com.dis2.cards.snakeCard;
-import com.dis2.cards2.LoopCard;
 import com.dis2.menuWidget.MenuWidget;
 import java.awt.BorderLayout;
 import java.awt.Color;  
@@ -33,11 +32,11 @@ public class app extends JFrame{
     
     public MenuWidget initMenu(){
         menuWidget = new MenuWidget(200, 400);
-        snakeCard snake = new snakeCard(3,3,160, 240, 10, 10, 0.5, 20);
-        fishCard fishR = new fishCard(3,3, 160, 240, 10, 10, 0.5, 20 ,5);
-        fishCard fishU = new fishCard(3,3, 160, 240, 10, 10, 0.5, 20 ,2);
-        fishCard fishD = new fishCard(3,3, 160, 240, 10, 10, 0.5, 20 ,3);
-        fishCard fishL = new fishCard(3,3, 160, 240, 10, 10, 0.5, 20 ,4);
+        snakeCard snake = new snakeCard(3,3,110, 150, 10, 10, 0.3, 15);
+        fishCard fishR = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,5);
+        fishCard fishU = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,2);
+        fishCard fishD = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,3);
+        fishCard fishL = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,4);
         
         JComponent snakeC = new complexCard(snake);
         JComponent fishRC = new complexCard(fishR);

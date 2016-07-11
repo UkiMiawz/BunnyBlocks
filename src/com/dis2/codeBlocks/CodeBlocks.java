@@ -2,7 +2,6 @@ package com.dis2.codeblocks;
 
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
-import com.dis2.cards2.Card;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -44,13 +43,17 @@ class DragListener extends MouseInputAdapter {
         selectedCard = (complexCard) e.getComponent();
         if (targetCard != null) {
             targetCard.setDefaultState();
-            if (isInsideCard(selectedCard, targetCard)) {
+            if (isInsideCard(selectedCard, targetCard)
+            		&&(targetCard.getCardWidget().getCardType())==1
+            		&&(selectedCard.hasChildren()&&selectedCard.getCardWidget().getCardType()==1)
+            		||selectedCard.getCardWidget().getCardType()!=1) { //only when card is type for (loop)
                 selectedCard.setDefaultState();
                 targetCard.addChild(selectedCard);
                 targetCard.getCardWidget().setInStack(true);
                 targetCard.repaint();
+            }else{
+            	cb.bringToFront(selectedCard);
             }  
-            
             //just test of functio getCode
             cb.getCode();
             
@@ -58,6 +61,20 @@ class DragListener extends MouseInputAdapter {
             
             // fix size of the previos container
         }  
+    }
+    
+    public boolean insertCard(complexCard selected, complexCard target){
+    	if (isInsideCard(selected, target)
+        		&&(target.getCardWidget().getCardType())==1
+        		&&(selected.hasChildren()&&selected.getCardWidget().getCardType()==1)
+        		||selected.getCardWidget().getCardType()!=1) { //only when card is type for (loop)
+            selected.setDefaultState();
+            target.addChild(selected);
+            target.getCardWidget().setInStack(true);
+            target.repaint();
+            return true;
+        } 
+    	return false;
     }
 
     public void mousePressed(MouseEvent me) {
@@ -109,7 +126,7 @@ class DragListener extends MouseInputAdapter {
         }
     }
 
-    public Card findTargetCards(ArrayList<Card> cards) {
+    public complexCard findTargetCards(ArrayList<complexCard> cards) {
         int target = 0;
         double distance = -1;
         for (int i = 0; i > cards.size(); i++) {
@@ -201,8 +218,7 @@ public class CodeBlocks extends JPanel {
 
     public ArrayList<complexCard> getCards() {
         ArrayList<complexCard> children = new ArrayList<complexCard>();
-        for (Component c : this.getComponents()) {
-        	System.out.println(c.getClass().getName());
+        for (Component c : this.getComponents()) { 
             if (c.getClass().getSimpleName().equals("complexCard")) {
                 children.add((complexCard) c);
             }
@@ -220,10 +236,17 @@ public class CodeBlocks extends JPanel {
         card.setDefaultBounds();
         Component temp = this.getComponentAt(card.getX(), card.getY());
         if (temp.getClass().getSimpleName().equals("CodeBlocks")) {
-            this.add(card);
+        	this.add(card);
             this.bringToFront(card);
-        } else {
-            ((complexCard) temp).addChild(card);
+        } else { 
+        	if(((complexCard)temp).getCardWidget().getCardType()==1
+            		&&card.getCardWidget().getCardType()!=1){
+        		((complexCard) temp).getCardWidget().setInStack(true);
+        		((complexCard) temp).addChild(card);
+        	}else{
+        		this.add(card);
+                this.bringToFront(card);
+        	} 
         }
     }
 
@@ -250,7 +273,7 @@ public class CodeBlocks extends JPanel {
         	
             try {
                 Transferable tr = e.getTransferable();
-                cardWidget card = (cardWidget) tr.getTransferData(dataFlavor);
+                cardWidget card = ((cardWidget) tr.getTransferData(dataFlavor)).clone();
 
                 if (e.isDataFlavorSupported(dataFlavor)) {
                     e.acceptDrop(DnDConstants.ACTION_COPY);

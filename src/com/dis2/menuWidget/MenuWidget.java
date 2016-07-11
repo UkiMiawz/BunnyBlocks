@@ -2,8 +2,8 @@ package com.dis2.menuWidget;
  
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
-import com.dis2.cards2.Card; 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Cursor; 
 import java.awt.Dimension;
 import java.awt.FlowLayout;  
@@ -16,6 +16,9 @@ import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource; 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -50,16 +53,19 @@ public class MenuWidget extends JPanel {
         this.add(container);
         this.setPreferredSize(new Dimension(width, height));  
         this.dataFlavor = dataFlavor;
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10,30,10,35));
+        
     }
 
     public void addCard(JComponent card) {
-    	
-        topPanel.setLayout(new BoxLayout(topPanel,BoxLayout.Y_AXIS)); 
         topPanel.add(card); 
         topPanel.setPreferredSize(new Dimension(card.getHeight(), card.getHeight() * topPanel.getComponents().length));
          DragSource ds = new DragSource();
         ds.createDefaultDragGestureRecognizer(card,
                 DnDConstants.ACTION_COPY, new DragGesture());
+        
+        
     }
 
     public ArrayList<JPanel> getCards() {
@@ -102,7 +108,7 @@ public class MenuWidget extends JPanel {
         private cardWidget card;
 
         public TransferableCard(cardWidget card) {
-            this.card = card;
+            this.card = card.clone();
         }
 
         @Override
