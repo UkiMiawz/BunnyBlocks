@@ -191,12 +191,12 @@ public class complexCard extends JPanel implements Cloneable{
 		
 		if(c.getCardType()==1){
 			c.setFillColor(p.brightGreen());
-			simpleCard card= new simpleCard(c);
-			text.setBackground(p.brightGreen());
+			repaint();
+			
 			
 		}else{
 			c.setFillColor(p.brightViolet());
-			simpleCard card= new simpleCard(c);
+			repaint();
 	    }
 	    
 	}
@@ -208,12 +208,11 @@ public class complexCard extends JPanel implements Cloneable{
 		
 		if(c.getCardType()==1){
 			c.setFillColor(p.green());
-			simpleCard card= new simpleCard(c);
-			text.setBackground(p.green());
+			repaint();
 			
 		}else{
 			c.setFillColor(p.violet());
-			simpleCard card= new simpleCard(c);
+			repaint();
 	    }
 	    
 	}
