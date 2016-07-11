@@ -6,13 +6,10 @@ import com.dis2.cards.fishCard;
 import com.dis2.cards.snakeCard;
 import com.dis2.menuWidget.MenuWidget;
 import java.awt.BorderLayout;
-import java.awt.Color;  
-import java.awt.Label;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;  
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 
 
 public class app extends JFrame{
