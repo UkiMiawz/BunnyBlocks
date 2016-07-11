@@ -13,7 +13,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource; 
+import java.awt.dnd.DragSource;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -101,6 +102,7 @@ public class MenuWidget extends JPanel {
             } 
             event.startDrag(cursor, new MenuWidget.TransferableCard(card));
         }
+        
     }
     
     class TransferableCard implements Transferable {

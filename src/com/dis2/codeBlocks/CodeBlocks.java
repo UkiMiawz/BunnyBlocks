@@ -206,7 +206,7 @@ public class CodeBlocks extends JPanel {
         }
 
         for (complexCard child : card.getChildren()) {
-            System.out.println(tap + child.getName());
+            System.out.println(tap + child.getCardWidget().getCardType());
             complexCard c = child;
             compList.add(c);
             if (c.hasChildren()) {
