@@ -19,6 +19,7 @@ public class cardWidget implements Cloneable{
 	private int imageHeight;
 	private Color fillColor;
 	private Color fontColor;
+	private Color borderColor = Color.black;
 	private int typeFace = 0;
     private int fontSize = 12;
     private int xMargin;
@@ -29,8 +30,11 @@ public class cardWidget implements Cloneable{
     private String label = "";
     private Image img;
     private Image gif;
-    private int textBox = 0;
     private String[] options;
+    private boolean simpleCard = true;
+    private boolean flagAnim = false;
+    private boolean inStack = false;
+    private int cardType;
  
 
     //constructor
@@ -180,6 +184,14 @@ public class cardWidget implements Cloneable{
 		this.imageHeight = imageHeight;
 	}
 
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+	}
+
 	public Image getGif() {
 		return gif;
 	}
@@ -228,14 +240,6 @@ public class cardWidget implements Cloneable{
 		this.yTextMargin = yTextMargin;
 	}
 
-	public int getTextBox() {
-		return textBox;
-	}
-
-	public void setTextBox(int textBox) {
-		this.textBox = textBox;
-	}
-
 	public String[] getOptions() {
 		return options;
 	}
@@ -257,7 +261,39 @@ public class cardWidget implements Cloneable{
     	setY(p.y);
     }
     
-    @Override public cardWidget clone() {
+    public int getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(int cardType) {
+		this.cardType = cardType;
+	}
+
+	public void setSimpleCard(boolean val){
+		this.simpleCard = val;
+	}
+	
+	public boolean isSimpleCard(){
+		return simpleCard;
+	}
+	
+	public void setAnimation(boolean val){
+		this.flagAnim = val;
+	}
+	
+	public boolean isAnimated(){
+		return flagAnim;
+	}
+    
+    public boolean isInStack() {
+		return inStack;
+	}
+
+	public void setInStack(boolean inStack) {
+		this.inStack = inStack;
+	}
+
+	@Override public cardWidget clone() {
         try {
             final cardWidget result = (cardWidget) super.clone();
             return result;

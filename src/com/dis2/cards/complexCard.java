@@ -2,13 +2,17 @@ package com.dis2.cards;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -19,6 +23,7 @@ import javax.swing.JTextField;
 
 import com.dis2.cards2.Card;
 import com.dis2.shared.Palette;
+import com.dis2.shared.Util;
 
 public class complexCard extends JPanel implements Cloneable{
 	
@@ -31,9 +36,9 @@ public class complexCard extends JPanel implements Cloneable{
 	JPanel animate = new JPanel();
 	JTextField forN = new JTextField("0",2);  //Use only with snake card
 	JComboBox<String> ifCombo = new JComboBox<String>(); //Use only with panda card
-	Boolean flagAnim = false;
 	cardWidget c;
 	Palette p = new Palette();
+	Util util = new Util();
 	
 	public complexCard(){}
 	
@@ -51,90 +56,96 @@ public class complexCard extends JPanel implements Cloneable{
 	public void paintComponent(Graphics g){
     	super.paintComponent(g);
 		
-		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        
-		lpane.setBounds(0, 0, c.getRectWidth(), c.getRectHeight());
-		lpane.setPreferredSize(new Dimension(c.getRectWidth(), c.getRectHeight()));
-        content.setBounds(0, 0, c.getRectWidth(), c.getRectHeight());
-        
-        simpleCard card= new simpleCard(c);
-        
-        content.add(card);
-        //content.addMouseListener(this);
-        
-        if(c.getTextBox()==1){
-        
-        content.setOpaque(true);
-        text.setBackground(c.getFillColor());
-        text.setBounds(80, 197, 30, 30);
-        text.add(forN);
-        text.setOpaque(true);
-        lpane.add(content, new Integer(0), 0);
-        lpane.add(text, new Integer(1), 0);
-        
-        } else if(c.getTextBox()==2){
-        	
-        	//ifCombo.addItem("Red Apple");
-        	ifCombo = new JComboBox<String>(c.getOptions());
-        	ifCombo.setEditable(false);
-        	
-        	content.setOpaque(true);
-            combo.setBackground(c.getFillColor());
-            combo.setBounds(25, 200, 120, 30);
-            combo.add(ifCombo);
-            combo.setOpaque(true);
-            lpane.add(content, new Integer(0), 0);
-            lpane.add(combo, new Integer(1), 0);
-        	
-        }else{
-        	
-        lpane.add(content, new Integer(0), 0);
-        
-        }
-        
-        /**
-         * Animation in card for MenuWidget
-         */
-        if(flagAnim){
-        	content.setOpaque(true);
-        	animate = new cardAnimation(c, c.getGif());
-            animate.setBounds(15,25, 140, 160);
-            animate.setOpaque(true);
-            lpane.add(content, new Integer(0), 0);
-        	lpane.add(animate, new Integer(1), 0);
-        }
-        
-        /**
-         * Action event for Snake card
-         * Take number input by user and set it in snakeCard
-         */
-        forN.addActionListener(new ActionListener() { //Use only with snake card
-            public void actionPerformed(ActionEvent e) {
-            	
-                System.out.println("Text=" + forN.getText());  
-                ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
-              }
-            });
-        
-        /**
-         * Action event for Panda card
-         * Take selection by user and set it in pandaCard
-         */
-        ifCombo.addActionListener(new ActionListener() { //Use only with panda card
-            public void actionPerformed(ActionEvent e) {
-            	
-              System.out.println("Selected index=" + ifCombo.getSelectedIndex()
-                  + " Selected item=" + ifCombo.getSelectedItem());
-              //Set SelectedItem to match condition of class Conditions
-              //Perfom action according
-            }
-          });
-
-        add(lpane); 
-        g.setColor(p.black());
-        g.drawRect(0,0, this.getWidth(), this.getHeight());
-        g.fillRect(0,0, this.getWidth(), this.getHeight());
-       
+    	if (c.isSimpleCard()){
+    	this.setBounds(this.getX(), this.getY(), c.getRectWidth(), c.getRectHeight());
+    	}
+    	//draw border
+    	g.setColor(c.getBorderColor());
+    	g.drawRoundRect(0,0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
+	    g.fillRoundRect(0,0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
+	    //draw card background
+    	g.setColor(c.getFillColor());
+    	g.drawRoundRect(2,2, this.getWidth()-4, this.getHeight()-4, c.getArcWidth()-1, c.getArcHeight()-1);
+	    g.fillRoundRect(2,2, this.getWidth()-4, this.getHeight()-4, c.getArcWidth()-1, c.getArcHeight()-1);
+	    //draw card with alles
+	    setImageDraw(g, c.getImg());
+    
+	
+	}
+	
+	public void setImageDraw(Graphics g, Image i){
+		
+		if(c.isSimpleCard()){
+			 double w = c.getImageScale() * c.getImageWidth();
+			 double h = c.getImageScale() * c.getImageHeight();
+			    
+			    // explicitly specify width (w) and height (h) to scale Image
+			    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int)w), c.getyMargin(), (int) w, (int) h, this);
+			    g.setColor(c.getFontColor());
+			    g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
+			    g.drawString(c.getLabel(),util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
+			    
+		
+		}else if((!c.isSimpleCard())&&(!c.isInStack())){
+			
+			double w = c.getImageScale() * c.getImageWidth();
+			double h = c.getImageScale() * c.getImageHeight();
+			
+			
+			
+			switch(c.getCardType()){
+			    
+			case 1: // for
+			    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int)w), c.getyMargin(), (int) w, (int) h, this);
+			    g.setColor(c.getFontColor());
+			    g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
+			    g.drawString(c.getLabel(),util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) - 25, c.getyTextMargin());
+				forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) + 25, c.getyTextMargin() - 15, 40, 25);
+				this.add(forN);
+			    
+			    break;
+			
+			case 2: // moveUp
+				 
+				 g.drawImage(c.getImg(), util.getImagenCenterX(this, (int)w), c.getyMargin(), (int) w, (int) h, this);
+				 g.setColor(c.getFontColor());
+				 g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
+				 g.drawString(c.getLabel(),util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin()-20);
+				 break;
+			case 3: // moveDown
+				
+				 g.drawImage(c.getImg(), util.getImagenCenterX(this, (int)w), c.getyMargin(), (int) w, (int) h, this);
+				 g.setColor(c.getFontColor());
+				 g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
+				 g.drawString(c.getLabel(),util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin()-20);
+				 break;
+			case 4: // moveLeft
+				
+				 g.drawImage(c.getImg(), util.getImagenCenterX(this, (int)w), c.getyMargin(), (int) w, (int) h, this);
+				 g.setColor(c.getFontColor());
+				 g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
+				 g.drawString(c.getLabel(),util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin()-20);
+				 break;
+			case 5: //moveRight
+				 g.drawImage(c.getImg(), util.getImagenCenterX(this, (int)w), c.getyMargin(), (int) w, (int) h, this);
+				 g.setColor(c.getFontColor());
+				 g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
+				 g.drawString(c.getLabel(),util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin()-20);
+				 break;
+			}
+			
+		}else if(c.isInStack()){
+			double w = 40;
+			double h = 40;
+			g.drawImage(c.getImg(), 3, 3, (int) w, (int) h, this);
+		    g.setColor(c.getFontColor());
+		    g.setFont(new Font("Courier", Font.BOLD, 16));
+		    g.drawString(c.getLabel(),(c.getRectWidth() - 45 - g.getFontMetrics().stringWidth(c.getLabel())) , 28);
+			forN.setBounds(c.getRectWidth() - 40, 10, 40, 25);
+			this.add(forN);
+			
+		}
+		
 	}
 	
 	public void setBounds(int width, int height) {
@@ -178,15 +189,10 @@ public class complexCard extends JPanel implements Cloneable{
      */
 	public void setHighlight() {
 		
-		if(c.getTextBox()==1){
+		if(c.getCardType()==1){
 			c.setFillColor(p.brightGreen());
 			simpleCard card= new simpleCard(c);
 			text.setBackground(p.brightGreen());
-			
-		} else if(c.getTextBox()==2){
-			c.setFillColor(p.brightPurple());
-			simpleCard card= new simpleCard(c);
-			combo.setBackground(p.brightPurple());
 			
 		}else{
 			c.setFillColor(p.brightViolet());
@@ -200,15 +206,10 @@ public class complexCard extends JPanel implements Cloneable{
      */
 	public void setDefaultState() {
 		
-		if(c.getTextBox()==1){
+		if(c.getCardType()==1){
 			c.setFillColor(p.green());
 			simpleCard card= new simpleCard(c);
 			text.setBackground(p.green());
-			
-		} else if(c.getTextBox()==2){
-			c.setFillColor(p.purple());
-			simpleCard card= new simpleCard(c);
-			combo.setBackground(p.purple());
 			
 		}else{
 			c.setFillColor(p.violet());
@@ -220,47 +221,6 @@ public class complexCard extends JPanel implements Cloneable{
 	public void setDefaultBounds() {
         this.setBounds(c.getX(), c.getY(), c.getDefaultWidth(), c.getDefaultHeight());
     }
-
-/*	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("Click");
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		/*System.out.println("Mouse Entered Space");
-		flagAnim = true; //this starts the animation of the gif
-		//stateChanged(c); //test for highlight color in cards
-		revalidate();
-		repaint();*/
-
-	/*}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		/*System.out.println("Mouse Exit Space");
-		flagAnim = false; //this ends the animation of the gif and repaint regular img
-		//stateBack(c); // //test for highlight color in cards
-		revalidate();
-		repaint();*/
-		
-	//}
 	
 	 @Override public complexCard clone() {
 	        try {

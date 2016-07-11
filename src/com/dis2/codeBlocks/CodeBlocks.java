@@ -47,6 +47,8 @@ class DragListener extends MouseInputAdapter {
             if (isInsideCard(selectedCard, targetCard)) {
                 selectedCard.setDefaultState();
                 targetCard.addChild(selectedCard);
+                targetCard.getCardWidget().setInStack(true);
+                targetCard.repaint();
             }  
             
             //just test of functio getCode
@@ -209,6 +211,7 @@ public class CodeBlocks extends JPanel {
     }
 
     public void addCard(complexCard card) {
+    	card.repaint();
     	card = card.clone();
         DragListener drag = new DragListener(this);
         card.addMouseListener(drag);
@@ -254,6 +257,7 @@ public class CodeBlocks extends JPanel {
                     e.dropComplete(true);
                     this.cb.validate();
                     card.setLocation(e.getLocation());
+                    card.setSimpleCard(false);
                     this.cb.addCard(new complexCard(card.clone()));
                     repaint();
                     return;

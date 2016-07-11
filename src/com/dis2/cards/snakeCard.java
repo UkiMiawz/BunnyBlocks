@@ -51,7 +51,7 @@ public class snakeCard extends cardWidget{
 		this.setxTextMargin(x + w/5);
 		this.setyTextMargin(h - h/10);
 		this.setText("The Snake card helps your character repeat an instruction N times");
-		this.setTextBox(1);
+		this.setCardType(1);
 		this.setGif(gif);
 		this.setGifScale(s);
 	}
