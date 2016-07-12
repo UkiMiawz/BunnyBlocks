@@ -4,8 +4,7 @@ import com.dis2.shared.Palette;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.awt.image.BufferedImage; 
 import java.io.IOException;
 import java.net.URL;
 
@@ -14,7 +13,7 @@ import javax.imageio.ImageIO;
 
 public class snakeCard extends cardWidget{
 	
-	private int Ntimes;
+	private int Ntimes = 1;
 	URL imageUrl = fishCard.class.getResource(
 			"/resources/snake.png");
 	Image img = Toolkit.getDefaultToolkit().getImage(imageUrl);
@@ -26,8 +25,7 @@ public class snakeCard extends cardWidget{
 	int ih;
 
 	public snakeCard(int x, int y, int w, int h, int arcW, int arcH, double s, int fs){
-		super(x,y,w,h,arcW,arcH);
-		
+		super(x,y,w,h,arcW,arcH); 
 		try{
 			BufferedImage bimg = ImageIO.read(imageUrl);
 			iw = bimg.getWidth();

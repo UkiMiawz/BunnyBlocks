@@ -1,7 +1,6 @@
 package com.dis2.cards;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.Component; 
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -37,9 +36,7 @@ public class complexCard extends JPanel implements Cloneable{
 		this.setLayout(null);
 		this.addMouseListener(new MouseAdapter(){
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("Mouse Entered Space");
+			public void mouseEntered(MouseEvent e) { 
 				flagAnim = true; //this starts the animation of the gif
 				//stateChanged(c); //test for highlight color in cards
 				revalidate();
@@ -47,9 +44,7 @@ public class complexCard extends JPanel implements Cloneable{
 			}
 			
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("Mouse Exit Space");
+			public void mouseExited(MouseEvent e) { 
 				flagAnim = false; //this ends the animation of the gif and repaint regular img
 				//stateBack(c); // //test for highlight color in cards
 				revalidate();
