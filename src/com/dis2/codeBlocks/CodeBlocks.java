@@ -269,16 +269,18 @@ public class CodeBlocks extends JPanel {
                     true, null);
         }
 
+        @Override
         public void drop(DropTargetDropEvent e) {
-        	
+            
             try {
                 Transferable tr = e.getTransferable();
                 cardWidget card = ((cardWidget) tr.getTransferData(dataFlavor)).clone();
-
+                System.out.println("validating data flavor");
                 if (e.isDataFlavorSupported(dataFlavor)) {
                     e.acceptDrop(DnDConstants.ACTION_COPY);
                     e.dropComplete(true);
                     this.cb.validate();
+                    System.out.println("entering validations");
                     card.setLocation(e.getLocation());
                     card.setSimpleCard(false);
                     this.cb.addCard(new complexCard(card.clone()));

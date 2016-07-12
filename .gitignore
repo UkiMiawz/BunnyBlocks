@@ -7,3 +7,5 @@ out/
 *.classpath
 *.project
 bin/
+dist/bunny.jar
+dist/README.TXT

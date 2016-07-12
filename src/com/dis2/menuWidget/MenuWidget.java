@@ -2,8 +2,7 @@ package com.dis2.menuWidget;
  
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.BorderLayout; 
 import java.awt.Cursor; 
 import java.awt.Dimension;
 import java.awt.FlowLayout;  
@@ -13,13 +12,11 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource;
-import java.awt.event.MouseAdapter;
+import java.awt.dnd.DragSource; 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
+import javax.swing.BorderFactory; 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -93,8 +90,7 @@ public class MenuWidget extends JPanel {
     
     class DragGesture implements DragGestureListener { 
         @Override
-        public void dragGestureRecognized(DragGestureEvent event) {
-        	System.out.println(event.getComponent().getClass().getName());
+        public void dragGestureRecognized(DragGestureEvent event) { 
             Cursor cursor = null;
             cardWidget card = ((complexCard)event.getComponent()).getCardWidget(); 
             if (event.getDragAction() == DnDConstants.ACTION_COPY) {
@@ -109,7 +105,7 @@ public class MenuWidget extends JPanel {
 
         private cardWidget card;
 
-        public TransferableCard(cardWidget card) {
+        public TransferableCard(cardWidget card) { 
             this.card = card.clone();
         }
 
