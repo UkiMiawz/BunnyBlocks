@@ -1,5 +1,6 @@
 package com.dis2.cards;
 
+import com.dis2.shared.CustomCursor;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -17,7 +18,9 @@ import javax.swing.JTextField;
 
 import com.dis2.shared.Palette;
 import com.dis2.shared.Util;
-import java.awt.Color;
+import java.awt.Color; 
+import java.awt.Cursor;
+import java.net.URL;
 
 public class complexCard extends JPanel implements Cloneable {
 
@@ -27,24 +30,37 @@ public class complexCard extends JPanel implements Cloneable {
     JTextField forN;  //Use only with snake card
     cardWidget c;
     Util util = new Util();
+
     boolean flagAnim = false;
 
     public complexCard() {
     }
 
-    public complexCard(cardWidget c) { 
-        this.c = c; 
+    public complexCard getSelf() {
+        return this;
+    }
+
+    public complexCard(cardWidget c) {
+        this.c = c;
         forN = new JTextField("0", 2);
-        
         this.setBounds(new Rectangle(c.getX(), c.getY(), c.getRectWidth(), c.getRectHeight()));
         this.setLayout(null);
         this.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(MouseEvent e) { 
+                getSelf().setCursor(CustomCursor.hand());
                 flagAnim = true; //this starts the animation of the gif
                 //stateChanged(c); //test for highlight color in cards
                 revalidate();
                 repaint();
+            }
+            
+            public void mousePressed(MouseEvent e){
+                getSelf().setCursor(CustomCursor.grab());
+            }
+            
+            public void mouseReleased(MouseEvent e){
+                getSelf().setCursor(CustomCursor.hand());
             }
 
             @Override
@@ -56,19 +72,36 @@ public class complexCard extends JPanel implements Cloneable {
 
             }
         });
-        
-        this.setBackground(Color.red);
-        
-        if(!c.isSimpleCard()){ 
+
+         
+        this.setOpaque(true);
+        this.setBackground(new Color(0,0,0,0));
+        if (!c.isSimpleCard()) { 
             forN.setBounds(0, 0, 30, 30);
+            forN.setDragEnabled(false);
+
+            forN.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    forN.requestFocus();
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+
+            });
+
+            forN.addActionListener(new ActionListener() { //Use only with snake card
+                public void actionPerformed(ActionEvent e) { 
+                    System.out.println("N For=" + forN.getText());
+                    ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
+                } 
+            });
+
             this.add(forN);
-            forN.repaint();
-            forN.requestFocus();
-            forN.revalidate();
         }
-        
-        
-        
 
     }
 
@@ -76,25 +109,25 @@ public class complexCard extends JPanel implements Cloneable {
         return this.c;
     }
 
-//    public void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//
-//        if (c.isSimpleCard()) {
-//            this.setBounds(this.getX(), this.getY(), c.getRectWidth(), c.getRectHeight());
-//
-//        }
-//        //draw border
-//        g.setColor(c.getBorderColor());
-//        g.drawRoundRect(0, 0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
-//        g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
-//        //draw card background
-//        g.setColor(c.getFillColor());
-//        g.drawRoundRect(2, 2, this.getWidth() - 4, this.getHeight() - 4, c.getArcWidth() - 1, c.getArcHeight() - 1);
-//        g.fillRoundRect(2, 2, this.getWidth() - 4, this.getHeight() - 4, c.getArcWidth() - 1, c.getArcHeight() - 1);
-//        //draw card with alles
-//        setImageDraw(g, c.getImg());
-//
-//    }
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        if (c.isSimpleCard()) {
+            this.setBounds(this.getX(), this.getY(), c.getRectWidth(), c.getRectHeight());
+
+        }
+        //draw border
+        g.setColor(c.getBorderColor());
+        g.drawRoundRect(0, 0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
+        g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
+        //draw card background
+        g.setColor(c.getFillColor());
+        g.drawRoundRect(2, 2, this.getWidth() - 4, this.getHeight() - 4, c.getArcWidth() - 1, c.getArcHeight() - 1);
+        g.fillRoundRect(2, 2, this.getWidth() - 4, this.getHeight() - 4, c.getArcWidth() - 1, c.getArcHeight() - 1);
+        //draw card with alles
+        setImageDraw(g, c.getImg());
+
+    }
 
     public void setImageDraw(Graphics g, Image i) {
 
@@ -126,7 +159,6 @@ public class complexCard extends JPanel implements Cloneable {
                     g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
                     g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) - 15, c.getyTextMargin());
                     forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) + 15, c.getyTextMargin() - 18, 40, 25);
-                    this.add(forN);
                     break;
                 ////
                 case 2: // moveUp
@@ -165,22 +197,7 @@ public class complexCard extends JPanel implements Cloneable {
             g.setColor(c.getFontColor());
             g.setFont(new Font("Courier", Font.BOLD, 16));
             g.drawString(c.getLabel(), (c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())), 28);
-            forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);
-            forN.requestFocus();
-            this.add(forN);
-
-            /**
-             * Action event for Snake card Take number input by user and set it
-             * in snakeCard
-             */
-            forN.addActionListener(new ActionListener() { //Use only with snake card
-                public void actionPerformed(ActionEvent e) {
-
-                    System.out.println("N For=" + forN.getText());
-                    ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
-                }
-            });
-
+            forN.setBounds(c.getRectWidth() - 35, 10, 40, 25); 
         }
 
     }

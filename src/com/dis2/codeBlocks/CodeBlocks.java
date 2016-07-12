@@ -226,9 +226,8 @@ public class CodeBlocks extends JPanel {
         return children;
     }
 
-    public void addCard(complexCard card) {
-        card.repaint();
-        card = card.clone();
+    public void addCard(complexCard c, Point OldPoint) { 
+        complexCard card = c.clone();
         DragListener drag = new DragListener(this);
         card.addMouseListener(drag);
         card.addMouseMotionListener(drag);
@@ -236,16 +235,23 @@ public class CodeBlocks extends JPanel {
         card.setDefaultBounds();
         Component temp = this.getComponentAt(card.getX(), card.getY());
         if (temp.getClass().getSimpleName().equals("CodeBlocks")) {
+            card.setLocation(new Point(card.getX() - OldPoint.x 
+                            , card.getY() - OldPoint.y ));
             this.add(card);
-            this.bringToFront(card);
+            this.bringToFront(card); 
+             
         } else if (((complexCard) temp).getCardWidget().getCardType() == 1
                 && card.getCardWidget().getCardType() != 1) {
             ((complexCard) temp).getCardWidget().setInStack(true);
             ((complexCard) temp).addChild(card);
         } else {
+            card.setLocation(new Point(OldPoint.x - card.getX()
+                            , OldPoint.y - card.getY()));
             this.add(card);
             this.bringToFront(card);
         }
+        card.repaint();
+        repaint();
     }
 
     public void bringToFront(complexCard card) {
@@ -276,12 +282,12 @@ public class CodeBlocks extends JPanel {
                 if (e.isDataFlavorSupported(dataFlavor)) {
                     e.acceptDrop(DnDConstants.ACTION_COPY);
                     e.dropComplete(true);
-                    this.cb.validate();  
-                    card.setLocation(new Point(e.getLocation().x - card.getX()
-                            , e.getLocation().y - card.getY()));
+                    this.cb.validate();   
                     card.setSimpleCard(false);
-                    this.cb.addCard(new complexCard(card.clone()));
-                    repaint();
+                    Point oldcoordinates = new Point(card.getLocation()); 
+                    card.setLocation(e.getLocation());
+                    this.cb.addCard(new complexCard(card.clone()), oldcoordinates); 
+                    
                     return;
                 }
                 e.rejectDrop();

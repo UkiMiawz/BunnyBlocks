@@ -88,12 +88,10 @@ public class MenuWidget extends JPanel {
     
     class DragGesture implements DragGestureListener { 
         @Override
-        public void dragGestureRecognized(DragGestureEvent event) {
-            
+        public void dragGestureRecognized(DragGestureEvent event) { 
             Cursor cursor = null;
-            cardWidget card = ((complexCard)event.getComponent()).getCardWidget();
             
-           
+            cardWidget card = ((complexCard)event.getComponent()).getCardWidget(); 
             card.setLocation(event.getDragOrigin());
             if (event.getDragAction() == DnDConstants.ACTION_COPY) {
                 cursor = DragSource.DefaultCopyDrop; 
