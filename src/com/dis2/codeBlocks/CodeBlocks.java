@@ -51,6 +51,7 @@ class DragListener extends MouseInputAdapter {
                 targetCard.addChild(selectedCard);
                 targetCard.getCardWidget().setInStack(true);
                 targetCard.repaint();
+                cb.updateScroll();
             }else{
             	cb.bringToFront(selectedCard);
             }  
@@ -91,6 +92,7 @@ class DragListener extends MouseInputAdapter {
         int x = location.x - pressed.getX() + me.getX();
         int y = location.y - pressed.getY() + me.getY();
         selectedCard.setLocation(x, y);
+        cb.updateScroll();
         solveCollitions();
     }
 
@@ -172,12 +174,15 @@ class DragListener extends MouseInputAdapter {
 }
 
 public class CodeBlocks extends JPanel {
-
+	
+	int originalH, originalW;
     DataFlavor dataFlavor = new DataFlavor(cardWidget.class,
             cardWidget.class.getSimpleName());
 
     public CodeBlocks(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
+        originalH = height;
+        originalW = width;
         this.setLayout(null);
         new DropTargetPanel(this);
     }
@@ -256,6 +261,31 @@ public class CodeBlocks extends JPanel {
             c.setDefaultState();
         }
     }
+    
+    public void updateScroll(){
+    	int refH= this.getHeight();
+    	int refW = this.getWidth();
+    	for (complexCard c : this.getCards()) {
+            int tempH = c.getBounds().y + c.getBounds().height;
+            if(tempH > refH){
+            	refH = tempH;
+            }else{
+            	refH = originalH;
+            }
+        }
+    	
+    	for (complexCard c : this.getCards()) {
+            int tempW = c.getBounds().x + c.getBounds().width;
+            if(tempW > refW){
+            	refW = tempW;
+            }else{
+            	refW = originalW;
+            }
+        }
+    		this.setPreferredSize(new Dimension(refW, refH));
+    		this.revalidate();
+    	
+    }
 
     class DropTargetPanel extends DropTargetAdapter implements
             DropTargetListener {
@@ -291,5 +321,6 @@ public class CodeBlocks extends JPanel {
                 e.rejectDrop();
             }
         }
+        
     }
 }
