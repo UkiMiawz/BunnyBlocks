@@ -29,6 +29,9 @@ public class complexCard extends JPanel implements Cloneable{
 	Util util = new Util();
 	boolean flagAnim = false;
 	
+	private complexCard parentCard;
+	private ArrayList<complexCard> childrenCards;
+	
 	public complexCard(){}
 	
 	public complexCard(cardWidget c){
@@ -58,6 +61,8 @@ public class complexCard extends JPanel implements Cloneable{
 			}
 		});
 		
+		parentCard = null;
+		childrenCards = new ArrayList<complexCard>();
 	}
 	
 	public cardWidget getCardWidget(){
@@ -180,6 +185,9 @@ public class complexCard extends JPanel implements Cloneable{
     }
 	
 	public void addChild(complexCard child) {
+		childrenCards.add(child);
+        child.parentCard = this;
+        
         this.add(child); 
         int w = this.getWidth() <= child.getWidth() ? child.getWidth()+20 : this.getWidth();
         int h =0; 
@@ -242,6 +250,71 @@ public class complexCard extends JPanel implements Cloneable{
 			repaint();
 	    }
 	    
+	}
+	
+	/*
+	 * Remove a child from childrenList.
+	 */
+	public void removeChild(complexCard child)
+	{
+		if (childrenCards.contains(child))
+		{
+			childrenCards.remove(child);	
+		}		
+	}
+	
+	/*
+	 * Remove a card's relation with parent.
+	 * Consequently, call parentCards's removeChild.
+	 */
+	public void removeParent()
+	{
+		if (parentCard != null)
+		{
+			parentCard.removeChild(this);
+			parentCard = null;	
+		}		
+	}
+	
+	/*
+	 * Recalculate card's size based on its children.
+	 */
+	public void recalculateSize()
+	{
+		if (childrenCards.size() > 0)
+		{
+			// Set a card to its default value first.
+			this.setBounds(c.getDefaultWidth(), c.getDefaultHeight());
+			
+			// Get the default width based on first child.
+			complexCard firstChild = childrenCards.get(0);
+			int w = this.getWidth() <= firstChild.getWidth() ? firstChild.getWidth()+20 : this.getWidth();
+			int h =0;
+			
+			for(int i=0; i < childrenCards.size(); i++)
+			{
+				if(i == 0)
+				{
+					// Do this only on the first child.
+					h=firstChild.getHeight()+80;
+					firstChild.setLocation(10, 60);
+					this.setBounds(w, h);
+				}
+				else
+				{				
+					complexCard child = childrenCards.get(i);
+					h= this.getHeight() + child.getHeight()+10;
+					child.setLocation(10, this.getHeight());
+					this.setBounds(w, h);
+				}	
+			}			 
+		}
+		else
+		{
+			// If the card has no child, then set all of its properties to default.
+			this.c.setInStack(false);
+			this.setBounds(c.getDefaultWidth(), c.getDefaultHeight());
+		}
 	}
 	
 	
