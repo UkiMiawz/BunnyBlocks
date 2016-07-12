@@ -251,6 +251,10 @@ public class cardWidget implements Cloneable {
         setX(p.x);
         setY(p.y);
     }
+    
+    public Point getLocation(){
+        return new Point(getX(),getY());
+    }
 
     public int getCardType() {
         return cardType;

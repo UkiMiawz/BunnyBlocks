@@ -61,9 +61,7 @@ public class MenuWidget extends JPanel {
         topPanel.setPreferredSize(new Dimension(card.getHeight(), card.getHeight() * topPanel.getComponents().length));
          DragSource ds = new DragSource();
         ds.createDefaultDragGestureRecognizer(card,
-                DnDConstants.ACTION_COPY, new DragGesture());
-        
-        
+                DnDConstants.ACTION_COPY, new DragGesture());  
     }
 
     public ArrayList<JPanel> getCards() {
@@ -90,23 +88,26 @@ public class MenuWidget extends JPanel {
     
     class DragGesture implements DragGestureListener { 
         @Override
-        public void dragGestureRecognized(DragGestureEvent event) { 
+        public void dragGestureRecognized(DragGestureEvent event) {
+            
             Cursor cursor = null;
-            cardWidget card = ((complexCard)event.getComponent()).getCardWidget(); 
+            cardWidget card = ((complexCard)event.getComponent()).getCardWidget();
+            
+           
+            card.setLocation(event.getDragOrigin());
             if (event.getDragAction() == DnDConstants.ACTION_COPY) {
-                cursor = DragSource.DefaultCopyDrop;
+                cursor = DragSource.DefaultCopyDrop; 
             } 
             event.startDrag(cursor, new MenuWidget.TransferableCard(card));
-        }
-        
+        }  
     }
     
     class TransferableCard implements Transferable {
 
         private cardWidget card;
 
-        public TransferableCard(cardWidget card) { 
-            this.card = card.clone();
+        public TransferableCard(cardWidget card) {  
+            this.card = card.clone(); 
         }
 
         @Override
@@ -122,7 +123,7 @@ public class MenuWidget extends JPanel {
         @Override
         public Object getTransferData(DataFlavor flavor)
                 throws UnsupportedFlavorException, IOException { 
-            if (flavor.equals(dataFlavor)) {
+            if (flavor.equals(dataFlavor)) { 
                 return card;
             } else {
                 throw new UnsupportedFlavorException(flavor);
