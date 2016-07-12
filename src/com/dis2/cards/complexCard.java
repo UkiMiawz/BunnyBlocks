@@ -1,20 +1,18 @@
 package com.dis2.cards;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.dis2.shared.Palette;
 import com.dis2.shared.Util;
@@ -160,16 +158,29 @@ public class complexCard extends JPanel implements Cloneable{
 		    this.add(forN);
 		    
 		    /**
-	         * Action event for Snake card
+	         * Detect any changes for Snake card
 	         * Take number input by user and set it in snakeCard
 	         */
-	        forN.addActionListener(new ActionListener() { //Use only with snake card
-	            public void actionPerformed(ActionEvent e) {
-	            	
-	                System.out.println("N For=" + forN.getText());  
-	                ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
-	              }
-	            });
+			// Listen for changes in the text
+			forN.getDocument().addDocumentListener(new DocumentListener() {
+				public void changedUpdate(DocumentEvent e) {
+					checkInput();
+				}
+				public void removeUpdate(DocumentEvent e) {
+					checkInput();
+				}
+				public void insertUpdate(DocumentEvent e) {
+					checkInput();
+				}
+
+				public void checkInput() {
+					System.out.println("Test Document Listener");
+					String textInput = forN.getText();
+					if(Util.isInteger(textInput)){
+						((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
+					}
+				}
+			});
 			
 		}
 		
