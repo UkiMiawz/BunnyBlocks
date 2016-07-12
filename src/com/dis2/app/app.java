@@ -83,6 +83,8 @@ public class app extends JFrame{
         ImageIcon iconWalk = new ImageIcon(urlWalk);
 
         canvas = new CanvasExtendedWidget(map.getImage(), iconChar, iconWalk, iconCoin, 80, 30, 340, 275);
+        canvas.setCodeBlocks(codeBlocks);
+
         return canvas;
     }
     
