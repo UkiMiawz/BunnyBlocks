@@ -1,7 +1,12 @@
 package com.dis2.canvasExtended;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.BorderFactory;
 
+import com.dis2.cardCompiler.CardCompiler;
+import com.dis2.codeBlocks.CodeBlocks;
 import com.dis2.canvas.CanvasWidget;
 import com.dis2.progress.StepsBar;
 import com.dis2.shared.AnimationAction;
@@ -34,6 +39,11 @@ public class CanvasExtendedWidget extends JPanel {
     //custom widgets
     private CanvasWidget canvasWidget;
     private StepsBar progressBar;
+
+    private CodeBlocks codeBlocks;
+    public void setCodeBlocks(CodeBlocks value){
+        codeBlocks = value;
+    }
 
     public void setCurrentStep(int value){
         System.out.println(logger + "Set current step " + value);
@@ -121,6 +131,14 @@ public class CanvasExtendedWidget extends JPanel {
         progressBar.setStepNumbers(totalSteps);
     }
 
+    private ArrayList<AnimationAction> getCalculatedAnimations(){
+        ArrayList<AnimationAction> result = new ArrayList<>();
+        if(codeBlocks != null){
+            result.addAll(CardCompiler.compileCards(codeBlocks.getCards()));
+        }
+        return result;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -128,6 +146,7 @@ public class CanvasExtendedWidget extends JPanel {
 
     private class ActionAnimate implements ActionListener{
         public void actionPerformed(ActionEvent e) {
+            canvasWidget.setAnimations(getCalculatedAnimations());
             canvasWidget.animateCanvas();
         }
     }
