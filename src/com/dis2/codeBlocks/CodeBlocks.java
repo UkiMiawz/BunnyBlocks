@@ -45,16 +45,24 @@ class DragListener extends MouseInputAdapter {
                     && (targetCard.getCardWidget().getCardType()) == 1
                     && (selectedCard.hasChildren() && selectedCard.getCardWidget().getCardType() == 1)
                     || selectedCard.getCardWidget().getCardType() != 1) { //only when card is type for (loop)
+                
+                
+                System.out.println("Esta dentro del contenedor?: " +isInsideCard(selectedCard, targetCard));
+                System.out.println("Target es tipo loop: "+ targetCard.getCardWidget().getCardType());
+                System.out.println("Selected Card tiene hijos es de tipo loop: "+ (selectedCard.hasChildren() && selectedCard.getCardWidget().getCardType() == 1));
+                System.out.println("Selected Card no es Lopp:" + selectedCard.getCardWidget().getCardType());
+                
                 selectedCard.setDefaultState();
                 targetCard.addChild(selectedCard);
                 targetCard.getCardWidget().setInStack(true);
                 targetCard.repaint();
                 cb.updateScroll();
+                 
             } else {
                 cb.bringToFront(selectedCard);
             }
             //just test of functio getCode
-            cb.getCode();
+            //cb.getCode();
 
         } else {//if released card is out of container
 
@@ -120,8 +128,11 @@ class DragListener extends MouseInputAdapter {
         for (complexCard card : collitions) {
             Point sP = selectedCard.getMidPoint();
             Point cP = card.getMidPoint();
-            if (getDistanceBetweenPoints(sP, cP) < distance || distance == -1) {
-                targetCard = card;
+            if (getDistanceBetweenPoints(sP, cP) < distance || distance == -1) { 
+                if(card.getCardWidget().getCardType()==1 
+                        && (selectedCard.hasChildren()||selectedCard.getCardWidget().getCardType()!=1)){
+                    targetCard = card;
+                } 
                 distance = getDistanceBetweenPoints(sP, cP);
             }
         }
