@@ -58,9 +58,15 @@ class DragListener extends MouseInputAdapter {
             //just test of functio getCode
             cb.getCode();
             
-        } else {//if released card is out of container
-            
-            // fix size of the previos container
+        } else 
+        {
+        	// if released card is out of container.
+        	// And it's a type of fish card (for now).
+            if(selectedCard.getCardWidget().getClass().getSimpleName().equals("fishCard"))
+            {
+            	selectedCard.removeParent();
+                cb.recalculateCardSize();	
+            }        	
         }  
     }
     
@@ -253,6 +259,18 @@ public class CodeBlocks extends JPanel {
                 this.bringToFront(card);
         	} 
         }
+    }
+    
+    /*
+     * Recalculate the size of all cards in codeBlocks.
+     */
+    public void recalculateCardSize()
+    {
+    	ArrayList<complexCard> allCards = getCards();
+    	for(complexCard currentCard : allCards)
+    	{
+    		currentCard.recalculateSize();
+    	}    	
     }
 
     public void bringToFront(complexCard card) {

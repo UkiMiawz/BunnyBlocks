@@ -1,20 +1,18 @@
 package com.dis2.cards;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.dis2.shared.Palette;
 import com.dis2.shared.Util;
@@ -28,6 +26,9 @@ public class complexCard extends JPanel implements Cloneable{
 	cardWidget c;
 	Util util = new Util();
 	boolean flagAnim = false;
+	
+	private complexCard parentCard;
+	private ArrayList<complexCard> childrenCards;
 	
 	public complexCard(){}
 	
@@ -58,6 +59,8 @@ public class complexCard extends JPanel implements Cloneable{
 			}
 		});
 		
+		parentCard = null;
+		childrenCards = new ArrayList<complexCard>();
 	}
 	
 	public cardWidget getCardWidget(){
@@ -160,16 +163,29 @@ public class complexCard extends JPanel implements Cloneable{
 		    this.add(forN);
 		    
 		    /**
-	         * Action event for Snake card
+	         * Detect any changes for Snake card
 	         * Take number input by user and set it in snakeCard
 	         */
-	        forN.addActionListener(new ActionListener() { //Use only with snake card
-	            public void actionPerformed(ActionEvent e) {
-	            	
-	                System.out.println("N For=" + forN.getText());  
-	                ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
-	              }
-	            });
+			// Listen for changes in the text
+			forN.getDocument().addDocumentListener(new DocumentListener() {
+				public void changedUpdate(DocumentEvent e) {
+					checkInput();
+				}
+				public void removeUpdate(DocumentEvent e) {
+					checkInput();
+				}
+				public void insertUpdate(DocumentEvent e) {
+					checkInput();
+				}
+
+				public void checkInput() {
+					System.out.println("Test Document Listener");
+					String textInput = forN.getText();
+					if(Util.isInteger(textInput)){
+						((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
+					}
+				}
+			});
 			
 		}
 		
@@ -180,6 +196,9 @@ public class complexCard extends JPanel implements Cloneable{
     }
 	
 	public void addChild(complexCard child) {
+		childrenCards.add(child);
+        child.parentCard = this;
+        
         this.add(child); 
         int w = this.getWidth() <= child.getWidth() ? child.getWidth()+20 : this.getWidth();
         int h =0; 
@@ -242,6 +261,71 @@ public class complexCard extends JPanel implements Cloneable{
 			repaint();
 	    }
 	    
+	}
+	
+	/*
+	 * Remove a child from childrenList.
+	 */
+	public void removeChild(complexCard child)
+	{
+		if (childrenCards.contains(child))
+		{
+			childrenCards.remove(child);	
+		}		
+	}
+	
+	/*
+	 * Remove a card's relation with parent.
+	 * Consequently, call parentCards's removeChild.
+	 */
+	public void removeParent()
+	{
+		if (parentCard != null)
+		{
+			parentCard.removeChild(this);
+			parentCard = null;	
+		}		
+	}
+	
+	/*
+	 * Recalculate card's size based on its children.
+	 */
+	public void recalculateSize()
+	{
+		if (childrenCards.size() > 0)
+		{
+			// Set a card to its default value first.
+			this.setBounds(c.getDefaultWidth(), c.getDefaultHeight());
+			
+			// Get the default width based on first child.
+			complexCard firstChild = childrenCards.get(0);
+			int w = this.getWidth() <= firstChild.getWidth() ? firstChild.getWidth()+20 : this.getWidth();
+			int h =0;
+			
+			for(int i=0; i < childrenCards.size(); i++)
+			{
+				if(i == 0)
+				{
+					// Do this only on the first child.
+					h=firstChild.getHeight()+80;
+					firstChild.setLocation(10, 60);
+					this.setBounds(w, h);
+				}
+				else
+				{				
+					complexCard child = childrenCards.get(i);
+					h= this.getHeight() + child.getHeight()+10;
+					child.setLocation(10, this.getHeight());
+					this.setBounds(w, h);
+				}	
+			}			 
+		}
+		else
+		{
+			// If the card has no child, then set all of its properties to default.
+			this.c.setInStack(false);
+			this.setBounds(c.getDefaultWidth(), c.getDefaultHeight());
+		}
 	}
 	
 	
