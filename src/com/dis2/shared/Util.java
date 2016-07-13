@@ -9,11 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
 import java.net.URL;
 import javax.swing.*;
-
-import static com.dis2.shared.Actions.MOVEDOWN;
 
 /**
  *
@@ -24,7 +21,7 @@ public class Util {
     public static int getImagenCenterX(JPanel panel, Image character) {
         return (panel.getWidth() / 2) - (character.getWidth(panel) / 2);
     }
-
+    
     public static int getImagenCenterX(JPanel panel, int w) {
         return (panel.getWidth() / 2) - (w / 2);
     }
@@ -32,9 +29,9 @@ public class Util {
     public static int getImagenCenterY(JPanel panel, Image character) {
         return (panel.getHeight() / 2) - (character.getHeight(panel) / 2);
     }
-
-    public static int getStringCenterX(JPanel panel, int label) {
-        return (panel.getWidth() / 2) - (label / 2);
+    
+    public static int getStringCenterX(JPanel panel, int label){
+    	return (panel.getWidth() / 2) - (label/2);
     }
 
     public static boolean isPixelTransparent(Image img, Point p) {
@@ -43,7 +40,7 @@ public class Util {
             if ((pixel >> 24) == 0x00) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (Exception e) { 
         }
 
         return false;
@@ -63,6 +60,21 @@ public class Util {
         return bimage;
     }
 
+    public static Actions getBackward(Actions action){
+        switch (action){
+            case MOVEDOWN:
+                return Actions.MOVEUP;
+            case MOVEUP:
+                return Actions.MOVEDOWN;
+            case MOVELEFT:
+                return Actions.MOVERIGHT;
+            case MOVERIGHT:
+                return Actions.MOVELEFT;
+            default:
+                return Actions.MOVEUP;
+        }
+    }
+
     /**
      * Save checking string to integer
      * @param s string input
@@ -71,16 +83,15 @@ public class Util {
     public static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
-        } catch (NumberFormatException e) {
+        } catch(NumberFormatException e) {
             return false;
-        } catch (NullPointerException e) {
+        } catch(NullPointerException e) {
             return false;
         }
         // only got here if we didn't return false
         return true;
     }
-    
-    
+
     /**
      * Check if a rectangle inside another rectangle
      * @param sx first rect x
@@ -104,20 +115,5 @@ public class Util {
         ImageIcon iconWalk = new ImageIcon(urlWalk);
         JOptionPane.showMessageDialog(null,
                 message, "Hello there", JOptionPane.INFORMATION_MESSAGE, iconWalk);
-    }
-
-    public static Actions getBackward(Actions action) {
-        switch (action) {
-            case MOVEDOWN:
-                return Actions.MOVEUP;
-            case MOVEUP:
-                return Actions.MOVEDOWN;
-            case MOVELEFT:
-                return Actions.MOVERIGHT;
-            case MOVERIGHT:
-                return Actions.MOVELEFT;
-            default:
-                return Actions.MOVEUP;
-        }
     }
 }

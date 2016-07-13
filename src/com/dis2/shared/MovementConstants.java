@@ -11,7 +11,6 @@ public class MovementConstants {
     public int getWidth() {return xBlockVertical;}
     public int getHeight() {return yBlockVertical;}
 
-
     public MovementConstants(int xBlockSize, int yBlockSize){
         xBlockVertical = xBlockSize;
         yBlockVertical = yBlockSize;
