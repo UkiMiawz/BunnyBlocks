@@ -1,6 +1,8 @@
 package com.dis2.progress;
 
 import com.dis2.shared.Palette;
+import com.dis2.shared.Util;
+import java.awt.BorderLayout;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,9 +15,7 @@ import javax.swing.JPanel;
  * @author David
  */
 public class StepsBar extends JPanel {
-
-    private int fixedWidth = 0;
-    private int fixedHeight = 0;
+ 
     private int arcWidth = 10;
     private int arcHeight = 10;
     private int stepNumbers = 0;
@@ -23,32 +23,27 @@ public class StepsBar extends JPanel {
     private Color baseBackgroundColor = Color.BLACK;
     private Color borderColor = Color.BLACK;
     private Color progressColor = Color.BLUE;
-
+    private int maxBarWidth = 0; 
     private Image goalImage = null;
-    private Image progressImage = null;
-
-    private boolean resizable = false;
-
-    public StepsBar(int width, int height) {
-        this.fixedWidth = width;
-        this.fixedHeight = height;
+    private Image progressImage = null; 
+    private boolean resizable = false; 
+     
+    public StepsBar(){ 
+         
+    }
+    
+    public  StepsBar(int widthContainer, int heightContainer) {  
+        this.setBounds(0, 0, widthContainer, heightContainer); 
+        this.setPreferredSize(new Dimension(widthContainer, heightContainer));
     }
 
-    public int getFixedWidth() {
-        return fixedWidth;
+    public int getMaxBarWidth() {
+        return maxBarWidth;
     }
 
-    public void setFixedWidth(int fixedWidth) {
-        this.fixedWidth = fixedWidth;
-    }
-
-    public int getFixedHeight() {
-        return fixedHeight;
-    }
-
-    public void setFixedHeight(int fixedHeight) {
-        this.fixedHeight = fixedHeight;
-    }
+    public void setMaxBarWidth(int maxBarWidth) {
+        this.maxBarWidth = maxBarWidth;
+    } 
 
     public int getArcWidth() {
         return arcWidth;
@@ -156,35 +151,46 @@ public class StepsBar extends JPanel {
     @Override
     protected void paintComponent(Graphics g) { 
         super.paintComponent(g); 
+        
+        int w = 0;
+        int x = 0;
+        int y = 0;
+        
         if (this.isResizable()) {
-            this.setSize(new Dimension(this.progressImage.getWidth(this)+this.fixedWidth, this.getHeight()));
+            w = this.getWidth();
         } else {
-            this.setSize(new Dimension(this.progressImage.getWidth(this)+this.fixedWidth, this.fixedHeight));
-        }
+            w = maxBarWidth;
+            x = (this.getWidth() / 2)-(maxBarWidth/2);
+        } 
         
         //Progress container
         g.setColor(this.getBaseBackgroundColor());
-        g.fillRoundRect(0, 0, this.fixedWidth, this.getHeight(), this.arcWidth, this.arcHeight);
+        g.fillRoundRect(x, y, w, this.getHeight(), this.arcWidth, this.arcHeight);
        
         //Current progress
         g.setColor(this.getProgressColor());
-        g.fillRoundRect(0, 0, this.fixedWidth, getProgressInPixels(), this.arcWidth, this.arcHeight);
+        g.fillRoundRect(x, y, w, getProgressInPixels(), this.arcWidth, this.arcHeight);
 
         //Progress background
         g.setColor(this.getBorderColor());
-        g.drawRoundRect(0, 0, this.fixedWidth, this.getHeight(), this.arcWidth, this.arcHeight);
+        g.drawRoundRect(x, y, w, this.getHeight(), this.arcWidth, this.arcHeight);
 
         //calculate width per steps
-        int WidthPerStep = this.fixedHeight / stepNumbers;
+        int heightPerStep = this.getHeight()/ stepNumbers;
         int currentPosition = 0;
-        g.setColor(Palette.blue());
+       
         for (int i=0; i<stepNumbers + 1; i++){
             //add pointers
-            g.fillRoundRect(0, currentPosition, this.fixedHeight, 3, this.arcWidth, this.arcHeight);
-            currentPosition += WidthPerStep;
+            g.fillRect(x, currentPosition, w, 1);
+            currentPosition += heightPerStep;
         }
+        
+        
 
         g.drawImage(goalImage, 0, this.getHeight()+40, this);
-        g.drawImage(progressImage, 0, getProgressImagePosition(), this);
+        g.drawImage(progressImage, Util.getImagenCenterX(this, progressImage), getProgressImagePosition(), this); 
+        repaint();
     }
+
+     
 }

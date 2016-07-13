@@ -5,6 +5,7 @@
  */
 package com.dis2.progress;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -21,23 +22,22 @@ import javax.swing.event.ChangeListener;
  *
  * @author David
  */
-public class TestProgress extends JPanel {
+public class TestProgress extends JFrame {
 
     public TestProgress() {
         try {
             //set layout
-            this.setLayout(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
+             
+            
 
             //setting up progress bar
-            StepsBar progress = new StepsBar(30, 600);
-            progress.setPreferredSize(new Dimension(100, 100));
-            progress.setBaseBackgroundColor(new Color(203,138,72));
-            progress.setBorderColor(new Color(173,119,65));
+            StepsBar progress = new StepsBar(30, 600); 
+            progress.setBaseBackgroundColor(new Color(203,138,72)); 
             progress.setProgressColor(new Color(46,204,113));
             progress.setStepNumbers(8);
-            progress.setCurrentStep(4);
+            progress.setCurrentStep(2);
             progress.setResizable(false);
+            progress.setMaxBarWidth(36);
 
             //set up pictures
             URL url = TestProgress.class.getResource("/resources/bunnyStep.gif");
@@ -46,11 +46,7 @@ public class TestProgress extends JPanel {
             progress.setGoalImage(new ImageIcon(url).getImage());
 
             this.add(progress);
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.weighty = 0.5;
-            c.gridx = 0;
-            c.gridy = 0;
-            this.add(progress, c);
+            
 
             JSlider steps = new JSlider(JSlider.VERTICAL, 0, 8,5);
             steps.addChangeListener(new ChangeListener() {
@@ -59,10 +55,12 @@ public class TestProgress extends JPanel {
                     progress.setCurrentStep(steps.getValue());
                 }
             });
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.gridx = 1;
-            c.gridy = 0;
-            this.add(steps, c);
+            
+            //this.add(steps,BorderLayout.LINE_END);
+            
+            this.setVisible(true);
+            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            this.pack();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,13 +70,7 @@ public class TestProgress extends JPanel {
 
     public static void main(String args[]) {
         try {
-            JFrame frame = new JFrame("Test Progress");
-            frame.setSize(400, 800);
-            frame.getContentPane().add(new TestProgress());
-
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+             new TestProgress(); 
         } catch (Exception e) {
             e.printStackTrace();
         }

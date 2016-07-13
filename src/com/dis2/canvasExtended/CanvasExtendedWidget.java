@@ -16,7 +16,7 @@ import com.dis2.shared.Palette;
 import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Color; 
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -79,13 +79,14 @@ public class CanvasExtendedWidget extends JPanel {
         bottomPanel.add(nextButton, BorderLayout.NORTH);
         bottomPanel.add(prevButton, BorderLayout.SOUTH);
 
-        //calculate the panel height
-        progressBar = new StepsBar(10, 650);
-        progressBar.setPreferredSize(new Dimension(100, 100));
-        progressBar.setBaseBackgroundColor(Palette.brown());
-        progressBar.setProgressColor(Palette.green());
-        progressBar.setStepNumbers(1);
-        progressBar.setCurrentStep(0);
+        //calculate the panel height 
+        progressBar = new StepsBar(30, 600); 
+        progressBar.setBaseBackgroundColor(new Color(203,138,72)); 
+        progressBar.setProgressColor(new Color(46,204,113));
+        progressBar.setStepNumbers(10);
+        progressBar.setCurrentStep(1); 
+        progressBar.setMaxBarWidth(36); 
+        
         URL url = CanvasExtendedWidget.class.getResource("/resources/bunnyStep.gif");
         progressBar.setProgressImage(new ImageIcon(url).getImage());
         url = CanvasExtendedWidget.class.getResource("/resources/coin_gold.png");
