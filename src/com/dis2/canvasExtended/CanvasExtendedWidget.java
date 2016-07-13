@@ -38,6 +38,10 @@ public class CanvasExtendedWidget extends JPanel {
     private JButton nextButton = new JButton("Next");
     private JButton prevButton = new JButton("Prev");
 
+    public JButton getPrevButton(){return prevButton;}
+    public JButton getNextButton(){return nextButton;}
+    public JButton getOkButton(){return okButton;}
+
     //custom widgets
     private CanvasWidget canvasWidget;
     private StepsBar progressBar;
@@ -105,7 +109,9 @@ public class CanvasExtendedWidget extends JPanel {
 
         //add action listeners for prev and next
         prevButton.setActionCommand("prev");
+        prevButton.setEnabled(false);
         nextButton.setActionCommand("next");
+        nextButton.setEnabled(false);
 
         prevButton.addActionListener(new ActionSteps());
         nextButton.addActionListener(new ActionSteps());

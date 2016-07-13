@@ -178,6 +178,10 @@ public class CanvasWidget extends JPanel {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
+            parentPanel.getOkButton().setEnabled(false);
+            parentPanel.getNextButton().setEnabled(false);
+            parentPanel.getPrevButton().setEnabled(false);
+
             if (currentQueue.isEmpty() && xMovement == 0 && yMovement == 0) {
                 System.out.println(logger + "Animation queue finished");
                 System.out.println(logger + "Animation finished - Current step now " + currentStep);
@@ -208,6 +212,23 @@ public class CanvasWidget extends JPanel {
                         System.out.println(logger + "Character missed with target");
                         Util.showMessage("Aw you missed the target. Don't lose hope, keep trying!");
                     }
+                }
+
+                System.out.println(logger + "Current step now " + (currentStep - 1));
+                System.out.println(logger + "Actions size " + actions.size());
+
+                if(currentStep > 1){
+                    System.out.println("Enabled prev button");
+                    parentPanel.getPrevButton().setEnabled(true);
+                }
+
+                System.out.println(logger + "Current step now " + (currentStep - 1));
+                System.out.println(logger + "Actions size " + actions.size());
+
+                if(currentStep <= actions.size()){
+                    System.out.println("Enabled next and prev button");
+                    parentPanel.getNextButton().setEnabled(true);
+                    parentPanel.getOkButton().setEnabled(true);
                 }
 
                 return;
