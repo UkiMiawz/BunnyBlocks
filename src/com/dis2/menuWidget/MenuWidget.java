@@ -2,6 +2,7 @@ package com.dis2.menuWidget;
  
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
+import com.dis2.shared.CustomCursor;
 import java.awt.BorderLayout; 
 import java.awt.Cursor; 
 import java.awt.Dimension;
@@ -89,14 +90,9 @@ public class MenuWidget extends JPanel {
     class DragGesture implements DragGestureListener { 
         @Override
         public void dragGestureRecognized(DragGestureEvent event) { 
-            Cursor cursor = null;
-            
             cardWidget card = ((complexCard)event.getComponent()).getCardWidget(); 
             card.setLocation(event.getDragOrigin());
-            if (event.getDragAction() == DnDConstants.ACTION_COPY) {
-                cursor = DragSource.DefaultCopyDrop; 
-            } 
-            event.startDrag(cursor, new MenuWidget.TransferableCard(card));
+            event.startDrag(DragSource.DefaultMoveDrop, new MenuWidget.TransferableCard(card));
         }  
     }
     

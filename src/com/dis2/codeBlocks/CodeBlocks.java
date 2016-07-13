@@ -38,9 +38,8 @@ class DragListener extends MouseInputAdapter {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-        selectedCard = (complexCard) e.getComponent();
+    public void mouseReleased(MouseEvent e) { 
+        selectedCard = (complexCard) e.getComponent(); 
         if (targetCard != null) {
             targetCard.setDefaultState();
             if (isInsideCard(selectedCard, targetCard)
@@ -51,6 +50,7 @@ class DragListener extends MouseInputAdapter {
                 targetCard.addChild(selectedCard);
                 targetCard.getCardWidget().setInStack(true);
                 targetCard.repaint();
+                cb.updateScroll();
             } else {
                 cb.bringToFront(selectedCard);
             }
@@ -82,7 +82,7 @@ class DragListener extends MouseInputAdapter {
         pressed = me;
     }
 
-    public void mouseDragged(MouseEvent me) {
+    public void mouseDragged(MouseEvent me) { 
         selectedCard = (complexCard) me.getComponent();
         targetCard = null;
         cb.bringToFront(selectedCard);
@@ -90,7 +90,16 @@ class DragListener extends MouseInputAdapter {
         location = selectedCard.getLocation(location);
         int x = location.x - pressed.getX() + me.getX();
         int y = location.y - pressed.getY() + me.getY();
+        
+        if(x < 0){ 
+            x= 0; 
+        }
+        if(y < 0){
+            y=0; 
+        }
+        
         selectedCard.setLocation(x, y);
+        cb.updateScroll();
         solveCollitions();
     }
 
@@ -173,11 +182,15 @@ class DragListener extends MouseInputAdapter {
 
 public class CodeBlocks extends JPanel {
 
+    int originalH, originalW;
     DataFlavor dataFlavor = new DataFlavor(cardWidget.class,
             cardWidget.class.getSimpleName());
 
     public CodeBlocks(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
+        originalH = height;
+        originalW = width;
+
         this.setLayout(null);
         new DropTargetPanel(this);
     }
@@ -226,7 +239,7 @@ public class CodeBlocks extends JPanel {
         return children;
     }
 
-    public void addCard(complexCard c, Point OldPoint) { 
+    public void addCard(complexCard c, Point OldPoint) {
         complexCard card = c.clone();
         DragListener drag = new DragListener(this);
         card.addMouseListener(drag);
@@ -235,18 +248,16 @@ public class CodeBlocks extends JPanel {
         card.setDefaultBounds();
         Component temp = this.getComponentAt(card.getX(), card.getY());
         if (temp.getClass().getSimpleName().equals("CodeBlocks")) {
-            card.setLocation(new Point(card.getX() - OldPoint.x 
-                            , card.getY() - OldPoint.y ));
+            card.setLocation(new Point(card.getX() - OldPoint.x, card.getY() - OldPoint.y));
             this.add(card);
-            this.bringToFront(card); 
-             
+            this.bringToFront(card);
+
         } else if (((complexCard) temp).getCardWidget().getCardType() == 1
                 && card.getCardWidget().getCardType() != 1) {
             ((complexCard) temp).getCardWidget().setInStack(true);
             ((complexCard) temp).addChild(card);
         } else {
-            card.setLocation(new Point(OldPoint.x - card.getX()
-                            , OldPoint.y - card.getY()));
+            card.setLocation(new Point(OldPoint.x - card.getX(), OldPoint.y - card.getY()));
             this.add(card);
             this.bringToFront(card);
         }
@@ -259,6 +270,30 @@ public class CodeBlocks extends JPanel {
         for (complexCard c : this.getCards()) {
             c.setDefaultState();
         }
+    }
+
+    public void updateScroll() {
+        int refH = this.getHeight();
+        int refW = this.getWidth();
+        for (complexCard c : this.getCards()) {
+            int tempH = c.getBounds().y + c.getBounds().height;
+            if (tempH > refH) {
+                refH = tempH;
+            } else {
+                refH = originalH;
+            }
+        }
+
+        for (complexCard c : this.getCards()) {
+            int tempW = c.getBounds().x + c.getBounds().width;
+            if (tempW > refW) {
+                refW = tempW;
+            } else {
+                refW = originalW;
+            }
+        }
+        this.setPreferredSize(new Dimension(refW, refH));
+        this.revalidate(); 
     }
 
     class DropTargetPanel extends DropTargetAdapter implements DropTargetListener {
@@ -278,16 +313,16 @@ public class CodeBlocks extends JPanel {
             try {
                 Transferable tr = e.getTransferable();
                 cardWidget card = ((cardWidget) tr.getTransferData(dataFlavor)).clone();
-              
+
                 if (e.isDataFlavorSupported(dataFlavor)) {
                     e.acceptDrop(DnDConstants.ACTION_COPY);
                     e.dropComplete(true);
-                    this.cb.validate();   
+                    this.cb.validate();
                     card.setSimpleCard(false);
-                    Point oldcoordinates = new Point(card.getLocation()); 
+                    Point oldcoordinates = new Point(card.getLocation());
                     card.setLocation(e.getLocation());
-                    this.cb.addCard(new complexCard(card.clone()), oldcoordinates); 
-                    
+                    this.cb.addCard(new complexCard(card.clone()), oldcoordinates);
+
                     return;
                 }
                 e.rejectDrop();
