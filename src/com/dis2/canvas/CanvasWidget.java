@@ -151,6 +151,7 @@ public class CanvasWidget extends JPanel {
             //add queue start from last step
             AnimationAction step = actions.get(currentStep - 1);
             AnimationAction prevStep = new AnimationAction(Util.getBackward(step.getAction()));
+            
             currentQueue.add(prevStep);
             System.out.println(logger + "Playing step number " + currentStep);
             currentStep -= 1;
@@ -221,6 +222,11 @@ public class CanvasWidget extends JPanel {
                 currentAction = currentQueue.remove(0);
                 needNewAnimation = false;
                 movementValue = movementConstants.getMovement(currentAction.getAction());
+                
+                if(currentAction.hasCard()){ 
+                    CanvasExtendedWidget.getCodeBlocks().setExecutedCard(currentAction.getCard()); 
+                }
+                
                 xMovement = movementValue.getX();
                 yMovement = movementValue.getY();
                 System.out.println(logger + "X : " + xMovement + " Y : " + yMovement + currentQueue.size());
