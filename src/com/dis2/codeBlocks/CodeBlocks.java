@@ -2,8 +2,7 @@ package com.dis2.codeBlocks;
 
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
-
-import java.awt.Color;
+ 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -14,8 +13,11 @@ import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
@@ -173,10 +175,10 @@ class DragListener extends MouseInputAdapter {
         return c;
     }
 
-    public boolean isInsideCard(complexCard selected, complexCard target) { 
+    public boolean isInsideCard(complexCard selected, complexCard target) {
         if (selected.equals(target)) {
             return false;
-        } 
+        }
         int xt = target.getX();
         int yt = target.getY();
         int wt = target.getWidth();
@@ -190,14 +192,19 @@ class DragListener extends MouseInputAdapter {
         } else {
             return false;
         }
-    } 
+    }
 }
 
 public class CodeBlocks extends JPanel {
 
     int originalH, originalW;
+    JButton close;
     DataFlavor dataFlavor = new DataFlavor(cardWidget.class,
             cardWidget.class.getSimpleName());
+
+    public CodeBlocks selfCodeBlocks() {
+        return this;
+    } 
 
     public CodeBlocks(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
@@ -205,41 +212,37 @@ public class CodeBlocks extends JPanel {
         originalW = width;
 
         this.setLayout(null);
+        close = new JButton("RESET");
+        close.setBounds(0, 0, 100, 30);
+        close.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Component c : selfCodeBlocks().getComponents()) {
+                    if (!(c instanceof JButton)) {
+                        selfCodeBlocks().remove(c);
+                    }
+                }
+                revalidate();
+                repaint();
+            }
+        });
+
+        this.add(close);
         new DropTargetPanel(this);
     }
 
-    public ArrayList<complexCard> getCode() {
-        ArrayList<complexCard> code = new ArrayList();
-        if (this.getCards().size() == 1) {
-            complexCard mainCard = new complexCard();
-            mainCard.add(this.getCards().get(0).clone());
-            code = this.buildTree(mainCard, 0);
-            System.out.println("****");
-            repaint();
-        } else {
-            System.out.println("In order to generate the code it must be only one super card Conteiners. now there are " + this.getCards().size() + " single Cards in the Code");
-        }
-        return code;
+    public void setExecutedCard(complexCard card){
+        setExecutedCard(this.getCards());
+        card.setHighlight();
     }
 
-    public ArrayList<complexCard> buildTree(complexCard card, int level) {
-        ArrayList<complexCard> compList = new ArrayList();
-
-        //loop-for only for print the card tree  
-        String tap = "";
-        for (int i = 0; i < level; i++) {
-            tap += " ";
-        }
-
-        for (complexCard child : card.getChildren()) {
-            System.out.println(tap + child.getCardWidget().getCardType());
-            complexCard c = child;
-            compList.add(c);
-            if (c.hasChildren()) {
-                compList.addAll(buildTree(c, level + 1));
+    private void setExecutedCard(ArrayList<complexCard> cards) { 
+        for (complexCard child : cards) {
+            child.setDefaultState(); 
+            if (child.hasChildren()) {
+               setExecutedCard(child.getChildren());
             }
-        }
-        return compList;
+        } 
     }
 
     public ArrayList<complexCard> getCards() {
@@ -255,7 +258,7 @@ public class CodeBlocks extends JPanel {
     /*
      * Recalculate the size of all cards in codeBlocks.
      */
-    public void recalculateCardSize() { 
+    public void recalculateCardSize() {
         for (complexCard currentCard : this.getCards()) {
             currentCard.recalculateSize();
         }
@@ -330,7 +333,7 @@ public class CodeBlocks extends JPanel {
         }
 
         @Override
-        public void drop(DropTargetDropEvent e) { 
+        public void drop(DropTargetDropEvent e) {
             try {
                 Transferable tr = e.getTransferable();
                 cardWidget card = ((cardWidget) tr.getTransferData(dataFlavor)).clone();

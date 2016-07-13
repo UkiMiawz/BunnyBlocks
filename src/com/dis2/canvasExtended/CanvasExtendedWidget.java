@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import com.dis2.cardCompiler.CardCompiler;
 import com.dis2.codeBlocks.CodeBlocks;
 import com.dis2.canvas.CanvasWidget;
+import com.dis2.cards.complexCard;
 import com.dis2.progress.StepsBar;
 import com.dis2.shared.AnimationAction;
 import com.dis2.shared.MovementConstants;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
  * Created by woooowowowo.
  */
 public class CanvasExtendedWidget extends JPanel {
+    
 
     private JPanel upperPanel = new JPanel();
     private JPanel bottomPanel = new JPanel();
@@ -40,9 +42,13 @@ public class CanvasExtendedWidget extends JPanel {
     private CanvasWidget canvasWidget;
     private StepsBar progressBar;
 
-    private CodeBlocks codeBlocks;
+    private static CodeBlocks codeBlocks;
     public void setCodeBlocks(CodeBlocks value){
         codeBlocks = value;
+    }
+    
+    public static CodeBlocks getCodeBlocks(){
+        return codeBlocks;
     }
 
     public void setCurrentStep(int value){
@@ -83,7 +89,7 @@ public class CanvasExtendedWidget extends JPanel {
         progressBar = new StepsBar(30, 600); 
         progressBar.setBaseBackgroundColor(new Color(203,138,72)); 
         progressBar.setProgressColor(new Color(46,204,113));
-        progressBar.setStepNumbers(10);
+        progressBar.setStepNumbers(1);
         progressBar.setCurrentStep(1); 
         progressBar.setMaxBarWidth(36); 
         
@@ -135,8 +141,9 @@ public class CanvasExtendedWidget extends JPanel {
     private ArrayList<AnimationAction> getCalculatedAnimations(){
         ArrayList<AnimationAction> result = new ArrayList<>();
         if(codeBlocks != null){
-            result.addAll(CardCompiler.compileCards(codeBlocks.getCards()));
+            result.addAll(CardCompiler.compileCards(codeBlocks.getCards())); 
         }
+        
         return result;
     }
 
@@ -148,7 +155,8 @@ public class CanvasExtendedWidget extends JPanel {
     private class ActionAnimate implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             canvasWidget.setAnimations(getCalculatedAnimations());
-            canvasWidget.animateCanvas();
+            canvasWidget.animateCanvas(); 
+           
         }
     }
 

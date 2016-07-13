@@ -7,6 +7,7 @@ import com.dis2.cards.fishCard;
 import com.dis2.cards.snakeCard;
 import com.dis2.menuWidget.MenuWidget;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.net.URL;
 
 import javax.swing.*;
@@ -37,93 +38,93 @@ public class app extends JFrame{
         canvasBase = new JPanel();
         canvas = initCanvas();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        container.setPreferredSize(new java.awt.Dimension(350, 357));
+        container.setPreferredSize(new Dimension(350, 357));
 
         menuWidgetBase.setLayout(new java.awt.BorderLayout());
 
         menuWidget.setLayout(null);
-        menuWidgetBase.add(initMenu(), java.awt.BorderLayout.CENTER);
+        menuWidgetBase.add(initMenu(), BorderLayout.CENTER);
 
-        javax.swing.GroupLayout menuWidgetContainerLayout = new javax.swing.GroupLayout(menuWidgetContainer);
+        GroupLayout menuWidgetContainerLayout = new GroupLayout(menuWidgetContainer);
         menuWidgetContainer.setLayout(menuWidgetContainerLayout);
         menuWidgetContainerLayout.setHorizontalGroup(
-            menuWidgetContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menuWidgetBase, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+            menuWidgetContainerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(menuWidgetBase, GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
         );
         menuWidgetContainerLayout.setVerticalGroup(
-            menuWidgetContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menuWidgetBase, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            menuWidgetContainerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(menuWidgetBase, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout codeBlocksLayout = new javax.swing.GroupLayout(codeBlocks);
+        javax.swing.GroupLayout codeBlocksLayout = new GroupLayout(codeBlocks);
         codeBlocks.setLayout(codeBlocksLayout);
         codeBlocksLayout.setHorizontalGroup(
-            codeBlocksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            codeBlocksLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 733, Short.MAX_VALUE)
         );
         codeBlocksLayout.setVerticalGroup(
-            codeBlocksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            codeBlocksLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 365, Short.MAX_VALUE)
         );
 
         scrollpane.setViewportView(initCodeBlocks());
 
-        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
+        javax.swing.GroupLayout containerLayout = new GroupLayout(container);
         container.setLayout(containerLayout);
         containerLayout.setHorizontalGroup(
-            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(menuWidgetContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            containerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(scrollpane, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(menuWidgetContainer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         containerLayout.setVerticalGroup(
-            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            containerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(containerLayout.createSequentialGroup()
-                .addComponent(scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(scrollpane, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(1, 1, 1)
-                .addComponent(menuWidgetContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(menuWidgetContainer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
 
-        canvasBase.setLayout(new java.awt.BorderLayout());
+        canvasBase.setLayout(new BorderLayout());
 
-        javax.swing.GroupLayout canvasLayout = new javax.swing.GroupLayout(canvas);
+        javax.swing.GroupLayout canvasLayout = new GroupLayout(canvas);
         canvas.setLayout(canvasLayout);
         canvasLayout.setHorizontalGroup(
-            canvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            canvasLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 500, Short.MAX_VALUE)
         );
         canvasLayout.setVerticalGroup(
-            canvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            canvasLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 370, Short.MAX_VALUE)
         );
 
         canvasBase.add(initCanvas(), java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout canvasContainerLayout = new javax.swing.GroupLayout(canvasContainer);
+       GroupLayout canvasContainerLayout = new javax.swing.GroupLayout(canvasContainer);
         canvasContainer.setLayout(canvasContainerLayout);
         canvasContainerLayout.setHorizontalGroup(
-            canvasContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(canvasBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            canvasContainerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(canvasBase, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         canvasContainerLayout.setVerticalGroup(
-            canvasContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(canvasBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            canvasContainerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(canvasBase, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addComponent(container, GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                 .addGap(1, 1, 1)
-                .addComponent(canvasContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(canvasContainer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-            .addComponent(canvasContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(container, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+            .addComponent(canvasContainer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         
         this.setVisible(true);
