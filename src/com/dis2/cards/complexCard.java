@@ -7,8 +7,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -19,8 +17,9 @@ import javax.swing.JTextField;
 import com.dis2.shared.Palette;
 import com.dis2.shared.Util;
 import java.awt.Color;
-import java.awt.Cursor;
-import java.net.URL;
+import javax.swing.JComboBox;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class complexCard extends JPanel implements Cloneable {
 
@@ -42,7 +41,7 @@ public class complexCard extends JPanel implements Cloneable {
 
     public complexCard(cardWidget c) {
         this.c = c;
-        forN = new JTextField("0", 2);
+        forN = new JTextField("1", 2);
         this.setBounds(new Rectangle(c.getX(), c.getY(), c.getRectWidth(), c.getRectHeight()));
         this.setLayout(null);
         this.addMouseListener(new MouseAdapter() {
@@ -78,27 +77,29 @@ public class complexCard extends JPanel implements Cloneable {
         if (!c.isSimpleCard() && c.getCardType() == 1) {
             forN.setBounds(0, 0, 30, 30);
             forN.setDragEnabled(false);
-
-            forN.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    forN.requestFocus();
+            forN.getDocument().addDocumentListener(new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) {
+                    checkInput();
                 }
 
-                @Override
-                public void mouseExited(MouseEvent e) {
-
-                } 
-            });
-
-            forN.addActionListener(new ActionListener() { //Use only with snake card
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("N For=" + forN.getText());
-                    ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
+                public void removeUpdate(DocumentEvent e) {
+                    checkInput();
                 }
-            });
 
-            this.add(forN);
+                public void insertUpdate(DocumentEvent e) {
+                    checkInput();
+                }
+
+                public void checkInput() {
+                    String textInput = forN.getText();
+                    try {
+                        ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
+                        System.out.println(Integer.valueOf(forN.getText()));
+                    } catch (Exception e) {
+                        ((snakeCard) c).setNtimes(1);
+                    } 
+                }
+            }); 
         }
 
     }
@@ -128,10 +129,10 @@ public class complexCard extends JPanel implements Cloneable {
     }
 
     public void setImageDraw(Graphics g, Image i) {
-        
+
         g.setColor(c.getFontColor());
         g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
-        
+
         if (c.isSimpleCard()) {
             double w = c.getImageScale() * c.getImageWidth();
             double h = c.getImageScale() * c.getImageHeight();
@@ -149,12 +150,13 @@ public class complexCard extends JPanel implements Cloneable {
             double w = c.getImageScale() * c.getImageWidth();
             double h = c.getImageScale() * c.getImageHeight();
 
-            switch (c.getCardType()) { 
+            switch (c.getCardType()) {
                 case 1: // for
                     g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
                     g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) - 15, c.getyTextMargin());
                     forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) + 15, c.getyTextMargin() - 18, 40, 25);
-                    break; 
+                    this.add(forN);
+                    break;
                 case 2: // moveUp 
                 case 3: // moveDown 
                 case 4: // moveLeft 
@@ -215,7 +217,6 @@ public class complexCard extends JPanel implements Cloneable {
      * Change color of card when the code is running
      */
     public void setHighlight() {
-
         if (c.getCardType() == 1) {
             c.setFillColor(Palette.brightGreen());
             repaint();
@@ -224,23 +225,52 @@ public class complexCard extends JPanel implements Cloneable {
             c.setFillColor(Palette.brightViolet());
             repaint();
         }
-
     }
 
     /**
      * Get back original color of card
      */
     public void setDefaultState() {
-
         if (c.getCardType() == 1) {
             c.setFillColor(Palette.green());
             repaint();
-
         } else {
             c.setFillColor(Palette.violet());
             repaint();
         }
+    }
 
+    /*
+	 * Recalculate card's size based on its children.
+     */
+    public void recalculateSize() {
+        if (this.hasChildren()) {
+            // Set a card to its default value first.
+            this.setBounds(c.getDefaultWidth(), c.getDefaultHeight());
+
+            // Get the default width based on first child.
+            complexCard firstChild = this.getChildren().get(0);
+            int w = this.getWidth() <= firstChild.getWidth() ? firstChild.getWidth() + 20 : this.getWidth();
+            int h = 0;
+
+            for (int i = 0; i < this.getChildren().size(); i++) {
+                if (i == 0) {
+                    // Do this only on the first child.
+                    h = firstChild.getHeight() + 80;
+                    firstChild.setLocation(10, 60);
+                    this.setBounds(w, h);
+                } else {
+                    complexCard child = this.getChildren().get(i);
+                    h = this.getHeight() + child.getHeight() + 10;
+                    child.setLocation(10, this.getHeight());
+                    this.setBounds(w, h);
+                }
+            }
+        } else {
+            // If the card has no child, then set all of its properties to default.
+            this.c.setInStack(false);
+            this.setBounds(c.getDefaultWidth(), c.getDefaultHeight());
+        }
     }
 
     public void setDefaultBounds() {
