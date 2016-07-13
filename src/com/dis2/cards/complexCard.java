@@ -1,7 +1,9 @@
 package com.dis2.cards;
 
+import com.dis2.app.app;
 import com.dis2.shared.CustomCursor;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -49,7 +51,11 @@ public class complexCard extends JPanel implements Cloneable {
             public void mouseEntered(MouseEvent e) {
                 getSelf().setCursor(CustomCursor.hand());
                 flagAnim = true; //this starts the animation of the gif
-                //stateChanged(c); //test for highlight color in cards
+        		app.menuWidget.descGlobalLabel.setFont(new Font("Arial Black", Font.ITALIC, 14));
+        		app.menuWidget.descGlobalLabel.setForeground(c.getFillColor());
+        		app.menuWidget.descGlobalLabel.setText("<html>" + c.getText() + "</html>");
+        		app.menuWidget.descGlobalLabel.setPreferredSize(new Dimension(app.menuWidget.getWidth(), 100));
+
                 revalidate();
                 repaint();
             }
@@ -66,6 +72,8 @@ public class complexCard extends JPanel implements Cloneable {
             public void mouseExited(MouseEvent e) {
                 flagAnim = false; //this ends the animation of the gif and repaint regular img
                 //stateBack(c); // //test for highlight color in cards
+        		app.menuWidget.descGlobalLabel.setText("");
+
                 revalidate();
                 repaint();
 

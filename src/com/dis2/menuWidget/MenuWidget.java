@@ -29,37 +29,34 @@ public class MenuWidget extends JPanel {
 
     private JPanel topPanel;
     private JPanel bottomPanel;
-    private JLabel descGlobalLabel;
-    private JPanel descGlobalCard;
+    public JLabel descGlobalLabel;
     public ArrayList<JPanel> cardContent;
     private JSplitPane container;
-    private int selectedCard = 0; 
+    
     
     DataFlavor dataFlavor = new DataFlavor(cardWidget.class,
             cardWidget.class.getSimpleName());
 
     public MenuWidget(int width, int height) {
         descGlobalLabel = new JLabel();
-        descGlobalCard = new JPanel();
         bottomPanel = new JPanel();
         topPanel = new JPanel();
-        container = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+        container = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 setUpTopPanel(), setUpBottomPanel());
         container.setOneTouchExpandable(true);
-        container.setDividerLocation(300);
+        container.setDividerLocation(400);
         container.setResizeWeight(.5d);
         this.setLayout(new BorderLayout());
         this.add(container);
         this.setPreferredSize(new Dimension(width, height));  
-        this.dataFlavor = dataFlavor;
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
-        topPanel.setBorder(BorderFactory.createEmptyBorder(10,30,10,35));
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         
     }
 
     public void addCard(JComponent card) {
-        topPanel.add(card); 
-        topPanel.setPreferredSize(new Dimension(card.getHeight(), card.getHeight() * topPanel.getComponents().length));
+        topPanel.add(card);
+        topPanel.setPreferredSize(new Dimension(card.getWidth()* topPanel.getComponents().length, card.getHeight()));
          DragSource ds = new DragSource();
         ds.createDefaultDragGestureRecognizer(card,
                 DnDConstants.ACTION_COPY, new DragGesture());  
@@ -71,19 +68,18 @@ public class MenuWidget extends JPanel {
 
     public JScrollPane setUpTopPanel() {
         JScrollPane scrollPane = new JScrollPane(topPanel,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         return scrollPane;
     }
 
     private JScrollPane setUpBottomPanel() {
-        bottomPanel.setPreferredSize(new Dimension(240, 300));
-        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        bottomPanel.add(descGlobalCard);
+        
+        bottomPanel.setLayout(new BorderLayout());
         bottomPanel.add(descGlobalLabel);
         JScrollPane scrollPane = new JScrollPane(bottomPanel,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         return scrollPane;
     } 
     

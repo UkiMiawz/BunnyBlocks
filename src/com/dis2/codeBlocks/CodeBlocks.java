@@ -2,6 +2,8 @@ package com.dis2.codeBlocks;
 
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
+
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
