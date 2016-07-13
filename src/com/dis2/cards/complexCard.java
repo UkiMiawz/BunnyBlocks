@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 
 import com.dis2.shared.Palette;
 import com.dis2.shared.Util;
-import java.awt.Color; 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.net.URL;
 
@@ -47,19 +47,19 @@ public class complexCard extends JPanel implements Cloneable {
         this.setLayout(null);
         this.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) { 
+            public void mouseEntered(MouseEvent e) {
                 getSelf().setCursor(CustomCursor.hand());
                 flagAnim = true; //this starts the animation of the gif
                 //stateChanged(c); //test for highlight color in cards
                 revalidate();
                 repaint();
             }
-            
-            public void mousePressed(MouseEvent e){
+
+            public void mousePressed(MouseEvent e) {
                 getSelf().setCursor(CustomCursor.grab());
             }
-            
-            public void mouseReleased(MouseEvent e){
+
+            public void mouseReleased(MouseEvent e) {
                 getSelf().setCursor(CustomCursor.hand());
             }
 
@@ -73,10 +73,9 @@ public class complexCard extends JPanel implements Cloneable {
             }
         });
 
-         
         this.setOpaque(true);
-        this.setBackground(new Color(0,0,0,0));
-        if (!c.isSimpleCard()) { 
+        this.setBackground(new Color(0, 0, 0, 0));
+        if (!c.isSimpleCard() && c.getCardType() == 1) {
             forN.setBounds(0, 0, 30, 30);
             forN.setDragEnabled(false);
 
@@ -89,15 +88,14 @@ public class complexCard extends JPanel implements Cloneable {
                 @Override
                 public void mouseExited(MouseEvent e) {
 
-                }
-
+                } 
             });
 
             forN.addActionListener(new ActionListener() { //Use only with snake card
-                public void actionPerformed(ActionEvent e) { 
+                public void actionPerformed(ActionEvent e) {
                     System.out.println("N For=" + forN.getText());
                     ((snakeCard) c).setNtimes(Integer.valueOf(forN.getText()));
-                } 
+                }
             });
 
             this.add(forN);
@@ -130,7 +128,10 @@ public class complexCard extends JPanel implements Cloneable {
     }
 
     public void setImageDraw(Graphics g, Image i) {
-
+        
+        g.setColor(c.getFontColor());
+        g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
+        
         if (c.isSimpleCard()) {
             double w = c.getImageScale() * c.getImageWidth();
             double h = c.getImageScale() * c.getImageHeight();
@@ -138,12 +139,9 @@ public class complexCard extends JPanel implements Cloneable {
             // explicitly specify width (w) and height (h) to scale Image
             if (!flagAnim) {
                 g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-
             } else {
                 g.drawImage(c.getGif(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
             }
-            g.setColor(c.getFontColor());
-            g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
             g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
 
         } else if ((!c.isSimpleCard()) && (!c.isInStack())) {
@@ -151,41 +149,17 @@ public class complexCard extends JPanel implements Cloneable {
             double w = c.getImageScale() * c.getImageWidth();
             double h = c.getImageScale() * c.getImageHeight();
 
-            switch (c.getCardType()) {
-
+            switch (c.getCardType()) { 
                 case 1: // for
                     g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-                    g.setColor(c.getFontColor());
-                    g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
                     g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) - 15, c.getyTextMargin());
                     forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) + 15, c.getyTextMargin() - 18, 40, 25);
-                    break;
-                ////
-                case 2: // moveUp
-
-                    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-                    g.setColor(c.getFontColor());
-                    g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
-                    g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
-                    break;
-                case 3: // moveDown
-
-                    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-                    g.setColor(c.getFontColor());
-                    g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
-                    g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
-                    break;
-                case 4: // moveLeft
-
-                    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-                    g.setColor(c.getFontColor());
-                    g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
-                    g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin() - 10);
-                    break;
+                    break; 
+                case 2: // moveUp 
+                case 3: // moveDown 
+                case 4: // moveLeft 
                 case 5: //moveRight
                     g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-                    g.setColor(c.getFontColor());
-                    g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
                     g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin() - 10);
                     break;
             }
@@ -197,9 +171,8 @@ public class complexCard extends JPanel implements Cloneable {
             g.setColor(c.getFontColor());
             g.setFont(new Font("Courier", Font.BOLD, 16));
             g.drawString(c.getLabel(), (c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())), 28);
-            forN.setBounds(c.getRectWidth() - 35, 10, 40, 25); 
+            forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);
         }
-
     }
 
     public void setBounds(int width, int height) {

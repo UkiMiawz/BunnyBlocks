@@ -30,8 +30,7 @@ class DragListener extends MouseInputAdapter {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
+    public void mouseClicked(MouseEvent e) { 
         selectedCard = (complexCard) e.getComponent();
         cb.bringToFront(selectedCard);
         selectedCard.setHighlight();
@@ -61,6 +60,8 @@ class DragListener extends MouseInputAdapter {
 
             // fix size of the previos container
         }
+        
+        cb.repaint();
     }
 
     public boolean insertCard(complexCard selected, complexCard target) {
@@ -250,20 +251,22 @@ public class CodeBlocks extends JPanel {
         if (temp.getClass().getSimpleName().equals("CodeBlocks")) {
             card.setLocation(new Point(card.getX() - OldPoint.x, card.getY() - OldPoint.y));
             this.add(card);
-            this.bringToFront(card);
-
+            this.bringToFront(card); 
         } else if (((complexCard) temp).getCardWidget().getCardType() == 1
                 && card.getCardWidget().getCardType() != 1) {
             ((complexCard) temp).getCardWidget().setInStack(true);
-            ((complexCard) temp).addChild(card);
+            ((complexCard) temp).addChild(card); 
         } else {
-            card.setLocation(new Point(OldPoint.x - card.getX(), OldPoint.y - card.getY()));
+            card.setLocation(new Point(card.getX() - OldPoint.x, card.getY() - OldPoint.y));
             this.add(card);
-            this.bringToFront(card);
-        }
+            this.bringToFront(card); 
+        } 
+        updateScroll();
         card.repaint();
         repaint();
     }
+    
+     
 
     public void bringToFront(complexCard card) {
         this.setComponentZOrder(card, 0);
