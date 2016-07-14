@@ -7,6 +7,9 @@ public class MovementConstants {
     private int yBlockVertical = 33;
     private int xBlockHorizontal = 55;
     private int yBlockHorizontal = -33;
+    
+    public int getWidth() {return xBlockVertical;}
+    public int getHeight() {return yBlockVertical;}
 
     public MovementConstants(int xBlockSize, int yBlockSize){
         xBlockVertical = xBlockSize;

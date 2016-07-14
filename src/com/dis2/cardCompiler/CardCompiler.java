@@ -26,13 +26,13 @@ public class CardCompiler {
                 //not for
                 switch (inputCard.getCardWidget().getCardType()){
                     case 2:
-                        result.add(new AnimationAction(Actions.MOVEUP)); break;
+                        result.add(new AnimationAction(Actions.MOVEUP ,inputCard)); break;
                     case 3:
-                        result.add(new AnimationAction(Actions.MOVEDOWN)); break;
+                        result.add(new AnimationAction(Actions.MOVEDOWN, inputCard)); break;
                     case 4:
-                        result.add(new AnimationAction(Actions.MOVELEFT)); break;
+                        result.add(new AnimationAction(Actions.MOVELEFT, inputCard)); break;
                     case 5:
-                        result.add(new AnimationAction(Actions.MOVERIGHT)); break;
+                        result.add(new AnimationAction(Actions.MOVERIGHT,inputCard)); break;
                     default:
                         break;
                 }

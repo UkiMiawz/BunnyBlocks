@@ -35,16 +35,11 @@ public class CanvasWidget extends JPanel {
     private Image backgroundImage;
 
     private AnimationObject character;
+    private AnimationObject target;
     private ArrayList<AnimationObject> animationObjects = new ArrayList<AnimationObject>();
-
-    private static final int xBlock = 65;
-    private static final int yBlock = 35;
 
     private int startingX = 0;
     private int startingY = 0;
-
-    private int targetX = 0;
-    private int targetY = 0;
 
     private static final int framePerSecond = 50;
     private MovementConstants movementConstants = new MovementConstants();
@@ -92,8 +87,6 @@ public class CanvasWidget extends JPanel {
             this.backgroundImage = backgroundImage;
             this.startingX = startingX;
             this.startingY = startingY;
-            this.targetX = targetX;
-            this.targetY = targetY;
             this.movementConstants = movementConstants;
 
             Dimension size = new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null));
@@ -106,7 +99,7 @@ public class CanvasWidget extends JPanel {
             AnimationObject bunny = new AnimationObject(startingX, startingY, characterImage, walkImage);
 
             System.out.println(logger + "Testing add target object");
-            AnimationObject target = new AnimationObject(targetX, targetY, targetImage);
+            target = new AnimationObject(targetX, targetY, targetImage);
 
             System.out.println(logger + "Add objects");
             character = bunny;
@@ -158,6 +151,7 @@ public class CanvasWidget extends JPanel {
             //add queue start from last step
             AnimationAction step = actions.get(currentStep - 1);
             AnimationAction prevStep = new AnimationAction(Util.getBackward(step.getAction()));
+            
             currentQueue.add(prevStep);
             System.out.println(logger + "Playing step number " + currentStep);
             currentStep -= 1;
@@ -184,11 +178,57 @@ public class CanvasWidget extends JPanel {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
+            if (parentPanel != null){
+                parentPanel.getOkButton().setEnabled(false);
+                parentPanel.getNextButton().setEnabled(false);
+                parentPanel.getPrevButton().setEnabled(false);
+            }
+
             if (currentQueue.isEmpty() && xMovement == 0 && yMovement == 0) {
                 System.out.println(logger + "Animation queue finished");
                 System.out.println(logger + "Animation finished - Current step now " + currentStep);
                 character.stand();
                 timer.stop();
+
+                if(currentStep-1 == actions.size()) {
+                    timer.stop();
+                    System.out.println(logger + "End of actions, check target position");
+
+                    //first rect, the character, get down left
+                    int sx = character.getX();
+                    int sy = character.getY() + character.getHeight();
+                    int sw = movementConstants.getWidth();
+                    int sh = movementConstants.getHeight();
+
+                    //second rect, the target
+                    int rx = target.getX();
+                    int ry = target.getY() + target.getHeight();
+                    int rw = movementConstants.getWidth();
+                    int rh = movementConstants.getHeight();
+
+                    if(Util.overlaps(sx, sy, sw, sh, rx, ry, rw, rh)){
+                        System.out.println(logger + "Character overlaps with target");
+                        Util.showMessage("You did it! Your program execute nicely and mr bunny got the coin!");
+                    }
+                    else{
+                        System.out.println(logger + "Character missed with target");
+                        Util.showMessage("Aw you missed the target. Don't lose hope, keep trying!");
+                    }
+                }
+
+                System.out.println(logger + "Current step now " + (currentStep - 1));
+                System.out.println(logger + "Actions size " + actions.size());
+
+                if(currentStep > 1){
+                    parentPanel.getPrevButton().setEnabled(true);
+                    parentPanel.getOkButton().setEnabled(true);
+                }
+
+                if(parentPanel != null && currentStep <= actions.size()){
+                    parentPanel.getNextButton().setEnabled(true);
+                    parentPanel.getOkButton().setEnabled(true);
+                }
+
                 return;
             }
 
@@ -201,6 +241,11 @@ public class CanvasWidget extends JPanel {
                 currentAction = currentQueue.remove(0);
                 needNewAnimation = false;
                 movementValue = movementConstants.getMovement(currentAction.getAction());
+                
+                if(currentAction.hasCard()){ 
+                    CanvasExtendedWidget.getCodeBlocks().setExecutedCard(currentAction.getCard()); 
+                }
+                
                 xMovement = movementValue.getX();
                 yMovement = movementValue.getY();
                 System.out.println(logger + "X : " + xMovement + " Y : " + yMovement + currentQueue.size());
@@ -234,6 +279,10 @@ public class CanvasWidget extends JPanel {
     }
 
     public void animateCanvas() {
+        if(actions != null && parentPanel != null && currentStep - 1 >= actions.size()){
+            currentStep = 1;
+            moveCharacterToStartPosition();
+        }
         this.animateCanvas(actions);
     }
 

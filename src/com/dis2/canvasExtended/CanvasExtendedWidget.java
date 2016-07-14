@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import com.dis2.cardCompiler.CardCompiler;
 import com.dis2.codeBlocks.CodeBlocks;
 import com.dis2.canvas.CanvasWidget;
+import com.dis2.cards.complexCard;
 import com.dis2.progress.StepsBar;
 import com.dis2.shared.AnimationAction;
 import com.dis2.shared.MovementConstants;
@@ -16,7 +17,7 @@ import com.dis2.shared.Palette;
 import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Color; 
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
  * Created by woooowowowo.
  */
 public class CanvasExtendedWidget extends JPanel {
+    
 
     private JPanel upperPanel = new JPanel();
     private JPanel bottomPanel = new JPanel();
@@ -36,13 +38,21 @@ public class CanvasExtendedWidget extends JPanel {
     private JButton nextButton = new JButton("Next");
     private JButton prevButton = new JButton("Prev");
 
+    public JButton getPrevButton(){return prevButton;}
+    public JButton getNextButton(){return nextButton;}
+    public JButton getOkButton(){return okButton;}
+
     //custom widgets
     private CanvasWidget canvasWidget;
     private StepsBar progressBar;
 
-    private CodeBlocks codeBlocks;
+    private static CodeBlocks codeBlocks;
     public void setCodeBlocks(CodeBlocks value){
         codeBlocks = value;
+    }
+    
+    public static CodeBlocks getCodeBlocks(){
+        return codeBlocks;
     }
 
     public void setCurrentStep(int value){
@@ -79,13 +89,14 @@ public class CanvasExtendedWidget extends JPanel {
         bottomPanel.add(nextButton, BorderLayout.NORTH);
         bottomPanel.add(prevButton, BorderLayout.SOUTH);
 
-        //calculate the panel height
-        progressBar = new StepsBar(10, 650);
-        progressBar.setPreferredSize(new Dimension(100, 100));
-        progressBar.setBaseBackgroundColor(Palette.brown());
-        progressBar.setProgressColor(Palette.green());
+        //calculate the panel height 
+        progressBar = new StepsBar(30, 600); 
+        progressBar.setBaseBackgroundColor(new Color(203,138,72)); 
+        progressBar.setProgressColor(new Color(46,204,113));
         progressBar.setStepNumbers(1);
-        progressBar.setCurrentStep(0);
+        progressBar.setCurrentStep(1); 
+        progressBar.setMaxBarWidth(36); 
+        
         URL url = CanvasExtendedWidget.class.getResource("/resources/bunnyStep.gif");
         progressBar.setProgressImage(new ImageIcon(url).getImage());
         url = CanvasExtendedWidget.class.getResource("/resources/coin_gold.png");
@@ -98,7 +109,9 @@ public class CanvasExtendedWidget extends JPanel {
 
         //add action listeners for prev and next
         prevButton.setActionCommand("prev");
+        prevButton.setEnabled(false);
         nextButton.setActionCommand("next");
+        nextButton.setEnabled(false);
 
         prevButton.addActionListener(new ActionSteps());
         nextButton.addActionListener(new ActionSteps());
@@ -134,8 +147,9 @@ public class CanvasExtendedWidget extends JPanel {
     private ArrayList<AnimationAction> getCalculatedAnimations(){
         ArrayList<AnimationAction> result = new ArrayList<>();
         if(codeBlocks != null){
-            result.addAll(CardCompiler.compileCards(codeBlocks.getCards()));
+            result.addAll(CardCompiler.compileCards(codeBlocks.getCards())); 
         }
+        
         return result;
     }
 
@@ -146,8 +160,10 @@ public class CanvasExtendedWidget extends JPanel {
 
     private class ActionAnimate implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            canvasWidget.setAnimations(getCalculatedAnimations());
-            canvasWidget.animateCanvas();
+            if(codeBlocks != null)
+                canvasWidget.setAnimations(getCalculatedAnimations());
+            canvasWidget.animateCanvas(); 
+           
         }
     }
 
