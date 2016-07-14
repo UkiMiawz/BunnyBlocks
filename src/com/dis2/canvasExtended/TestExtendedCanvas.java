@@ -64,9 +64,9 @@ public class TestExtendedCanvas {
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
             testActions.add(new AnimationAction(Actions.MOVEDOWN));
             testActions.add(new AnimationAction(Actions.MOVEUP));
-            //testActions.add(new AnimationAction(Actions.MOVEUP));
-            //testActions.add(new AnimationAction(Actions.MOVEUP));
-            //testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
+            testActions.add(new AnimationAction(Actions.MOVEUP));
 
             panel.setAnimations(testActions);
 

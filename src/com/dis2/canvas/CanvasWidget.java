@@ -178,9 +178,11 @@ public class CanvasWidget extends JPanel {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            parentPanel.getOkButton().setEnabled(false);
-            parentPanel.getNextButton().setEnabled(false);
-            parentPanel.getPrevButton().setEnabled(false);
+            if (parentPanel != null){
+                parentPanel.getOkButton().setEnabled(false);
+                parentPanel.getNextButton().setEnabled(false);
+                parentPanel.getPrevButton().setEnabled(false);
+            }
 
             if (currentQueue.isEmpty() && xMovement == 0 && yMovement == 0) {
                 System.out.println(logger + "Animation queue finished");
@@ -218,15 +220,11 @@ public class CanvasWidget extends JPanel {
                 System.out.println(logger + "Actions size " + actions.size());
 
                 if(currentStep > 1){
-                    System.out.println("Enabled prev button");
                     parentPanel.getPrevButton().setEnabled(true);
+                    parentPanel.getOkButton().setEnabled(true);
                 }
 
-                System.out.println(logger + "Current step now " + (currentStep - 1));
-                System.out.println(logger + "Actions size " + actions.size());
-
-                if(currentStep <= actions.size()){
-                    System.out.println("Enabled next and prev button");
+                if(parentPanel != null && currentStep <= actions.size()){
                     parentPanel.getNextButton().setEnabled(true);
                     parentPanel.getOkButton().setEnabled(true);
                 }
@@ -281,6 +279,10 @@ public class CanvasWidget extends JPanel {
     }
 
     public void animateCanvas() {
+        if(actions != null && parentPanel != null && currentStep - 1 >= actions.size()){
+            currentStep = 1;
+            moveCharacterToStartPosition();
+        }
         this.animateCanvas(actions);
     }
 
