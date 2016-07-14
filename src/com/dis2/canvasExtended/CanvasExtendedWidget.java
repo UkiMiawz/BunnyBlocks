@@ -160,8 +160,12 @@ public class CanvasExtendedWidget extends JPanel {
 
     private class ActionAnimate implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            if(codeBlocks != null)
-                canvasWidget.setAnimations(getCalculatedAnimations());
+            if(codeBlocks != null){
+                ArrayList animations = getCalculatedAnimations();
+                canvasWidget.setAnimations(animations);
+                totalSteps = animations.size();
+                recalculateSteps();
+            }
             canvasWidget.animateCanvas(); 
            
         }
