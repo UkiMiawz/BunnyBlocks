@@ -257,20 +257,26 @@ public class complexCard extends JPanel implements Cloneable {
             this.setBounds(c.getDefaultWidth(), c.getDefaultHeight());
 
             // Get the default width based on first child.
-            complexCard firstChild = this.getChildren().get(0);
-            int w = this.getWidth() <= firstChild.getWidth() ? firstChild.getWidth() + 20 : this.getWidth();
+            int w = 0;
             int h = 0;
 
             for (int i = 0; i < this.getChildren().size(); i++) {
                 if (i == 0) {
                     // Do this only on the first child.
-                    h = firstChild.getHeight() + 80;
+                	complexCard firstChild = this.getChildren().get(0);
+                   	w = firstChild.getWidth() + 20;
+                	h = firstChild.getHeight() + 80;
                     firstChild.setLocation(10, 60);
                     this.setBounds(w, h);
                 } else {
-                    complexCard child = this.getChildren().get(i);
-                    h = this.getHeight() + child.getHeight() + 10;
-                    child.setLocation(10, this.getHeight());
+                    complexCard currentChild = this.getChildren().get(i);
+                    int currentChildWidth = currentChild.getWidth() + 20;
+                    if (currentChildWidth > w)
+                    {
+                    	w = currentChildWidth;
+                    }
+                    h = this.getHeight() + currentChild.getHeight() + 10;
+                    currentChild.setLocation(10, this.getHeight());
                     this.setBounds(w, h);
                 }
             }

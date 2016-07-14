@@ -67,13 +67,9 @@ class DragListener extends MouseInputAdapter {
             //just test of functio getCode
             //cb.getCode();
 
-        } else if (selectedCard.getCardWidget().getClass().getSimpleName().equals("fishCard")) {
-            //if released card is out of container
-            cb.recalculateCardSize();
-        }
-        // if released card is out of container.
-        // And it's a type of fish card (for now).
-
+        } 
+        
+        cb.recalculateCardSize();
         cb.repaint();
     }
 
