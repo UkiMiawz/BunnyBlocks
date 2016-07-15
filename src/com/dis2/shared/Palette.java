@@ -23,6 +23,7 @@ public class Palette {
     private static Color brightRed = new Color(255, 0, 0);
     private static Color brightPurple = new Color(163, 102, 255);
     private static Color brightViolet = new Color(255, 0, 85);
+    private static Color brightBlue = new Color(0, 0, 255);
     
     //Methods to call the value of a color from the other classes
     public static Color black(){ return black; }
@@ -40,5 +41,6 @@ public class Palette {
     public static Color brightRed(){ return brightRed; }
     public static Color brightPurple(){ return brightPurple; }
     public static Color brightViolet(){ return brightViolet; }
+    public static Color brightBlue() { return brightBlue; }
 
 }

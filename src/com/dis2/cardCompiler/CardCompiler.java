@@ -22,7 +22,7 @@ public class CardCompiler {
         System.out.println(logger + "number of cards " + inputCards.size());
 
         for(complexCard inputCard: inputCards){
-            if(inputCard.getCardWidget().getCardType() != 1){
+            if(inputCard.getCardWidget().getCardType() > 1){
                 //not for
                 switch (inputCard.getCardWidget().getCardType()){
                     case 2:
@@ -36,7 +36,7 @@ public class CardCompiler {
                     default:
                         break;
                 }
-            } else {
+            } else if (inputCard.getCardWidget().getCardType() == 1){
                 //cast card to for
                 snakeCard currentCard = (snakeCard) inputCard.getCardWidget();
                 int loopNumber = currentCard.getNtimes();
@@ -47,6 +47,10 @@ public class CardCompiler {
                     System.out.println(logger + "number of children " + test);
                     result.addAll(compileCards(inputCard.getChildren()));
                 }
+            } 
+            else if (inputCard.getCardWidget().getCardType() == 0) 
+            {
+            	result.addAll(compileCards(inputCard.getChildren()));
             }
         }
 
