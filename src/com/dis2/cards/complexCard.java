@@ -20,6 +20,7 @@ import com.dis2.shared.Palette;
 import com.dis2.shared.Util;
 import java.awt.Color;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -123,7 +124,7 @@ public class complexCard extends JPanel implements Cloneable {
             this.setBounds(this.getX(), this.getY(), c.getRectWidth(), c.getRectHeight());
 
         }
-        //draw border
+      //draw border
         g.setColor(c.getBorderColor());
         g.drawRoundRect(0, 0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
         g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
@@ -131,13 +132,14 @@ public class complexCard extends JPanel implements Cloneable {
         g.setColor(c.getFillColor());
         g.drawRoundRect(2, 2, this.getWidth() - 4, this.getHeight() - 4, c.getArcWidth() - 1, c.getArcHeight() - 1);
         g.fillRoundRect(2, 2, this.getWidth() - 4, this.getHeight() - 4, c.getArcWidth() - 1, c.getArcHeight() - 1);
+
         //draw card with alles
         setImageDraw(g, c.getImg());
 
     }
 
     public void setImageDraw(Graphics g, Image i) {
-
+    	
         g.setColor(c.getFontColor());
         g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
 
@@ -159,7 +161,12 @@ public class complexCard extends JPanel implements Cloneable {
             double h = c.getImageScale() * c.getImageHeight();
 
             switch (c.getCardType()) {
-                case 1: // for
+            	case 0: // main Card
+            		g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
+            		g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
+            		System.out.println(c.getFillColor());
+            		break;
+               	case 1: // for
                     g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
                     g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) - 15, c.getyTextMargin());
                     forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) + 15, c.getyTextMargin() - 18, 40, 25);
@@ -171,17 +178,24 @@ public class complexCard extends JPanel implements Cloneable {
                 case 5: //moveRight
                     g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
                     g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin() - 10);
-                    break;
+                    break;                
             }
 
-        } else if (c.isInStack()) {
-            double w = 40;
-            double h = 40;
-            g.drawImage(c.getImg(), 3, 3, (int) w, (int) h, this);
-            g.setColor(c.getFontColor());
-            g.setFont(new Font("Courier", Font.BOLD, 16));
-            g.drawString(c.getLabel(), (c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())), 28);
-            forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);
+        } else if (c.isInStack()) {        	
+        		double w = 40;
+        		double h = 40;
+        		g.drawImage(c.getImg(), 3, 3, (int) w, (int) h, this);
+        		g.setColor(c.getFontColor());
+        		g.setFont(new Font("Courier", Font.BOLD, 16));
+        		if (c.getCardType() == 1)
+        		{
+        			g.drawString(c.getLabel(), (c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())), 28);
+        			forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);	
+        		}
+        		else if(c.getCardType() == 0)
+        		{
+        			g.drawString(c.getLabel(), (c.getRectWidth() - 10 - g.getFontMetrics().stringWidth(c.getLabel())), 28);        			
+        		}
         }
     }
 
@@ -229,7 +243,10 @@ public class complexCard extends JPanel implements Cloneable {
             c.setFillColor(Palette.brightGreen());
             repaint();
 
-        } else {
+        }else if(c.getCardType()==0){
+        	c.setFillColor(Palette.brightBlue());
+            repaint();
+        }else {
             c.setFillColor(Palette.brightViolet());
             repaint();
         }
@@ -242,7 +259,10 @@ public class complexCard extends JPanel implements Cloneable {
         if (c.getCardType() == 1) {
             c.setFillColor(Palette.green());
             repaint();
-        } else {
+        } else if(c.getCardType()==0){
+        	c.setFillColor(Palette.blue());
+            repaint();
+        }else {
             c.setFillColor(Palette.violet());
             repaint();
         }

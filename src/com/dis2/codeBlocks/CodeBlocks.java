@@ -2,7 +2,10 @@ package com.dis2.codeBlocks;
 
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
- 
+import com.dis2.cards.bunnyCard;
+import com.dis2.shared.Util;
+
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -46,14 +49,9 @@ class DragListener extends MouseInputAdapter {
         if (targetCard != null) {
             targetCard.setDefaultState();
             if (isInsideCard(selectedCard, targetCard)
-                    && (targetCard.getCardWidget().getCardType()) == 1
+                    && ((targetCard.getCardWidget().getCardType()) == 1 || targetCard.getCardWidget().getCardType() == 0)
                     && (selectedCard.hasChildren() && selectedCard.getCardWidget().getCardType() == 1)
                     || selectedCard.getCardWidget().getCardType() != 1) { //only when card is type for (loop)
-
-                System.out.println("Esta dentro del contenedor?: " + isInsideCard(selectedCard, targetCard));
-                System.out.println("Target es tipo loop: " + targetCard.getCardWidget().getCardType());
-                System.out.println("Selected Card tiene hijos es de tipo loop: " + (selectedCard.hasChildren() && selectedCard.getCardWidget().getCardType() == 1));
-                System.out.println("Selected Card no es Lopp:" + selectedCard.getCardWidget().getCardType());
 
                 selectedCard.setDefaultState();
                 targetCard.addChild(selectedCard);
@@ -130,7 +128,7 @@ class DragListener extends MouseInputAdapter {
             Point sP = selectedCard.getMidPoint();
             Point cP = card.getMidPoint();
             if (getDistanceBetweenPoints(sP, cP) < distance || distance == -1) {
-                if (card.getCardWidget().getCardType() == 1
+                if ((card.getCardWidget().getCardType() == 1 || card.getCardWidget().getCardType() == 0)
                         && (selectedCard.hasChildren() || selectedCard.getCardWidget().getCardType() != 1)) {
                     targetCard = card;
                 }
@@ -224,7 +222,7 @@ public class CodeBlocks extends JPanel {
         });
 
         this.add(close);
-        new DropTargetPanel(this);
+        new DropTargetPanel(this);        
     }
 
     public void setExecutedCard(complexCard card){
@@ -272,11 +270,13 @@ public class CodeBlocks extends JPanel {
             card.setLocation(new Point(card.getX() - OldPoint.x, card.getY() - OldPoint.y));
             this.add(card);
             this.bringToFront(card);
-        } else if (((complexCard) temp).getCardWidget().getCardType() == 1
+        } else if ((((complexCard) temp).getCardWidget().getCardType() == 1 ||
+        		((complexCard) temp).getCardWidget().getCardType() == 0)
                 && card.getCardWidget().getCardType() != 1) {
             ((complexCard) temp).getCardWidget().setInStack(true);
             ((complexCard) temp).addChild(card);
-        } else {
+        }         
+        else {
             card.setLocation(new Point(card.getX() - OldPoint.x, card.getY() - OldPoint.y));
             this.add(card);
             this.bringToFront(card);
@@ -315,6 +315,17 @@ public class CodeBlocks extends JPanel {
         }
         this.setPreferredSize(new Dimension(refW, refH));
         this.revalidate();
+    }
+    
+    public boolean ValidateCodeBlocks()
+    {
+    	if (getCards().size() > 1)
+    	{
+    		Util.showMessage("Please combine all cards under Bunny Card!");
+    		return false;
+    	}
+    	
+    	return true;
     }
 
     class DropTargetPanel extends DropTargetAdapter implements DropTargetListener {
