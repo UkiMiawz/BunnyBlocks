@@ -2,7 +2,6 @@ package com.dis2.app;
   
 import com.dis2.canvasExtended.CanvasExtendedWidget;
 import com.dis2.codeBlocks.CodeBlocks;
-import com.dis2.cards.bunnyCard;
 import com.dis2.cards.complexCard;
 import com.dis2.cards.fishCard;
 import com.dis2.cards.snakeCard;
@@ -135,14 +134,12 @@ public class app extends JFrame{
     
     public MenuWidget initMenu(){
         menuWidget = new MenuWidget(400, 200);
-        bunnyCard bunny = new bunnyCard(3,3,110, 150, 10, 10, 0.3, 15);
         snakeCard snake = new snakeCard(3,3,110, 150, 10, 10, 0.3, 15);
         fishCard fishR = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,5);
         fishCard fishU = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,2);
         fishCard fishD = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,3);
         fishCard fishL = new fishCard(3,3, 110, 150, 10, 10, 0.3, 15 ,4);
         
-        menuWidget.addCard(new complexCard(bunny));
         menuWidget.addCard(new complexCard(snake));
         menuWidget.addCard(new complexCard(fishR));
         menuWidget.addCard(new complexCard(fishU));

@@ -5,7 +5,6 @@ import com.dis2.cards.complexCard;
 import com.dis2.cards.bunnyCard;
 import com.dis2.shared.Util;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -216,6 +215,7 @@ public class CodeBlocks extends JPanel {
                         selfCodeBlocks().remove(c);
                     }
                 }
+                SetUpBunnyCard();
                 revalidate();
                 repaint();
             }
@@ -223,6 +223,7 @@ public class CodeBlocks extends JPanel {
 
         this.add(close);
         new DropTargetPanel(this);        
+        SetUpBunnyCard();
     }
 
     public void setExecutedCard(complexCard card){
@@ -318,8 +319,8 @@ public class CodeBlocks extends JPanel {
     }
     
     public boolean ValidateCodeBlocks()
-    {
-    	if (getCards().size() > 1)
+    {    	
+    	if (getCards().size() > 1 || getCards().get(0).getCardWidget().getCardType() != 0)
     	{
     		Util.showMessage("Please combine all cards under Bunny Card!");
     		return false;
@@ -327,7 +328,22 @@ public class CodeBlocks extends JPanel {
     	
     	return true;
     }
-
+    
+    public void SetUpBunnyCard(){
+    	bunnyCard bunny = new bunnyCard(3,3,110, 150, 10, 10, 0.3, 15);
+        complexCard bunnyComplex = new complexCard(bunny);
+        
+        bunnyComplex.getCardWidget().setSimpleCard(false);
+        DragListener drag = new DragListener(this);
+        bunnyComplex.addMouseListener(drag);
+        bunnyComplex.addMouseMotionListener(drag);
+        bunnyComplex.setDefaultState();
+        bunnyComplex.setDefaultBounds();
+        bunnyComplex.setLocation(new Point(50, 50));
+        this.add(bunnyComplex);
+        this.bringToFront(bunnyComplex);
+    }
+    
     class DropTargetPanel extends DropTargetAdapter implements DropTargetListener {
 
         private DropTarget dropTarget;
