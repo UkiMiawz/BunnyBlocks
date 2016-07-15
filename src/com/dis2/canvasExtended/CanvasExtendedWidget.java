@@ -144,6 +144,15 @@ public class CanvasExtendedWidget extends JPanel {
         progressBar.setStepNumbers(totalSteps);
     }
 
+    public void resetCanvas(){
+        prevButton.setEnabled(false);
+        nextButton.setEnabled(false);
+        okButton.setEnabled(true);
+        canvasWidget.resetCanvas();
+        totalSteps = 1;
+        progressBar.setStepNumbers(totalSteps);
+    }
+
     private ArrayList<AnimationAction> getCalculatedAnimations(){
         ArrayList<AnimationAction> result = new ArrayList<>();
         if(codeBlocks != null){
@@ -163,11 +172,14 @@ public class CanvasExtendedWidget extends JPanel {
 
             if(codeBlocks != null && codeBlocks.ValidateCodeBlocks()){
                 ArrayList animations = getCalculatedAnimations();
-                canvasWidget.setAnimations(animations);
-                totalSteps = animations.size();
-                recalculateSteps();
-                canvasWidget.animateCanvas(); 
-            }           
+                if(animations.size() > 0)
+                {
+                    canvasWidget.setAnimations(animations);
+                    totalSteps = animations.size();
+                    recalculateSteps();
+                    canvasWidget.animateCanvas();
+                }
+            }
         }
     }
 

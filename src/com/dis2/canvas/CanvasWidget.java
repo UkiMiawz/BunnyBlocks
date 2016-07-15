@@ -129,6 +129,21 @@ public class CanvasWidget extends JPanel {
         character.setY(startingY);
     }
 
+    public void resetCanvas(){
+        if(timer != null)
+            timer.stop();
+        moveCharacterToStartPosition();
+        this.actions = new ArrayList<>();
+        currentQueue = new ArrayList<>();
+        currentStep = 1;
+        currentAction = null;
+        xMovement = 0;
+        yMovement = 0;
+        movementValue = null;
+        needNewAnimation = true;
+        repaint();
+    }
+
     private void animateCanvas(ArrayList<AnimationAction> steps) {
         try {
             character.move();
