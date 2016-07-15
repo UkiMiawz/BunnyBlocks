@@ -1,5 +1,6 @@
 package com.dis2.codeBlocks;
 
+import com.dis2.canvasExtended.CanvasExtendedWidget;
 import com.dis2.cards.cardWidget;
 import com.dis2.cards.complexCard;
 import com.dis2.cards.bunnyCard;
@@ -196,6 +197,11 @@ public class CodeBlocks extends JPanel {
     DataFlavor dataFlavor = new DataFlavor(cardWidget.class,
             cardWidget.class.getSimpleName());
 
+    CanvasExtendedWidget canvas;
+    public void setCanvas(CanvasExtendedWidget value){
+        canvas = value;
+    }
+
     public CodeBlocks selfCodeBlocks() {
         return this;
     } 
@@ -216,6 +222,11 @@ public class CodeBlocks extends JPanel {
                         selfCodeBlocks().remove(c);
                     }
                 }
+
+                if(canvas != null){
+                    canvas.resetCanvas();
+                }
+
                 revalidate();
                 repaint();
             }

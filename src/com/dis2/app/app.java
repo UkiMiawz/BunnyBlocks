@@ -186,6 +186,7 @@ public class app extends JFrame{
 
         canvas = new CanvasExtendedWidget(map.getImage(), iconChar, iconWalk, iconCoin, 80, 30, 340, 275);
         canvas.setCodeBlocks(codeBlocks);
+        codeBlocks.setCanvas(canvas);
 
         return canvas;
     }
