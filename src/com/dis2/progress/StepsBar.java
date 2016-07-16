@@ -184,8 +184,6 @@ public class StepsBar extends JPanel {
             g.fillRect(x, currentPosition, w, 1);
             currentPosition += heightPerStep;
         }
-        
-        
 
         g.drawImage(goalImage, 0, this.getHeight()+40, this);
         g.drawImage(progressImage, Util.getImagenCenterX(this, progressImage), getProgressImagePosition(), this); 
