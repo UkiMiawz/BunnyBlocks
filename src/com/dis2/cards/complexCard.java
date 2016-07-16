@@ -52,10 +52,12 @@ public class complexCard extends JPanel implements Cloneable {
             public void mouseEntered(MouseEvent e) {
                 getSelf().setCursor(CustomCursor.hand());
                 flagAnim = true; //this starts the animation of the gif
-        		app.menuWidget.descGlobalLabel.setFont(new Font("Arial Black", Font.ITALIC, 14));
-        		app.menuWidget.descGlobalLabel.setForeground(c.getFillColor());
-        		app.menuWidget.descGlobalLabel.setText("<html>" + c.getText() + "</html>");
-        		app.menuWidget.descGlobalLabel.setPreferredSize(new Dimension(app.menuWidget.getWidth(), 100));
+        		
+                String currentDescText = c.getText();
+        		Font currentDescFont = new Font("Arial Black", Font.ITALIC, 14);
+        		Color currentDescColor = c.getFillColor();
+        		//menuWidget.descGlobalLabel.setPreferredSize(new Dimension(menuWidget.getWidth(), 100));
+        		app.menuWidget.descriptionPanel.ChangeText(currentDescText, currentDescColor, currentDescFont);		
 
                 revalidate();
                 repaint();
@@ -73,8 +75,7 @@ public class complexCard extends JPanel implements Cloneable {
             public void mouseExited(MouseEvent e) {
                 flagAnim = false; //this ends the animation of the gif and repaint regular img
                 //stateBack(c); // //test for highlight color in cards
-        		app.menuWidget.descGlobalLabel.setText("");
-
+        		
                 revalidate();
                 repaint();
 
@@ -164,7 +165,6 @@ public class complexCard extends JPanel implements Cloneable {
             	case 0: // main Card
             		g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
             		g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
-            		System.out.println(c.getFillColor());
             		break;
                	case 1: // for
                     g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
