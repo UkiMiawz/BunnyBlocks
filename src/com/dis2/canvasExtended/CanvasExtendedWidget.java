@@ -83,8 +83,8 @@ public class CanvasExtendedWidget extends JPanel {
         bottomPanel.setLayout(new BorderLayout());
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         //add buttons
-        bottomPanel.add(nextButton, BorderLayout.NORTH);
-        bottomPanel.add(prevButton, BorderLayout.SOUTH);
+        bottomPanel.add(prevButton, BorderLayout.NORTH);
+        bottomPanel.add(nextButton, BorderLayout.SOUTH);
 
         //calculate the panel height 
         progressBar = new StepsBar(30, 600);
