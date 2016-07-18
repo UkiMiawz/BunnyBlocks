@@ -17,6 +17,7 @@ public class CustomDialog extends JDialog {
     public CustomDialog(String message, ImageIcon icon) {
 
         super(new JFrame(), true);
+        this.setResizable(false);
         cm.registerComponent(this);
 
         JPanel contentPanel = new JPanel();
