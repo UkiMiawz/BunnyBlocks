@@ -85,7 +85,7 @@ public class complexCard extends JPanel implements Cloneable {
         this.setOpaque(true);
         this.setBackground(new Color(0, 0, 0, 0));
         if (!c.isSimpleCard() && c.getCardType() == 1) {
-            forN.setBounds(0, 0, 30, 30);
+            forN.setBounds(0, 0, 20, 25);
             forN.setDragEnabled(false);
             forN.getDocument().addDocumentListener(new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
@@ -172,9 +172,11 @@ public class complexCard extends JPanel implements Cloneable {
                     
                     break;
                	case 1: // for
-                    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-                    g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) - 15, c.getyTextMargin());
-                    forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) + 15, c.getyTextMargin() - 18, 40, 25);
+                    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin()-10, (int) w, (int) h, this);
+                    g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin()-20);
+                    g.drawString("times", c.getRectWidth()-65, c.getyTextMargin());
+                    forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel()))-10, c.getyTextMargin()-15, 25, 25);
+
                     this.add(forN);
                     break;
                 case 2: // moveUp 
@@ -195,8 +197,9 @@ public class complexCard extends JPanel implements Cloneable {
         		if (c.getCardType() == 1)
         		{
                             g.drawImage(c.getImg(), 3, 3, (int) w, (int) h, this);
-                            g.drawString(c.getLabel(), (c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())), 28);
-                            forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);	
+                            g.drawString(c.getLabel(), (c.getRectWidth() - g.getFontMetrics().stringWidth(c.getLabel()))-10, 18);
+                            g.drawString("times", c.getRectWidth()-40, 45);
+                            forN.setBounds(c.getRectWidth()-70, 25, 30, 25);
         		}
         		else if(c.getCardType() == 0)
         		{
