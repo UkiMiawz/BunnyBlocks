@@ -41,7 +41,7 @@ public class bunnyCard extends cardWidget{
 		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
-		this.setLabel("Bunny");
+		this.setLabel("Put cards here");
 		this.setxTextMargin(x + w/5);
 		this.setyTextMargin(h - h/10);
 		this.setText("The bunny card will decide the sequence of cards.");
