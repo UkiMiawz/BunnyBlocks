@@ -4,20 +4,17 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 import com.dis2.cardCompiler.CardCompiler;
 import com.dis2.codeBlocks.CodeBlocks;
 import com.dis2.canvas.CanvasWidget;
-import com.dis2.cards.complexCard;
 import com.dis2.progress.StepsBar;
 import com.dis2.shared.AnimationAction;
 import com.dis2.shared.MovementConstants;
-import com.dis2.shared.Palette;
 
-import java.awt.Image;
-import java.awt.Graphics;
-import java.awt.BorderLayout;
-import java.awt.Color; 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -34,9 +31,9 @@ public class CanvasExtendedWidget extends JPanel {
     private JPanel bottomPanel = new JPanel();
 
     //Buttons
-    private JButton okButton = new JButton("Play");
-    private JButton nextButton = new JButton("Next");
-    private JButton prevButton = new JButton("Prev");
+    private JButton okButton = new JButton();
+    private JButton nextButton = new JButton();
+    private JButton prevButton = new JButton();
 
     public JButton getPrevButton(){return prevButton;}
     public JButton getNextButton(){return nextButton;}
@@ -90,12 +87,12 @@ public class CanvasExtendedWidget extends JPanel {
         bottomPanel.add(prevButton, BorderLayout.SOUTH);
 
         //calculate the panel height 
-        progressBar = new StepsBar(30, 600); 
+        progressBar = new StepsBar(30, 600);
         progressBar.setBaseBackgroundColor(new Color(203,138,72)); 
         progressBar.setProgressColor(new Color(46,204,113));
         progressBar.setStepNumbers(1);
         progressBar.setCurrentStep(1); 
-        progressBar.setMaxBarWidth(36); 
+        progressBar.setMaxBarWidth(36);
         
         URL url = CanvasExtendedWidget.class.getResource("/resources/bunnyStep.gif");
         progressBar.setProgressImage(new ImageIcon(url).getImage());
@@ -115,6 +112,32 @@ public class CanvasExtendedWidget extends JPanel {
 
         prevButton.addActionListener(new ActionSteps());
         nextButton.addActionListener(new ActionSteps());
+
+        //set button icons
+        URL urlNext = CanvasExtendedWidget.class.getResource(
+                "/resources/next.png");
+        System.out.println(urlNext.getPath());
+        ImageIcon iconNext = new ImageIcon(urlNext);
+        nextButton.setIcon(iconNext);
+
+        URL urlPlay = CanvasExtendedWidget.class.getResource(
+                "/resources/play.png");
+        System.out.println(urlPlay.getPath());
+        ImageIcon iconPlay = new ImageIcon(urlPlay);
+        okButton.setIcon(iconPlay);
+
+        URL urlPrev = CanvasExtendedWidget.class.getResource(
+                "/resources/prev.png");
+        System.out.println(urlPrev.getPath());
+        ImageIcon iconPrev = new ImageIcon(urlPrev);
+        prevButton.setIcon(iconPrev);
+
+        /*nextButton.setBorder(new CompoundBorder(new EmptyBorder(10, 10, 10, 10), nextButton.getBorder()));
+        prevButton.setBorder(new CompoundBorder(new EmptyBorder(10, 10, 10, 10), prevButton.getBorder()));
+        okButton.setBorder(new CompoundBorder(new EmptyBorder(10, 10, 10, 10), okButton.getBorder()));
+
+        okButton.setContentAreaFilled(false);
+        okButton.setOpaque(false);*/
 
         //add both panel to widget
         this.setLayout(new BorderLayout());
