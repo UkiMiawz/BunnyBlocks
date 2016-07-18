@@ -1,30 +1,27 @@
 package com.dis2.cards;
 
-import com.dis2.shared.Palette;
-
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage; 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import com.dis2.shared.Palette;
 
-public class snakeCard extends cardWidget{
-	
-	private int Ntimes = 1;
+public class bunnyCard extends cardWidget{
 	URL imageUrl = fishCard.class.getResource(
-			"/resources/snake.png");
+			"/resources/bunny_brown.png");
 	Image img = Toolkit.getDefaultToolkit().getImage(imageUrl);
 	URL gifUrl = fishCard.class.getResource(
-		"/resources/snake_hd.gif");
+		"/resources/coin.gif");
 	Image gif = Toolkit.getDefaultToolkit().createImage(gifUrl);
 	BufferedImage bimg;
 	int iw;
 	int ih;
 
-	public snakeCard(int x, int y, int w, int h, int arcW, int arcH, double s, int fs){
+	public bunnyCard(int x, int y, int w, int h, int arcW, int arcH, double s, int fs){
 		super(x,y,w,h,arcW,arcH); 
 		try{
 			BufferedImage bimg = ImageIO.read(imageUrl);
@@ -34,7 +31,7 @@ public class snakeCard extends cardWidget{
 				    e.printStackTrace();
 		}
 		
-		this.setFillColor(Palette.green());
+		this.setFillColor(Palette.blue());
 		this.setImg(img);
 		this.setImageHeight(ih);
 		this.setImageWidth(iw);
@@ -44,21 +41,12 @@ public class snakeCard extends cardWidget{
 		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
-		this.setLabel("Repeat");
+		this.setLabel("Bunny");
 		this.setxTextMargin(x + w/5);
 		this.setyTextMargin(h - h/10);
-		this.setText("The Snake card helps your character repeat an instruction N times");
-		this.setCardType(1);
+		this.setText("The bunny card will decide the sequence of cards.");
+		this.setCardType(0);
 		this.setGif(gif);
 		this.setGifScale(s);
 	}
-
-	public int getNtimes() {
-		return Ntimes;
-	}
-
-	public void setNtimes(int ntimes) {
-		this.Ntimes = ntimes;
-	}
-
 }

@@ -20,6 +20,7 @@ import com.dis2.shared.Palette;
 import com.dis2.shared.Util;
 import java.awt.Color;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -51,10 +52,12 @@ public class complexCard extends JPanel implements Cloneable {
             public void mouseEntered(MouseEvent e) {
                 getSelf().setCursor(CustomCursor.hand());
                 flagAnim = true; //this starts the animation of the gif
-        		app.menuWidget.descGlobalLabel.setFont(new Font("Arial Black", Font.ITALIC, 14));
-        		app.menuWidget.descGlobalLabel.setForeground(c.getFillColor());
-        		app.menuWidget.descGlobalLabel.setText("<html>" + c.getText() + "</html>");
-        		app.menuWidget.descGlobalLabel.setPreferredSize(new Dimension(app.menuWidget.getWidth(), 100));
+        		
+                String currentDescText = c.getText();
+        		Font currentDescFont = new Font("Arial Black", Font.ITALIC, 14);
+        		Color currentDescColor = c.getFillColor();
+        		//menuWidget.descGlobalLabel.setPreferredSize(new Dimension(menuWidget.getWidth(), 100));
+        		app.menuWidget.descriptionPanel.ChangeText(currentDescText, currentDescColor, currentDescFont);		
 
                 revalidate();
                 repaint();
@@ -72,8 +75,7 @@ public class complexCard extends JPanel implements Cloneable {
             public void mouseExited(MouseEvent e) {
                 flagAnim = false; //this ends the animation of the gif and repaint regular img
                 //stateBack(c); // //test for highlight color in cards
-        		app.menuWidget.descGlobalLabel.setText("");
-
+        		
                 revalidate();
                 repaint();
 
@@ -83,7 +85,7 @@ public class complexCard extends JPanel implements Cloneable {
         this.setOpaque(true);
         this.setBackground(new Color(0, 0, 0, 0));
         if (!c.isSimpleCard() && c.getCardType() == 1) {
-            forN.setBounds(0, 0, 30, 30);
+            forN.setBounds(0, 0, 20, 25);
             forN.setDragEnabled(false);
             forN.getDocument().addDocumentListener(new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
@@ -123,7 +125,7 @@ public class complexCard extends JPanel implements Cloneable {
             this.setBounds(this.getX(), this.getY(), c.getRectWidth(), c.getRectHeight());
 
         }
-        //draw border
+      //draw border
         g.setColor(c.getBorderColor());
         g.drawRoundRect(0, 0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
         g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), c.getArcWidth(), c.getArcHeight());
@@ -131,13 +133,14 @@ public class complexCard extends JPanel implements Cloneable {
         g.setColor(c.getFillColor());
         g.drawRoundRect(2, 2, this.getWidth() - 4, this.getHeight() - 4, c.getArcWidth() - 1, c.getArcHeight() - 1);
         g.fillRoundRect(2, 2, this.getWidth() - 4, this.getHeight() - 4, c.getArcWidth() - 1, c.getArcHeight() - 1);
+
         //draw card with alles
         setImageDraw(g, c.getImg());
 
     }
 
     public void setImageDraw(Graphics g, Image i) {
-
+    	
         g.setColor(c.getFontColor());
         g.setFont(new Font("Courier", Font.BOLD, c.getFontSize()));
 
@@ -159,10 +162,15 @@ public class complexCard extends JPanel implements Cloneable {
             double h = c.getImageScale() * c.getImageHeight();
 
             switch (c.getCardType()) {
-                case 1: // for
-                    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-                    g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) - 15, c.getyTextMargin());
-                    forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) + 15, c.getyTextMargin() - 18, 40, 25);
+            	case 0: // main Card
+            		g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
+            		g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
+            		break;
+               	case 1: // for
+                    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin()-10, (int) w, (int) h, this);
+                    g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin()-20);
+                    g.drawString("times", c.getRectWidth()-65, c.getyTextMargin());
+                    forN.setBounds(util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel()))-10, c.getyTextMargin()-15, 25, 25);
                     this.add(forN);
                     break;
                 case 2: // moveUp 
@@ -171,17 +179,25 @@ public class complexCard extends JPanel implements Cloneable {
                 case 5: //moveRight
                     g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
                     g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin() - 10);
-                    break;
+                    break;                
             }
 
-        } else if (c.isInStack()) {
-            double w = 40;
-            double h = 40;
-            g.drawImage(c.getImg(), 3, 3, (int) w, (int) h, this);
-            g.setColor(c.getFontColor());
-            g.setFont(new Font("Courier", Font.BOLD, 16));
-            g.drawString(c.getLabel(), (c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())), 28);
-            forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);
+        } else if (c.isInStack()) {        	
+        		double w = 30;
+        		double h = 30;
+        		g.drawImage(c.getImg(), 3, 3, (int) w, (int) h, this);
+        		g.setColor(c.getFontColor());
+        		g.setFont(new Font("Courier", Font.BOLD, 16));
+        		if (c.getCardType() == 1)
+        		{
+        			g.drawString(c.getLabel(), (c.getRectWidth() - g.getFontMetrics().stringWidth(c.getLabel()))-10, 18);
+        			g.drawString("times", c.getRectWidth()-40, 45);
+        			forN.setBounds(c.getRectWidth()-70, 25, 30, 25);	
+        		}
+        		else if(c.getCardType() == 0)
+        		{
+        			g.drawString(c.getLabel(), (c.getRectWidth() - 10 - g.getFontMetrics().stringWidth(c.getLabel())), 28);        			
+        		}
         }
     }
 
@@ -229,7 +245,10 @@ public class complexCard extends JPanel implements Cloneable {
             c.setFillColor(Palette.brightGreen());
             repaint();
 
-        } else {
+        }else if(c.getCardType()==0){
+        	c.setFillColor(Palette.brightBlue());
+            repaint();
+        }else {
             c.setFillColor(Palette.brightViolet());
             repaint();
         }
@@ -242,7 +261,10 @@ public class complexCard extends JPanel implements Cloneable {
         if (c.getCardType() == 1) {
             c.setFillColor(Palette.green());
             repaint();
-        } else {
+        } else if(c.getCardType()==0){
+        	c.setFillColor(Palette.blue());
+            repaint();
+        }else {
             c.setFillColor(Palette.violet());
             repaint();
         }
@@ -257,20 +279,26 @@ public class complexCard extends JPanel implements Cloneable {
             this.setBounds(c.getDefaultWidth(), c.getDefaultHeight());
 
             // Get the default width based on first child.
-            complexCard firstChild = this.getChildren().get(0);
-            int w = this.getWidth() <= firstChild.getWidth() ? firstChild.getWidth() + 20 : this.getWidth();
+            int w = 0;
             int h = 0;
 
             for (int i = 0; i < this.getChildren().size(); i++) {
                 if (i == 0) {
                     // Do this only on the first child.
-                    h = firstChild.getHeight() + 80;
+                	complexCard firstChild = this.getChildren().get(0);
+                   	w = firstChild.getWidth() + 20;
+                	h = firstChild.getHeight() + 80;
                     firstChild.setLocation(10, 60);
                     this.setBounds(w, h);
                 } else {
-                    complexCard child = this.getChildren().get(i);
-                    h = this.getHeight() + child.getHeight() + 10;
-                    child.setLocation(10, this.getHeight());
+                    complexCard currentChild = this.getChildren().get(i);
+                    int currentChildWidth = currentChild.getWidth() + 20;
+                    if (currentChildWidth > w)
+                    {
+                    	w = currentChildWidth;
+                    }
+                    h = this.getHeight() + currentChild.getHeight() + 10;
+                    currentChild.setLocation(10, this.getHeight());
                     this.setBounds(w, h);
                 }
             }
