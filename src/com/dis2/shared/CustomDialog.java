@@ -32,7 +32,6 @@ public class CustomDialog extends JDialog {
         messageLbl.setFont(new Font("ArialBlack", Font.PLAIN, 18));
         messageLbl.setBorder(padding);
         messagePanel.add(messageLbl, BorderLayout.CENTER);
-        messagePanel.setBorder(BorderFactory.createLineBorder(Palette.black()));
 
         okBtn.addActionListener(new Close());
         URL urlCheck = CustomDialog.class.getResource(
