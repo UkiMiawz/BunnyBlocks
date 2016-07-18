@@ -132,13 +132,6 @@ public class CanvasExtendedWidget extends JPanel {
         ImageIcon iconPrev = new ImageIcon(urlPrev);
         prevButton.setIcon(iconPrev);
 
-        /*nextButton.setBorder(new CompoundBorder(new EmptyBorder(10, 10, 10, 10), nextButton.getBorder()));
-        prevButton.setBorder(new CompoundBorder(new EmptyBorder(10, 10, 10, 10), prevButton.getBorder()));
-        okButton.setBorder(new CompoundBorder(new EmptyBorder(10, 10, 10, 10), okButton.getBorder()));
-
-        okButton.setContentAreaFilled(false);
-        okButton.setOpaque(false);*/
-
         //add both panel to widget
         this.setLayout(new BorderLayout());
         this.add(upperPanel, BorderLayout.CENTER);

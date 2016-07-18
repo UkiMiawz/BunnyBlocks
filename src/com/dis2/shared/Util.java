@@ -9,7 +9,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -108,12 +110,12 @@ public class Util {
         return sx < rx + rw && sx + sw > rx && sy < ry + rh && sy + sh > ry;
     }
 
-    public static void showMessage(String message){
+    public static void showMessage(String message) {
         URL urlWalk = Util.class.getResource(
-                "/resources/bunnyStep.gif");
-        System.out.println(urlWalk.getPath());
+                "/resources/bunny_dialog.png");
         ImageIcon iconWalk = new ImageIcon(urlWalk);
-        JOptionPane.showMessageDialog(null,
-                message, "Hello there", JOptionPane.INFORMATION_MESSAGE, iconWalk);
+        new CustomDialog(message, iconWalk);
+        /*JOptionPane.showMessageDialog(null,
+                message, "Hello there", JOptionPane.INFORMATION_MESSAGE, iconWalk);*/
     }
 }
