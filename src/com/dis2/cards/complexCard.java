@@ -154,8 +154,11 @@ public class complexCard extends JPanel implements Cloneable {
             } else {
                 g.drawImage(c.getGif(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
             }
-            g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
-
+            
+            if(c.getCardType() !=0){
+                g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
+            }
+            
         } else if ((!c.isSimpleCard()) && (!c.isInStack())) {
 
             double w = c.getImageScale() * c.getImageWidth();
@@ -163,9 +166,11 @@ public class complexCard extends JPanel implements Cloneable {
 
             switch (c.getCardType()) {
             	case 0: // main Card
-            		g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
-            		g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())), c.getyTextMargin());
-            		break;
+                    g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
+                    g.drawString("Place Cards", util.getStringCenterX(this, g.getFontMetrics().stringWidth("Place Cards")), c.getyTextMargin()-30);
+                    g.drawString("Here", util.getStringCenterX(this, g.getFontMetrics().stringWidth("Here")), c.getyTextMargin()-10);
+                    
+                    break;
                	case 1: // for
                     g.drawImage(c.getImg(), util.getImagenCenterX(this, (int) w), c.getyMargin(), (int) w, (int) h, this);
                     g.drawString(c.getLabel(), util.getStringCenterX(this, g.getFontMetrics().stringWidth(c.getLabel())) - 15, c.getyTextMargin());
@@ -184,18 +189,22 @@ public class complexCard extends JPanel implements Cloneable {
         } else if (c.isInStack()) {        	
         		double w = 40;
         		double h = 40;
-        		g.drawImage(c.getImg(), 3, 3, (int) w, (int) h, this);
+        		
         		g.setColor(c.getFontColor());
         		g.setFont(new Font("Courier", Font.BOLD, 16));
         		if (c.getCardType() == 1)
         		{
-        			g.drawString(c.getLabel(), (c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())), 28);
-        			forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);	
+                            g.drawImage(c.getImg(), 3, 3, (int) w, (int) h, this);
+                            g.drawString(c.getLabel(), (c.getRectWidth() - 35 - g.getFontMetrics().stringWidth(c.getLabel())), 28);
+                            forN.setBounds(c.getRectWidth() - 35, 10, 40, 25);	
         		}
         		else if(c.getCardType() == 0)
         		{
-        			g.drawString(c.getLabel(), (c.getRectWidth() - 10 - g.getFontMetrics().stringWidth(c.getLabel())), 28);        			
-        		}
+                            g.drawImage(c.getImg(), 3, 3, (int) 30, (int) 50, this);
+                            g.drawString("Place",(c.getRectWidth() - 15 - g.getFontMetrics().stringWidth("Place")),20);
+                            g.drawString("Cards", (c.getRectWidth() - 15 - g.getFontMetrics().stringWidth("Cards")),35);
+                            g.drawString("Here", (c.getRectWidth() - 15 - g.getFontMetrics().stringWidth("Here ")), 50); 
+                        }
         }
     }
 
