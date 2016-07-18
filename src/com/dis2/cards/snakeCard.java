@@ -44,7 +44,7 @@ public class snakeCard extends cardWidget{
 		this.setFontColor(Palette.white());
 		this.setFontSize(fs);
 		this.setTypeFace(1);
-		this.setLabel("For");
+		this.setLabel("Repeat");
 		this.setxTextMargin(x + w/5);
 		this.setyTextMargin(h - h/10);
 		this.setText("The Snake card helps your character repeat an instruction N times");
